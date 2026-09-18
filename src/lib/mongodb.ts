@@ -1,13 +1,5 @@
 import mongoose from "mongoose";
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error("Please define the MONGODB_URI environment variable");
-}
-
-const MONGODB_URI_DEFINED: string = MONGODB_URI;
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let cached = (global as any).mongoose;
 
@@ -23,7 +15,11 @@ export async function connectDB() {
   if (cached.conn) return cached.conn;
 
   if (!cached.promise) {
-    cached.promise = mongoose.connect(MONGODB_URI_DEFINED).catch((err) => {
+    const MONGODB_URI = process.env.MONGODB_URI;
+    if (!MONGODB_URI) {
+      throw new Error("Please define the MONGODB_URI environment variable");
+    }
+    cached.promise = mongoose.connect(MONGODB_URI).catch((err) => {
       cached.promise = null;
       throw err;
     });
