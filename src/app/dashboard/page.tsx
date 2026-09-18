@@ -93,6 +93,27 @@ function DashboardPageContent() {
     }
   };
 
+  const handleProfileSave = async () => {
+    try {
+      const nameInput = document.querySelector<HTMLInputElement>("#profile-name");
+      const bioInput = document.querySelector<HTMLTextAreaElement>("#profile-bio");
+      const res = await fetch("/api/users/me", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: nameInput?.value, bio: bioInput?.value }),
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setUser({ ...user!, name: data.user.name, bio: data.user.bio });
+        toast.success("Profile updated");
+      } else {
+        toast.error("Failed to update profile");
+      }
+    } catch {
+      toast.error("Failed to update profile");
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
@@ -107,7 +128,7 @@ function DashboardPageContent() {
     if (!confirm("Are you sure you want to delete this story?")) return;
 
     try {
-      const res = await fetch(`/api/stories/${id}`, { method: "DELETE" });
+      const res = await fetch(`/api/admin/stories/${id}`, { method: "DELETE" });
       if (res.ok) {
         toast.success("Story deleted");
         setStories(stories.filter((s) => s._id !== id));
@@ -185,6 +206,7 @@ function DashboardPageContent() {
                   </label>
                   <input
                     type="text"
+                    id="profile-name"
                     defaultValue={user.name}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none"
                   />
@@ -194,13 +216,17 @@ function DashboardPageContent() {
                     Bio
                   </label>
                   <textarea
+                    id="profile-bio"
                     defaultValue={user.bio}
                     rows={4}
                     className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none resize-none"
                     placeholder="Tell us about yourself..."
                   />
                 </div>
-                <button className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-full font-medium transition">
+                <button
+                  onClick={handleProfileSave}
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-6 py-3 rounded-full font-medium transition"
+                >
                   Save Changes
                 </button>
               </div>
