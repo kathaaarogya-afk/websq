@@ -35,7 +35,7 @@ export async function GET() {
     results.readyState = conn.readyState;
 
     if (conn.db) {
-      const collections = await conn.db.listCollections();
+      const collections = await conn.db.listCollections().toArray();
       results.collections = collections.map((c) => c.name);
     } else {
       results.collections = [];
