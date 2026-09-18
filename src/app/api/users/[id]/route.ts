@@ -4,22 +4,6 @@ import User from "@/models/User";
 import Story from "@/models/Story";
 import Follow from "@/models/Follow";
 import { verifyToken } from "@/lib/jwt";
-import { auth } from "@/lib/auth";
-
-async function getCurrentUserId(req: NextRequest): Promise<string | null> {
-  const session = await auth();
-  if (session?.user?.email) {
-    await connectDB();
-    const user = await User.findOne({ email: session.user.email }).select("_id");
-    return user?._id?.toString() || null;
-  }
-  const token = req.cookies.get("token")?.value;
-  if (token) {
-    const decoded = verifyToken(token);
-    if (decoded) return decoded.userId;
-  }
-  return null;
-}
 
 export async function GET(
   req: NextRequest,
@@ -43,10 +27,13 @@ export async function GET(
       .lean();
 
     let isFollowing = false;
-    const currentUserId = await getCurrentUserId(req);
-    if (currentUserId && currentUserId !== id) {
-      const follow = await Follow.findOne({ follower: currentUserId, following: id });
-      isFollowing = !!follow;
+    const token = req.cookies.get("token")?.value;
+    if (token) {
+      const decoded = verifyToken(token);
+      if (decoded && decoded.userId !== id) {
+        const follow = await Follow.findOne({ follower: decoded.userId, following: id });
+        isFollowing = !!follow;
+      }
     }
 
     return NextResponse.json({ user, stories, isFollowing });

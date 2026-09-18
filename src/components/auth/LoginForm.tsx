@@ -54,7 +54,7 @@ export default function LoginForm() {
     setIsGoogleLoading(true);
     try {
       await signIn("google", {
-        callbackUrl: "/dashboard",
+        callbackUrl: "/api/auth/sync?redirect=/dashboard",
         redirect: true,
       });
     } catch {

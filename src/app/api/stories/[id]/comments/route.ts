@@ -1,20 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
+import { verifyToken } from "@/lib/jwt";
 import { connectDB } from "@/lib/mongodb";
 import Comment from "@/models/Comment";
 import Story from "@/models/Story";
-import User from "@/models/User";
-import { verifyToken } from "@/lib/jwt";
-import { auth } from "@/lib/auth";
-
-async function getUserId(): Promise<string | null> {
-  const session = await auth();
-  if (session?.user?.email) {
-    await connectDB();
-    const user = await User.findOne({ email: session.user.email }).select("_id");
-    return user?._id?.toString() || null;
-  }
-  return null;
-}
 
 export async function GET(
   req: NextRequest,
@@ -52,16 +40,13 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    let userId = await getUserId();
-    if (!userId) {
-      const token = req.cookies.get("token")?.value;
-      if (token) {
-        const decoded = verifyToken(token);
-        if (decoded) userId = decoded.userId;
-      }
-    }
-    if (!userId) {
+    const token = req.cookies.get("token")?.value;
+    if (!token) {
       return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+    }
+    const decoded = verifyToken(token);
+    if (!decoded) {
+      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
     const { id } = await params;
@@ -75,7 +60,7 @@ export async function POST(
 
     const comment = await Comment.create({
       content: content.trim(),
-      author: userId,
+      author: decoded.userId,
       story: id,
       parentComment: parentComment || null,
     });

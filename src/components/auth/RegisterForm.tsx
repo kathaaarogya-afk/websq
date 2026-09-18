@@ -63,7 +63,7 @@ export default function RegisterForm() {
     setIsGoogleLoading(true);
     try {
       await signIn("google", {
-        callbackUrl: "/dashboard",
+        callbackUrl: "/api/auth/sync?redirect=/dashboard",
         redirect: true,
       });
     } catch {
