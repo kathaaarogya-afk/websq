@@ -40,7 +40,7 @@ export default function WhyWebSQ() {
 
           <p className="mt-5 text-lg text-gray-600 max-w-3xl mx-auto">
             We believe every person has a unique journey worth sharing.
-            Whether you're a student, parent, traveller or professional,
+            Whether you&apos;re a student, parent, traveller or professional,
             your experiences can inspire others.
           </p>
         </div>

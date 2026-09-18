@@ -8,12 +8,18 @@ if (!MONGODB_URI) {
 
 const MONGODB_URI_DEFINED: string = MONGODB_URI;
 
-let cached = (global as any).mongoose;
+let cached = (global as Record<string, unknown>).mongoose as {
+  conn: typeof mongoose | null;
+  promise: Promise<typeof mongoose> | null;
+} | undefined;
 
 if (!cached) {
-  cached = (global as any).mongoose = {
+  cached = ((global as Record<string, unknown>).mongoose = {
     conn: null,
     promise: null,
+  }) as {
+    conn: typeof mongoose | null;
+    promise: Promise<typeof mongoose> | null;
   };
 }
 
