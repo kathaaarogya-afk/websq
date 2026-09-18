@@ -43,7 +43,7 @@ export const {
           return true;
         } catch (error) {
           console.error("Google sign-in error:", error);
-          return false;
+          return "/login?error=database_error";
         }
       }
       return true;
