@@ -53,20 +53,12 @@ export default function LoginForm() {
   const handleGoogleLogin = async () => {
     setIsGoogleLoading(true);
     try {
-      const result = await signIn("google", {
+      await signIn("google", {
         callbackUrl: "/dashboard",
-        redirect: false,
+        redirect: true,
       });
-
-      if (result?.error) {
-        toast.error("Google sign-in failed");
-      } else {
-        toast.success("Welcome back!");
-        router.push("/dashboard");
-      }
     } catch {
       toast.error("Google sign-in failed");
-    } finally {
       setIsGoogleLoading(false);
     }
   };

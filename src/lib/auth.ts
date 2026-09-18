@@ -20,9 +20,7 @@ export const {
       if (account?.provider === "google") {
         try {
           await connectDB();
-
           const existingUser = await User.findOne({ email: user.email });
-
           if (!existingUser) {
             await User.create({
               name: user.name,
@@ -32,18 +30,12 @@ export const {
               role: "user",
               active: true,
             });
-          } else {
-            // Update image if changed
-            if (user.image && existingUser.image !== user.image) {
-              existingUser.image = user.image;
-              await existingUser.save();
-            }
+          } else if (user.image && existingUser.image !== user.image) {
+            existingUser.image = user.image;
+            await existingUser.save();
           }
-
-          return true;
         } catch (error) {
-          console.error("Google sign-in error:", error);
-          return "/login?error=database_error";
+          console.error("Google sign-in DB error (allowing sign-in anyway):", error);
         }
       }
       return true;

@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import { Menu, X, Search, PenSquare, Bell, ChevronDown } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -59,6 +59,7 @@ export default function Header() {
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
+      await signOut({ redirect: false });
       setUser(null);
       toast.success("Logged out successfully");
       router.push("/");
