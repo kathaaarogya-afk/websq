@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
+import { verifyToken } from "@/lib/jwt";
 import Story from "@/models/Story";
+import mongoose from "mongoose";
 
 export async function GET(
   req: NextRequest,
@@ -10,10 +12,16 @@ export async function GET(
     await connectDB();
     const { id } = await params;
 
-    const story = await Story.findOne({
-      $or: [{ slug: id }, { _id: id }],
-      status: "published",
-    })
+    const isObjectId = mongoose.Types.ObjectId.isValid(id);
+
+    let query: Record<string, unknown>;
+    if (isObjectId) {
+      query = { $or: [{ slug: id }, { _id: id }] };
+    } else {
+      query = { slug: id };
+    }
+
+    let story = await Story.findOne(query)
       .populate("author", "name image bio followersCount")
       .lean();
 
@@ -24,7 +32,24 @@ export async function GET(
       );
     }
 
-    await Story.updateOne({ _id: story._id }, { $inc: { views: 1 } });
+    const token = req.cookies.get("token")?.value;
+    const isOwner = token
+      ? (() => {
+          const decoded = verifyToken(token);
+          return decoded && String(story.author._id) === decoded.userId;
+        })()
+      : false;
+
+    if (!isOwner && story.status !== "published") {
+      return NextResponse.json(
+        { error: "Story not found" },
+        { status: 404 }
+      );
+    }
+
+    if (!isOwner) {
+      await Story.updateOne({ _id: story._id }, { $inc: { views: 1 } });
+    }
 
     return NextResponse.json({ story });
   } catch (error: unknown) {

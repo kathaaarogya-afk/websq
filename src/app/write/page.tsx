@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, useCallback } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import StoryForm from "@/components/writer/StoryForm";
+import { Suspense } from "react";
 
 interface StoryFormData {
   title: string;
@@ -13,10 +14,14 @@ interface StoryFormData {
   coverImage: string;
 }
 
-export default function WritePage() {
+function WritePageInner() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const editId = searchParams.get("edit");
+
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [initialData, setInitialData] = useState<Partial<StoryFormData> | undefined>(undefined);
 
   useEffect(() => {
     const checkAuth = async () => {
@@ -36,13 +41,45 @@ export default function WritePage() {
     checkAuth();
   }, [router]);
 
+  const fetchStory = useCallback(async () => {
+    if (!editId) return;
+    try {
+      const res = await fetch(`/api/stories/${editId}`, { credentials: "include" });
+      if (res.ok) {
+        const data = await res.json();
+        setInitialData({
+          title: data.story.title,
+          content: data.story.content,
+          category: data.story.category,
+          excerpt: data.story.excerpt,
+          coverImage: data.story.coverImage,
+        });
+      } else {
+        toast.error("Story not found");
+        router.push("/dashboard");
+      }
+    } catch {
+      toast.error("Failed to load story");
+      router.push("/dashboard");
+    }
+  }, [editId, router]);
+
+  useEffect(() => {
+    if (!loading) {
+      fetchStory();
+    }
+  }, [loading, fetchStory]);
+
   const handleSaveDraft = async (data: StoryFormData) => {
     setSaving(true);
     try {
+      const body: Record<string, unknown> = { ...data };
+      if (editId) body.storyId = editId;
+
       const res = await fetch("/api/stories/save-draft", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
       });
 
       if (res.ok) {
@@ -61,14 +98,17 @@ export default function WritePage() {
   const handlePublish = async (data: StoryFormData) => {
     setSaving(true);
     try {
+      const body: Record<string, unknown> = { ...data };
+      if (editId) body.storyId = editId;
+
       const res = await fetch("/api/stories/publish", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+        body: JSON.stringify(body),
       });
 
       if (res.ok) {
-        toast.success("Story published successfully!");
+        toast.success(editId ? "Story updated successfully!" : "Story published successfully!");
         router.push("/dashboard?tab=published");
       } else {
         const error = await res.json();
@@ -93,11 +133,20 @@ export default function WritePage() {
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-orange-50 py-8 px-4">
       <div className="max-w-4xl mx-auto">
         <StoryForm
+          initialData={initialData}
           onSaveDraft={handleSaveDraft}
           onPublish={handlePublish}
           loading={saving}
         />
       </div>
     </div>
+  );
+}
+
+export default function WritePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen flex items-center justify-center"><div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-400"></div></div>}>
+      <WritePageInner />
+    </Suspense>
   );
 }

@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
-    const { title, content, category, excerpt, coverImage } = await req.json();
+    const { title, content, category, excerpt, coverImage, storyId } = await req.json();
 
     if (!title || !title.trim()) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
@@ -29,6 +29,30 @@ export async function POST(req: NextRequest) {
     await connectDB();
 
     const now = new Date();
+
+    if (storyId) {
+      const existing = await Story.findOne({ _id: storyId, author: decoded.userId });
+      if (!existing) {
+        return NextResponse.json({ error: "Story not found" }, { status: 404 });
+      }
+
+      existing.title = title.trim();
+      existing.content = content.trim();
+      existing.category = category;
+      existing.excerpt = excerpt || "";
+      existing.coverImage = coverImage || "";
+      existing.status = "published";
+      existing.adminStatus = "approved";
+      existing.publishedAt = existing.publishedAt || now;
+      existing.approvedAt = now;
+      await existing.save();
+
+      return NextResponse.json({
+        message: "Story updated",
+        story: { id: existing._id, title: existing.title, slug: existing.slug },
+      });
+    }
+
     const story = await Story.create({
       title: title.trim(),
       content: content.trim(),

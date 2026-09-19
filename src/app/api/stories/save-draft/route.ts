@@ -14,13 +14,33 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Invalid token" }, { status: 401 });
     }
 
-    const { title, content, category, excerpt, coverImage } = await req.json();
+    const { title, content, category, excerpt, coverImage, storyId } = await req.json();
 
     if (!title || !title.trim()) {
       return NextResponse.json({ error: "Title is required" }, { status: 400 });
     }
 
     await connectDB();
+
+    if (storyId) {
+      const existing = await Story.findOne({ _id: storyId, author: decoded.userId });
+      if (!existing) {
+        return NextResponse.json({ error: "Story not found" }, { status: 404 });
+      }
+
+      existing.title = title.trim();
+      existing.content = content || "";
+      existing.category = category || "Life";
+      existing.excerpt = excerpt || "";
+      existing.coverImage = coverImage || "";
+      existing.status = "draft";
+      await existing.save();
+
+      return NextResponse.json({
+        message: "Draft updated",
+        story: { id: existing._id, title: existing.title },
+      });
+    }
 
     const story = await Story.create({
       title: title.trim(),
