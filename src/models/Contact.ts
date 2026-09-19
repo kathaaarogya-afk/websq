@@ -18,7 +18,7 @@ const ContactSchema = new Schema<IContact>(
     },
     lastName: {
       type: String,
-      required: true,
+      default: "",
     },
     email: {
       type: String,
