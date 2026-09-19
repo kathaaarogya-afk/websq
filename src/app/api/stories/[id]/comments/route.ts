@@ -3,6 +3,7 @@ import { verifyToken } from "@/lib/jwt";
 import { connectDB } from "@/lib/mongodb";
 import Comment from "@/models/Comment";
 import Story from "@/models/Story";
+import Notification from "@/models/Notification";
 
 export async function GET(
   req: NextRequest,
@@ -66,6 +67,34 @@ export async function POST(
     });
 
     await Story.findByIdAndUpdate(id, { $inc: { commentsCount: 1 } });
+
+    const story = await Story.findById(id).select("author title slug").lean();
+    if (story) {
+      const fromUser = await import("@/models/User").then((m) =>
+        m.default.findById(decoded.userId).select("name").lean()
+      );
+
+      if (parentComment) {
+        const parentCommentDoc = await Comment.findById(parentComment).select("author").lean();
+        if (parentCommentDoc && parentCommentDoc.author.toString() !== decoded.userId) {
+          await Notification.create({
+            user: parentCommentDoc.author,
+            fromUser: decoded.userId,
+            type: "comment_reply",
+            message: `${fromUser?.name || "Someone"} replied to your comment`,
+            link: `/stories/${story.slug}`,
+          });
+        }
+      } else if (story.author.toString() !== decoded.userId) {
+        await Notification.create({
+          user: story.author,
+          fromUser: decoded.userId,
+          type: "comment",
+          message: `${fromUser?.name || "Someone"} commented on "${story.title}"`,
+          link: `/stories/${story.slug}`,
+        });
+      }
+    }
 
     const populated = await Comment.findById(comment._id).populate("author", "name image").lean();
     return NextResponse.json({ comment: populated });

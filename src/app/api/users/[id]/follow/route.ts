@@ -3,6 +3,7 @@ import { verifyToken } from "@/lib/jwt";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import Follow from "@/models/Follow";
+import Notification from "@/models/Notification";
 
 export async function POST(
   req: NextRequest,
@@ -35,6 +36,18 @@ export async function POST(
 
     await Follow.create({ follower: decoded.userId, following: id });
     await User.findByIdAndUpdate(id, { $inc: { followersCount: 1 } });
+
+    const fromUser = await User.findById(decoded.userId).select("name").lean();
+    if (fromUser) {
+      await Notification.create({
+        user: id,
+        fromUser: decoded.userId,
+        type: "follow",
+        message: `${fromUser.name} started following you`,
+        link: `/profile/${decoded.userId}`,
+      });
+    }
+
     const user = await User.findById(id);
     return NextResponse.json({ following: true, followersCount: user?.followersCount || 0 });
   } catch (error: unknown) {

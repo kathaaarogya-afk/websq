@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import Story from "@/models/Story";
+import Notification from "@/models/Notification";
 
 export async function PUT(
   req: NextRequest,
@@ -14,10 +15,25 @@ export async function PUT(
       id,
       { adminStatus: "rejected", rejectionReason: reason || "" },
       { new: true }
-    );
+    ).select("author title").lean();
+
     if (!story) {
       return NextResponse.json({ error: "Story not found" }, { status: 404 });
     }
+
+    if (story.author) {
+      const msg = reason
+        ? `Your story "${story.title}" was not approved. Reason: ${reason}`
+        : `Your story "${story.title}" was not approved. Please review and resubmit.`;
+
+      await Notification.create({
+        user: story.author,
+        type: "story_rejected",
+        message: msg,
+        link: "/dashboard?tab=drafts",
+      });
+    }
+
     return NextResponse.json({ message: "Story rejected", story });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to reject story";

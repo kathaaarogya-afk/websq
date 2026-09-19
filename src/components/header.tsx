@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
-import { Menu, X, Search, Bell, ChevronDown } from "lucide-react";
+import { Menu, X, Search, Bell, ChevronDown, Check, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 
 interface UserData {
@@ -14,12 +14,36 @@ interface UserData {
   image: string;
 }
 
+interface NotificationData {
+  _id: string;
+  fromUser?: { name: string; image?: string } | null;
+  type: string;
+  message: string;
+  link?: string;
+  read: boolean;
+  createdAt: string;
+}
+
+const notifIcons: Record<string, string> = {
+  follow: "👤",
+  like: "❤️",
+  comment: "💬",
+  comment_reply: "↩️",
+  story_approved: "✅",
+  story_rejected: "❌",
+};
+
 export default function Header() {
   const router = useRouter();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<UserData | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [showNotifPanel, setShowNotifPanel] = useState(false);
+  const [notifications, setNotifications] = useState<NotificationData[]>([]);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const notifRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -45,6 +69,79 @@ export default function Header() {
     fetchUser();
   }, [pathname]);
 
+  useEffect(() => {
+    if (!user) return;
+    fetchNotifications();
+    const interval = setInterval(fetchNotifications, 30000);
+    return () => clearInterval(interval);
+  }, [user]);
+
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
+        setShowNotifPanel(false);
+      }
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const fetchNotifications = async () => {
+    try {
+      const res = await fetch("/api/notifications");
+      if (res.ok) {
+        const data = await res.json();
+        setNotifications(data.notifications || []);
+        setUnreadCount(data.unreadCount || 0);
+      }
+    } catch {}
+  };
+
+  const markAllRead = async () => {
+    try {
+      await fetch("/api/notifications", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "read_all" }),
+      });
+      setNotifications((prev) => prev.map((n) => ({ ...n, read: true })));
+      setUnreadCount(0);
+    } catch {}
+  };
+
+  const markOneRead = async (id: string) => {
+    try {
+      await fetch("/api/notifications", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ action: "read_one", notificationId: id }),
+      });
+      setNotifications((prev) =>
+        prev.map((n) => (n._id === id ? { ...n, read: true } : n))
+      );
+      setUnreadCount((prev) => Math.max(0, prev - 1));
+    } catch {}
+  };
+
+  const clearAll = async () => {
+    try {
+      await fetch("/api/notifications", { method: "DELETE" });
+      setNotifications([]);
+      setUnreadCount(0);
+    } catch {}
+  };
+
+  const handleNotifClick = (notif: NotificationData) => {
+    if (!notif.read) markOneRead(notif._id);
+    if (notif.link) {
+      setShowNotifPanel(false);
+      router.push(notif.link);
+    }
+  };
+
   const handleLogout = async () => {
     try {
       await fetch("/api/auth/logout", { method: "POST" });
@@ -54,6 +151,18 @@ export default function Header() {
     } catch {
       toast.error("Logout failed");
     }
+  };
+
+  const timeAgo = (date: string) => {
+    const seconds = Math.floor((Date.now() - new Date(date).getTime()) / 1000);
+    if (seconds < 60) return "just now";
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) return `${minutes}m ago`;
+    const hours = Math.floor(minutes / 60);
+    if (hours < 24) return `${hours}h ago`;
+    const days = Math.floor(hours / 24);
+    if (days < 7) return `${days}d ago`;
+    return new Date(date).toLocaleDateString("en-AU", { day: "numeric", month: "short" });
   };
 
   const publicNavItems = [
@@ -117,14 +226,134 @@ export default function Header() {
 
             {user ? (
               <>
-                <button className="w-10 h-10 rounded-full hover:bg-yellow-100 flex items-center justify-center transition relative">
-                  <Bell size={20} />
-                  <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-                </button>
-
-                <div className="relative">
+                {/* Notification Bell */}
+                <div className="relative" ref={notifRef}>
                   <button
-                    onClick={() => setShowDropdown(!showDropdown)}
+                    onClick={() => {
+                      setShowNotifPanel(!showNotifPanel);
+                      setShowDropdown(false);
+                    }}
+                    className="w-10 h-10 rounded-full hover:bg-yellow-100 flex items-center justify-center transition relative"
+                  >
+                    <Bell size={20} />
+                    {unreadCount > 0 && (
+                      <span className="absolute -top-0.5 -right-0.5 min-w-[18px] h-[18px] bg-red-500 text-white text-[10px] font-bold rounded-full flex items-center justify-center px-1 animate-pulse">
+                        {unreadCount > 99 ? "99+" : unreadCount}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Notification Panel */}
+                  {showNotifPanel && (
+                    <div className="absolute right-0 mt-2 w-[380px] bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden">
+                      {/* Panel Header */}
+                      <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+                        <div className="flex items-center gap-2">
+                          <h3 className="font-bold text-gray-900">Notifications</h3>
+                          {unreadCount > 0 && (
+                            <span className="bg-yellow-400 text-yellow-900 text-xs font-bold px-2 py-0.5 rounded-full">
+                              {unreadCount}
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          {unreadCount > 0 && (
+                            <button
+                              onClick={markAllRead}
+                              className="text-xs text-yellow-600 hover:text-yellow-700 font-medium px-2 py-1 rounded-lg hover:bg-yellow-50 transition"
+                            >
+                              <Check size={14} className="inline mr-1" />
+                              Mark all read
+                            </button>
+                          )}
+                          {notifications.length > 0 && (
+                            <button
+                              onClick={clearAll}
+                              className="text-xs text-gray-400 hover:text-red-500 font-medium px-2 py-1 rounded-lg hover:bg-red-50 transition"
+                            >
+                              <Trash2 size={14} />
+                            </button>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Notifications List */}
+                      <div className="max-h-[420px] overflow-y-auto">
+                        {notifications.length === 0 ? (
+                          <div className="py-12 text-center">
+                            <Bell className="mx-auto text-gray-300 mb-3" size={36} />
+                            <p className="text-gray-400 text-sm">No notifications yet</p>
+                          </div>
+                        ) : (
+                          notifications.map((notif) => (
+                            <button
+                              key={notif._id}
+                              onClick={() => handleNotifClick(notif)}
+                              className={`w-full flex items-start gap-3 px-5 py-3.5 text-left hover:bg-gray-50 transition border-b border-gray-50 last:border-0 ${
+                                !notif.read ? "bg-yellow-50/50" : ""
+                              }`}
+                            >
+                              {/* Avatar / Icon */}
+                              {notif.fromUser ? (
+                                notif.fromUser.image ? (
+                                  <img
+                                    src={notif.fromUser.image}
+                                    alt=""
+                                    className="w-10 h-10 rounded-full object-cover flex-shrink-0"
+                                  />
+                                ) : (
+                                  <div className="w-10 h-10 bg-yellow-200 rounded-full flex items-center justify-center text-sm font-bold text-yellow-700 flex-shrink-0">
+                                    {notif.fromUser.name.charAt(0).toUpperCase()}
+                                  </div>
+                                )
+                              ) : (
+                                <div className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center text-lg flex-shrink-0">
+                                  {notifIcons[notif.type] || "🔔"}
+                                </div>
+                              )}
+
+                              {/* Content */}
+                              <div className="flex-1 min-w-0">
+                                <p className={`text-sm leading-snug ${!notif.read ? "font-medium text-gray-900" : "text-gray-600"}`}>
+                                  {notif.message}
+                                </p>
+                                <p className="text-xs text-gray-400 mt-1">
+                                  {timeAgo(notif.createdAt)}
+                                </p>
+                              </div>
+
+                              {/* Unread Dot */}
+                              {!notif.read && (
+                                <div className="w-2.5 h-2.5 bg-yellow-400 rounded-full flex-shrink-0 mt-1.5"></div>
+                              )}
+                            </button>
+                          ))
+                        )}
+                      </div>
+
+                      {/* Panel Footer */}
+                      {notifications.length > 0 && (
+                        <div className="px-5 py-3 border-t border-gray-100 bg-gray-50/50">
+                          <Link
+                            href="/dashboard"
+                            onClick={() => setShowNotifPanel(false)}
+                            className="text-xs text-center block text-yellow-600 hover:text-yellow-700 font-medium"
+                          >
+                            View all activity
+                          </Link>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                {/* User Dropdown */}
+                <div className="relative" ref={dropdownRef}>
+                  <button
+                    onClick={() => {
+                      setShowDropdown(!showDropdown);
+                      setShowNotifPanel(false);
+                    }}
                     className="flex items-center gap-2 hover:bg-yellow-50 px-3 py-2 rounded-full transition"
                   >
                     {user.image ? (

@@ -3,6 +3,7 @@ import { verifyToken } from "@/lib/jwt";
 import { connectDB } from "@/lib/mongodb";
 import Like from "@/models/Like";
 import Story from "@/models/Story";
+import Notification from "@/models/Notification";
 
 export async function POST(
   req: NextRequest,
@@ -31,8 +32,25 @@ export async function POST(
 
     await Like.create({ user: decoded.userId, story: id });
     await Story.findByIdAndUpdate(id, { $inc: { likesCount: 1 } });
-    const story = await Story.findById(id);
-    return NextResponse.json({ liked: true, likesCount: story?.likesCount || 0 });
+
+    const story = await Story.findById(id).select("author title slug").lean();
+    if (story && story.author.toString() !== decoded.userId) {
+      const fromUser = await import("@/models/User").then((m) =>
+        m.default.findById(decoded.userId).select("name").lean()
+      );
+      if (fromUser) {
+        await Notification.create({
+          user: story.author,
+          fromUser: decoded.userId,
+          type: "like",
+          message: `${fromUser.name} liked your story "${story.title}"`,
+          link: `/stories/${story.slug}`,
+        });
+      }
+    }
+
+    const updatedStory = await Story.findById(id);
+    return NextResponse.json({ liked: true, likesCount: updatedStory?.likesCount || 0 });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to toggle like";
     return NextResponse.json({ error: message }, { status: 500 });
