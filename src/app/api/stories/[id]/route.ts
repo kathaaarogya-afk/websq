@@ -4,13 +4,16 @@ import Story from "@/models/Story";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectDB();
-    const { slug } = await params;
+    const { id } = await params;
 
-    const story = await Story.findOne({ slug, status: "published" })
+    const story = await Story.findOne({
+      $or: [{ slug: id }, { _id: id }],
+      status: "published",
+    })
       .populate("author", "name image bio followersCount")
       .lean();
 
@@ -21,15 +24,11 @@ export async function GET(
       );
     }
 
-    // Increment views
     await Story.updateOne({ _id: story._id }, { $inc: { views: 1 } });
 
     return NextResponse.json({ story });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to fetch story";
-    return NextResponse.json(
-      { error: message },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
