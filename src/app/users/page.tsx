@@ -177,7 +177,7 @@ export default function UsersPage() {
                   </div>
 
                   {/* Content */}
-                  <div className="pt-13 p-6">
+                  <div className="pt-14 p-6">
                     <Link href={`/profile/${user._id}`}>
                       <h3 className="text-lg font-bold text-gray-900 hover:text-yellow-600 transition truncate">
                         {user.name}
