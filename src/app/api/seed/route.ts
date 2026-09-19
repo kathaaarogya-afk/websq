@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import Story from "@/models/Story";
+import Category from "@/models/Category";
 
 const authors = [
   { name: "Admin", email: "admin@websq.com.au", bio: "Site administrator.", role: "admin" as const },
@@ -203,6 +204,41 @@ const stories = [
     likesCount: 456,
     commentsCount: 98,
   },
+
+  // ===== PERSONAL STORIES (3 short, ~500 words each) =====
+  {
+    title: "The Moment That Changed My Life",
+    category: "Personal",
+    coverImage: "https://images.unsplash.com/photo-1474631245212-32dc3c8310c6?w=800&h=600&fit=crop",
+    excerpt: "A single phone call on a Tuesday afternoon reshaped everything I thought I knew about my future.",
+    content: `<p>It was a Tuesday. I remember because I had just made a coffee — black, no sugar — and was staring at my laptop screen, pretending to work on a proposal I had been putting off for days.</p><p>The phone rang. It was my mum. Her voice was calm, the way it gets when something serious has happened and she is trying not to make it worse.</p><p>"Your dad had a heart attack. He is alive. But it is serious."</p><p>I dropped the coffee. It shattered on the kitchen floor, but I did not notice. I grabbed my keys and drove to the hospital in what felt like forty minutes but was probably fifteen.</p><p>When I arrived, Dad was in the cardiac unit. He was pale, connected to machines, but awake. When he saw me, he smiled — actually smiled — and said, "I told them you would come running."</p><p>That night, sitting beside his bed while Mum slept in the chair across the room, I thought about all the things I had been too busy to do. Visit more. Call more. Say the things I always assumed there would be time for later.</p><p>Dad recovered. The doctors said he was lucky. But luck had nothing to do with it — he had spent years walking every morning, eating well, and ignoring my jokes about him becoming a health nut. His discipline saved his life.</p><p>What changed for me was simpler. I stopped postponing the important things. I booked a flight home the next month. I called Dad every Sunday after that. I told my brother I was proud of him, something I had never said out loud.</p><p>The coffee on the kitchen floor? I cleaned it up when I got home, three days later. It had dried into a brown stain that took forever to scrub. I kept thinking about that stain — how something so small can sit there, untouched, while everything around it changes.</p><p>Dad is fine now. He still walks every morning. I still call him every Sunday. And I never let a coffee go cold while something important is waiting.</p>`,
+    author: 1,
+    views: 187,
+    likesCount: 34,
+    commentsCount: 8,
+  },
+  {
+    title: "A Lesson I Will Never Forget",
+    category: "Education",
+    coverImage: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&h=600&fit=crop",
+    excerpt: "My biggest mistake taught me more than any classroom ever could.",
+    content: `<p>I was twenty-three and thought I knew everything. I had just graduated, landed a junior role at a marketing firm, and was convinced I was on track to run the place within five years.</p><p>My first big project was a campaign for a local bakery. I spent weeks on it — bold concepts, flashy designs, social media strategies. I presented it to the team with the confidence of someone who had never been told no.</p><p>The client hated it. Not disliked — hated. She said it did not feel like her bakery. It felt like something from a textbook. She was right.</p><p>My manager, James, pulled me aside afterward. I expected a lecture. Instead, he asked me one question: "Did you visit the bakery?"</p><p>I had not. I had looked at their website, read their social media, and built the entire campaign from behind my desk. I had never smelled the bread, watched the customers, or spoken to the owner about what made her business special.</p><p>James told me something I carry to this day: "Research tells you what. Experience tells you why. You need both."</p><p>I went to the bakery the next morning. I ate a croissant. I watched the owner greet every customer by name. I saw the hand-painted sign above the counter that said, "Made with love since 1987." I understood.</p><p>The second version of the campaign was completely different. Warm, personal, focused on the people, not the product. The client loved it. It ran for two years.</p><p>That mistake — my arrogance, my assumption that I could understand something without experiencing it — taught me more than four years of university. I learned to listen before I create, to observe before I decide, and to never assume I am the smartest person in the room.</p><p>I keep a photo of that bakery on my desk. Not as a reminder of failure, but as a reminder that the best lessons come from the moments we least expect.</p>`,
+    author: 2,
+    views: 245,
+    likesCount: 52,
+    commentsCount: 15,
+  },
+  {
+    title: "The Place I Will Never Forget",
+    category: "Travel",
+    coverImage: "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&h=600&fit=crop",
+    excerpt: "A tiny village in the mountains of Vietnam changed how I see the world.",
+    content: `<p>I had been travelling for three weeks when I arrived in Sapa. By then, I was tired of hostels, tired of instant noodles, and tired of pretending that jet lag did not exist.</p><p>A local woman named Mai offered to be my guide. She spoke limited English and I spoke zero Vietnamese, but somehow we understood each other. She led me up a mountain path that did not appear on any map.</p><p>We walked for hours. The trail wound through rice terraces that cascaded down the hillside like green staircases. The air smelled of earth and wild flowers. There were no other tourists. Just us, the birds, and the occasional water buffalo blocking the path.</p><p>At the top, Mai pointed to a small village below. Her village. She invited me to her home for lunch.</p><p>Her house was a wooden stilt house with a dirt floor and a fire pit in the centre. Her children ran around barefoot, laughing. Her husband brought me tea that tasted like nothing I had ever had before — sweet, earthy, warm.</p><p>She cooked rice with vegetables from her garden. It was the simplest meal I had eaten in weeks and the best. We sat on the floor, ate with our hands, and smiled at each other because words were not necessary.</p><p>After lunch, her daughter showed me her drawings — crayon pictures of mountains, houses, and stick figures holding hands. One drawing had three people: the daughter, her mother, and a tall figure with yellow hair. That was me.</p><p>I left that village with a full stomach and a full heart. I gave Mai what I could — some money, a small gift from my bag. She gave me something bigger: a reminder that hospitality does not require a common language, and that the best moments in travel are the ones you never plan.</p><p>I have been to bigger cities, fancier resorts, and more famous landmarks since then. But none of them made me feel the way that village did. Sapa taught me that the world is full of kindness, if you are willing to wander off the path.</p>`,
+    author: 3,
+    views: 312,
+    likesCount: 67,
+    commentsCount: 19,
+  },
 ];
 
 export async function GET() {
@@ -236,6 +272,14 @@ async function seedDatabase() {
 
     let created = 0;
     let skipped = 0;
+
+    const categories = ["Life", "Family", "Career", "Education", "Technology", "Travel", "Health", "Inspiration", "Personal"];
+    for (const cat of categories) {
+      const exists = await Category.findOne({ name: cat });
+      if (!exists) {
+        await Category.create({ name: cat, description: `Stories about ${cat.toLowerCase()}` });
+      }
+    }
 
     for (const story of stories) {
       const existing = await Story.findOne({ title: story.title });

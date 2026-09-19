@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { Calendar, BookOpen, Users, Heart } from "lucide-react";
+import { Calendar, BookOpen, Users, Heart, Flag } from "lucide-react";
 import FollowButton from "./FollowButton";
+import ReportModal from "./ReportModal";
 
 interface UserProfileData {
   _id: string;
@@ -27,6 +29,8 @@ export default function UserProfile({
   isOwnProfile = false,
   isFollowing = false,
 }: UserProfileProps) {
+  const [showReport, setShowReport] = useState(false);
+
   return (
     <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
       {/* Cover */}
@@ -64,11 +68,20 @@ export default function UserProfile({
                 Edit Profile
               </Link>
             ) : (
-              <FollowButton
-                userId={user._id}
-                initialFollowing={isFollowing}
-                initialFollowerCount={user.followersCount}
-              />
+              <>
+                <FollowButton
+                  userId={user._id}
+                  initialFollowing={isFollowing}
+                  initialFollowerCount={user.followersCount}
+                />
+                <button
+                  onClick={() => setShowReport(true)}
+                  className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-red-500 transition"
+                >
+                  <Flag size={15} />
+                  Report
+                </button>
+              </>
             )}
           </div>
         </div>
@@ -104,6 +117,15 @@ export default function UserProfile({
           </div>
         </div>
       </div>
+
+      {showReport && (
+        <ReportModal
+          targetType="user"
+          targetId={user._id}
+          targetName={user.name}
+          onClose={() => setShowReport(false)}
+        />
+      )}
     </div>
   );
 }

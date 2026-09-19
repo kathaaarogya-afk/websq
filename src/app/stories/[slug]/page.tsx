@@ -3,11 +3,12 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Clock, Eye, ArrowLeft } from "lucide-react";
+import { Clock, Eye, ArrowLeft, Flag } from "lucide-react";
 import LikeButton from "@/components/community/LikeButton";
 import BookmarkButton from "@/components/community/BookmarkButton";
 import FollowButton from "@/components/community/FollowButton";
 import CommentSection from "@/components/community/CommentSection";
+import ReportModal from "@/components/community/ReportModal";
 
 interface StoryData {
   _id: string;
@@ -38,6 +39,7 @@ export default function StoryPage() {
   const [story, setStory] = useState<StoryData | null>(null);
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const [showReport, setShowReport] = useState(false);
 
   const fetchCurrentUser = useCallback(async () => {
     try {
@@ -214,7 +216,27 @@ export default function StoryPage() {
               size="sm"
             />
           )}
+
+          {!isAuthor && currentUserId && (
+            <button
+              onClick={() => setShowReport(true)}
+              className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-red-500 transition ml-2"
+            >
+              <Flag size={15} />
+              Report
+            </button>
+          )}
         </div>
+
+        {/* Report Modal */}
+        {showReport && (
+          <ReportModal
+            targetType="story"
+            targetId={story._id}
+            targetName={story.title}
+            onClose={() => setShowReport(false)}
+          />
+        )}
 
         {/* Comments Section */}
         <CommentSection
