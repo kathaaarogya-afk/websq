@@ -6,10 +6,10 @@ import Story from "@/models/Story";
 import Category from "@/models/Category";
 
 const authors = [
-  { name: "Admin", email: "admin@websq.com.au", bio: "Site administrator.", role: "admin" as const },
-  { name: "Sarah Johnson", email: "sarah@websq.com.au", bio: "Travel writer and adventure seeker.", role: "user" as const },
-  { name: "David Wilson", email: "david@websq.com.au", bio: "Tech enthusiast and lifelong learner.", role: "user" as const },
-  { name: "Emily Brown", email: "emily@websq.com.au", bio: "Education advocate and storyteller.", role: "user" as const },
+  { name: "Admin", email: "admin@websq.com.au", bio: "Site administrator.", role: "admin" as const, image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&h=200&fit=crop&crop=face" },
+  { name: "Sarah Johnson", email: "sarah@websq.com.au", bio: "Travel writer and adventure seeker.", role: "user" as const, image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&h=200&fit=crop&crop=face" },
+  { name: "David Wilson", email: "david@websq.com.au", bio: "Tech enthusiast and lifelong learner.", role: "user" as const, image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&h=200&fit=crop&crop=face" },
+  { name: "Emily Brown", email: "emily@websq.com.au", bio: "Education advocate and storyteller.", role: "user" as const, image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face" },
 ];
 
 const stories = [
@@ -264,6 +264,7 @@ async function seedDatabase() {
           email: author.email,
           password: hashedPassword,
           bio: author.bio,
+          image: author.image || "",
           role: author.role || "user",
         });
       }

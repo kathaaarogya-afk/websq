@@ -367,20 +367,40 @@ export default function Footer() {
 
 <div className="border-t border-yellow-200 bg-[#FFF7E6]">
 
-  <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col lg:flex-row items-center justify-between gap-5">
+  <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col items-center gap-4">
 
-    <p className="text-gray-500">
+    <div className="flex flex-wrap justify-center gap-x-4 gap-y-1 text-xs text-gray-400">
+      <Link href="/community-guidelines" className="hover:text-yellow-600 transition">Community Guidelines</Link>
+      <span>&middot;</span>
+      <Link href="/terms" className="hover:text-yellow-600 transition">Terms</Link>
+      <span>&middot;</span>
+      <Link href="/privacy" className="hover:text-yellow-600 transition">Privacy</Link>
+      <span>&middot;</span>
+      <Link href="/cookie-policy" className="hover:text-yellow-600 transition">Cookies</Link>
+      <span>&middot;</span>
+      <Link href="/copyright" className="hover:text-yellow-600 transition">Copyright</Link>
+      <span>&middot;</span>
+      <Link href="/acceptable-use" className="hover:text-yellow-600 transition">Acceptable Use</Link>
+      <span>&middot;</span>
+      <Link href="/report-content" className="hover:text-yellow-600 transition">Report</Link>
+    </div>
 
-      © {new Date().getFullYear()} WebSQ.
+    <div className="flex flex-col lg:flex-row items-center justify-between w-full gap-3">
+
+    <p className="text-gray-500 text-sm">
+
+      &copy; {new Date().getFullYear()} WebSQ.
       All Rights Reserved.
 
     </p>
 
-    <p className="font-semibold text-yellow-700 text-center">
+    <p className="font-semibold text-yellow-700 text-sm text-center">
 
-      Made with ❤️ for storytellers around the world.
+      Made with &#10084;&#65039; for storytellers around the world.
 
     </p>
+
+  </div>
 
   </div>
 
