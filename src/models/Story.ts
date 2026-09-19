@@ -57,6 +57,7 @@ const StorySchema = new Schema<IStory>(
         "Travel",
         "Health",
         "Inspiration",
+        "Personal",
       ],
     },
     coverImage: {
