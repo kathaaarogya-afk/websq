@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Menu, X, Search, Bell, ChevronDown } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -20,6 +20,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [user, setUser] = useState<UserData | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -42,7 +43,7 @@ export default function Header() {
       }
     };
     fetchUser();
-  }, []);
+  }, [pathname]);
 
   const handleLogout = async () => {
     try {
