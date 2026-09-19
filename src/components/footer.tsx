@@ -318,9 +318,9 @@ export default function Footer() {
               Contact
             </h3>
 
-            <div className="space-y-5 text-gray-600">
+            <div className="flex flex-wrap items-center gap-6 text-gray-600">
 
-              <div className="flex gap-3">
+              <div className="flex items-center gap-2">
 
                 <Mail className="text-yellow-500" />
 
@@ -328,7 +328,7 @@ export default function Footer() {
 
               </div>
 
-              <div className="flex gap-3">
+              <div className="flex items-center gap-2">
 
                 <MapPin className="text-yellow-500" />
 
@@ -338,7 +338,7 @@ export default function Footer() {
 
             </div>
 
-            <div className="flex gap-4 mt-10">
+            <div className="flex gap-4 mt-6">
 
               <a className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-yellow-500 hover:text-white transition">
                 <FaFacebookF />
