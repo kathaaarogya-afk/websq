@@ -7,6 +7,7 @@ export const {
   signOut,
   auth,
 } = NextAuth({
+  trustHost: true,
   providers: [
     Google({
       clientId: process.env.GOOGLE_CLIENT_ID || "",
@@ -34,17 +35,6 @@ export const {
             existingUser.image = user.image;
             await existingUser.save();
           }
-
-          // Create a custom JWT token for API auth
-          const jwt = await import("jsonwebtoken");
-          const JWT_SECRET = process.env.JWT_SECRET || "";
-          const token = jwt.default.sign(
-            { userId: existingUser?._id?.toString() || user.email, email: user.email, name: user.name, role: "user" },
-            JWT_SECRET,
-            { expiresIn: "7d" }
-          );
-          // We can't set cookies here in signIn callback, so we set it via a custom header approach
-          // The cookie will be set by the session callback response
         } catch (error) {
           console.error("Google sign-in DB error:", error);
         }

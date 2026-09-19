@@ -34,6 +34,11 @@ export default function LoginForm() {
         body: JSON.stringify(data),
       });
 
+      const contentType = res.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        throw new Error("Server error. Please try again later.");
+      }
+
       const result = await res.json();
 
       if (!res.ok) {
