@@ -10,8 +10,7 @@ export async function GET(req: NextRequest) {
     await connectDB();
 
     const users = await User.find({ role: "user", active: true })
-      .select("name image bio storiesCount followersCount createdAt")
-      .sort({ storiesCount: -1 })
+      .select("name image bio followersCount createdAt")
       .lean();
 
     const writers = await Promise.all(
@@ -24,6 +23,8 @@ export async function GET(req: NextRequest) {
         return { ...user, storyCount };
       })
     );
+
+    writers.sort((a, b) => b.storyCount - a.storyCount);
 
     let followingIds: string[] = [];
     const token = req.cookies.get("token")?.value;
