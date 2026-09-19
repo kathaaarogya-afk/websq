@@ -282,33 +282,7 @@ export default function Footer() {
 
           </div>
 
-          {/* Legal */}
-
-          <div>
-
-            <h3 className="font-bold text-xl mb-6">
-              Legal
-            </h3>
-
-            <ul className="space-y-4 text-gray-600">
-
-              <li><Link href="/community-guidelines" className="hover:text-yellow-600 transition">Community Guidelines</Link></li>
-
-              <li><Link href="/terms" className="hover:text-yellow-600 transition">Terms of Service</Link></li>
-
-              <li><Link href="/privacy" className="hover:text-yellow-600 transition">Privacy Policy</Link></li>
-
-              <li><Link href="/cookie-policy" className="hover:text-yellow-600 transition">Cookie Policy</Link></li>
-
-              <li><Link href="/copyright" className="hover:text-yellow-600 transition">Copyright Policy</Link></li>
-
-              <li><Link href="/acceptable-use" className="hover:text-yellow-600 transition">Acceptable Use</Link></li>
-
-              <li><Link href="/report-content" className="hover:text-yellow-600 transition">Report Content</Link></li>
-
-            </ul>
-
-          </div>
+       
 
           {/* Contact */}
 
