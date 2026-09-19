@@ -1,35 +1,41 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-const writers = [
-  {
-    name: "Sarah Johnson",
-    role: "Travel",
-    stories: 120,
-    image: "/writers/writer1.jpg",
-  },
-  {
-    name: "David Wilson",
-    role: "Technology",
-    stories: 84,
-    image: "/writers/writer2.jpg",
-  },
-  {
-    name: "Emily Brown",
-    role: "Education",
-    stories: 67,
-    image: "/writers/writer3.jpg",
-  },
-];
+interface Writer {
+  _id: string;
+  name: string;
+  image: string;
+  bio: string;
+  storyCount: number;
+  followersCount: number;
+}
 
 export default function FeaturedWriters() {
+  const [writers, setWriters] = useState<Writer[]>([]);
+
+  useEffect(() => {
+    const fetchWriters = async () => {
+      try {
+        const res = await fetch("/api/users");
+        if (res.ok) {
+          const data = await res.json();
+          setWriters((data.writers || []).slice(0, 3));
+        }
+      } catch {
+        // silent
+      }
+    };
+    fetchWriters();
+  }, []);
+
+  if (writers.length === 0) return null;
+
   return (
     <section className="py-24 bg-white">
       <div className="max-w-7xl mx-auto px-6">
-
         <div className="text-center mb-16">
           <span className="text-yellow-500 font-semibold uppercase tracking-widest">
             Community
@@ -43,21 +49,25 @@ export default function FeaturedWriters() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-10">
-          {writers.map((writer, index) => (
+          {writers.map((writer) => (
             <motion.div
-              key={index}
+              key={writer._id}
               whileHover={{ y: -8 }}
             >
-              <Link href={`/stories?category=${writer.role}`}>
+              <Link href={`/profile/${writer._id}`}>
                 <div className="bg-[#FFFDF8] rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300 group h-full">
                   <div className="overflow-hidden">
-                    <Image
-                      src={writer.image}
-                      alt={writer.name}
-                      width={400}
-                      height={400}
-                      className="w-full h-80 object-cover group-hover:scale-105 transition duration-500"
-                    />
+                    {writer.image ? (
+                      <img
+                        src={writer.image}
+                        alt={writer.name}
+                        className="w-full h-80 object-cover group-hover:scale-105 transition duration-500"
+                      />
+                    ) : (
+                      <div className="w-full h-80 bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-6xl font-bold text-white">
+                        {writer.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
                   </div>
 
                   <div className="p-8">
@@ -66,13 +76,13 @@ export default function FeaturedWriters() {
                     </h3>
 
                     <p className="text-yellow-500 mt-2">
-                      {writer.role} Writer
+                      {writer.bio || "Writer"}
                     </p>
 
                     <div className="mt-6 flex justify-between items-center">
                       <div>
                         <h4 className="text-3xl font-bold text-gray-900">
-                          {writer.stories}
+                          {writer.storyCount}
                         </h4>
                         <p className="text-gray-500">Stories</p>
                       </div>
@@ -87,7 +97,6 @@ export default function FeaturedWriters() {
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );

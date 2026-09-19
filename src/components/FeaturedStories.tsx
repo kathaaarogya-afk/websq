@@ -1,42 +1,44 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 
-const stories = [
-  {
-    slug: "a-letter-to-my-daughter",
-    title: "A Letter to My Daughter",
-    category: "Family",
-    author: "Emily Brown",
-    read: "5 min read",
-    image: "/stories/story1.jpg",
-  },
-  {
-    slug: "the-day-i-learned-to-let-go",
-    title: "The Day I Learned to Let Go",
-    category: "Life",
-    author: "Sarah Johnson",
-    read: "7 min read",
-    image: "/stories/story2.jpg",
-  },
-  {
-    slug: "the-teacher-who-changed-my-life",
-    title: "The Teacher Who Changed My Life",
-    category: "Education",
-    author: "David Wilson",
-    read: "6 min read",
-    image: "/stories/story3.jpg",
-  },
-];
+interface Story {
+  _id: string;
+  slug: string;
+  title: string;
+  category: string;
+  coverImage: string;
+  excerpt: string;
+  author: { _id: string; name: string };
+  createdAt: string;
+}
 
 export default function FeaturedStories() {
+  const [stories, setStories] = useState<Story[]>([]);
+
+  useEffect(() => {
+    const fetchFeatured = async () => {
+      try {
+        const res = await fetch("/api/stories?limit=3");
+        if (res.ok) {
+          const data = await res.json();
+          setStories(data.stories || []);
+        }
+      } catch {
+        // silent
+      }
+    };
+    fetchFeatured();
+  }, []);
+
+  if (stories.length === 0) return null;
+
   return (
     <section className="py-24 bg-[#FFFDF7]">
       <div className="max-w-7xl mx-auto px-6">
-
         <div className="text-center mb-16">
           <span className="text-yellow-600 font-semibold uppercase tracking-widest">
             Featured
@@ -53,7 +55,7 @@ export default function FeaturedStories() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {stories.map((story, index) => (
             <motion.div
-              key={story.slug}
+              key={story._id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -61,15 +63,15 @@ export default function FeaturedStories() {
             >
               <Link href={`/stories/${story.slug}`}>
                 <div className="bg-white rounded-3xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300 group h-full">
-                  <div className="overflow-hidden">
-                    <Image
-                      src={story.image}
-                      alt={story.title}
-                      width={600}
-                      height={400}
-                      className="w-full h-64 object-cover group-hover:scale-110 transition duration-500"
-                    />
-                  </div>
+                  {story.coverImage && (
+                    <div className="overflow-hidden">
+                      <img
+                        src={story.coverImage}
+                        alt={story.title}
+                        className="w-full h-64 object-cover group-hover:scale-110 transition duration-500"
+                      />
+                    </div>
+                  )}
 
                   <div className="p-7">
                     <Link
@@ -85,12 +87,12 @@ export default function FeaturedStories() {
                     </h3>
 
                     <p className="text-gray-500 mt-3">
-                      By {story.author}
+                      By {story.author?.name || "Unknown"}
                     </p>
 
                     <div className="flex items-center gap-2 text-gray-500 mt-4">
                       <Clock size={18} />
-                      <span>{story.read}</span>
+                      <span>{new Date(story.createdAt).toLocaleDateString()}</span>
                     </div>
 
                     <div className="inline-flex items-center gap-2 mt-7 text-yellow-600 font-semibold group-hover:gap-3 transition-all">
@@ -103,7 +105,6 @@ export default function FeaturedStories() {
             </motion.div>
           ))}
         </div>
-
       </div>
     </section>
   );
