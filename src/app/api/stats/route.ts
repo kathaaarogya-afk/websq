@@ -13,7 +13,7 @@ export async function GET() {
     const [storiesCount, writersCount, categoriesCount] = await Promise.all([
       Story.countDocuments({ status: "published", adminStatus: "approved" }),
       User.countDocuments({ role: "user", active: true }),
-      Category.countDocuments({ active: true }),
+      Category.countDocuments(),
     ]);
 
     return NextResponse.json({
