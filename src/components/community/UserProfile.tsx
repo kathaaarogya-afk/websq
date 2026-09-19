@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { MapPin, Calendar, BookOpen, Users, Heart } from "lucide-react";
+import { Calendar, BookOpen, Users, Heart } from "lucide-react";
 import FollowButton from "./FollowButton";
 
 interface UserProfileData {

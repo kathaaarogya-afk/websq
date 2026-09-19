@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { Menu, X, Search, PenSquare, Bell, ChevronDown } from "lucide-react";
+import { Menu, X, Search, Bell, ChevronDown } from "lucide-react";
 import toast from "react-hot-toast";
 
 interface UserData {

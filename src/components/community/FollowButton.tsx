@@ -19,7 +19,7 @@ export default function FollowButton({
   size = "md",
 }: FollowButtonProps) {
   const [following, setFollowing] = useState(initialFollowing);
-  const [followerCount, setFollowerCount] = useState(initialFollowerCount);
+  const [, setFollowerCount] = useState(initialFollowerCount);
   const [loading, setLoading] = useState(false);
 
   const handleFollow = async () => {
