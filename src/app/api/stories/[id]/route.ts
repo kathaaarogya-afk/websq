@@ -21,7 +21,7 @@ export async function GET(
       query = { slug: id };
     }
 
-    let story = await Story.findOne(query)
+    const story = await Story.findOne(query)
       .populate("author", "name image bio followersCount")
       .lean();
 
