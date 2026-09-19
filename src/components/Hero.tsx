@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { useState, useEffect } from "react";
 import { ArrowRight, PenSquare, BookOpen, Users, Lightbulb } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -13,6 +14,19 @@ const features = [
 ];
 
 export default function Hero() {
+  const [stats, setStats] = useState({ stories: 0, writers: 0, categories: 8 });
+
+  useEffect(() => {
+    fetch("/api/stats")
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.stories !== undefined) {
+          setStats(data);
+        }
+      })
+      .catch(() => {});
+  }, []);
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-[#FFFDF6] via-white to-[#FFF6DA]">
       {/* Decorative blobs */}
@@ -34,13 +48,13 @@ export default function Hero() {
             </span>
 
             <h1 className="text-5xl lg:text-7xl font-extrabold leading-[1.1] text-gray-900">
-              Every Voice
-              <span className="block text-yellow-500">Has a Story</span>
+              A Space for
+              <span className="block text-yellow-500">Every Story</span>
             </h1>
 
             <p className="mt-6 text-lg lg:text-xl text-gray-600 leading-relaxed max-w-lg">
-              Discover inspiring stories, life experiences, and ideas shared by
-              people from every walk of life.
+              Share your life experiences, lessons, and ideas with a community
+              that values real stories from real people. Read, write, and connect.
             </p>
 
             {/* Feature pills */}
@@ -80,9 +94,9 @@ export default function Hero() {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-8 mt-14">
               {[
-                { num: "1200+", label: "Stories" },
-                { num: "350+", label: "Writers" },
-                { num: "8", label: "Categories" },
+                { num: stats.stories.toLocaleString(), label: "Stories" },
+                { num: stats.writers.toLocaleString(), label: "Writers" },
+                { num: stats.categories.toString(), label: "Categories" },
               ].map((s) => (
                 <div key={s.label}>
                   <h3 className="text-3xl font-bold text-yellow-500">{s.num}</h3>
