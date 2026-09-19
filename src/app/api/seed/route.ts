@@ -267,6 +267,9 @@ async function seedDatabase() {
           image: author.image || "",
           role: author.role || "user",
         });
+      } else if (author.image && !user.image) {
+        user.image = author.image;
+        await user.save();
       }
       createdAuthors.push(user);
     }
