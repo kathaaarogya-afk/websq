@@ -175,6 +175,13 @@ export default function Header() {
                       >
                         Following
                       </Link>
+                      <Link
+                        href="/users"
+                        className="block px-4 py-2 text-gray-700 hover:bg-yellow-50"
+                        onClick={() => setShowDropdown(false)}
+                      >
+                        Users
+                      </Link>
                       <hr className="my-1" />
                       <button
                         onClick={() => {
@@ -240,6 +247,13 @@ export default function Header() {
                   className="text-gray-700 hover:text-yellow-500 font-medium"
                 >
                   Dashboard
+                </Link>
+                <Link
+                  href="/users"
+                  onClick={() => setMobileOpen(false)}
+                  className="text-gray-700 hover:text-yellow-500 font-medium"
+                >
+                  Users
                 </Link>
                 <button
                   onClick={() => {

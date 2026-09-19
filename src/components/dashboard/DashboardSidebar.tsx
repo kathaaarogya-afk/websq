@@ -8,6 +8,7 @@ import {
   BookOpen,
   FileText,
   User,
+  Users,
   LogOut,
 } from "lucide-react";
 
@@ -44,6 +45,11 @@ const navItems = [
     icon: User,
     label: "Profile",
     href: "/dashboard?tab=profile",
+  },
+  {
+    icon: Users,
+    label: "Users",
+    href: "/users",
   },
 ];
 

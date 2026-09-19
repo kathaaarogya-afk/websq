@@ -1,9 +1,11 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import Story from "@/models/Story";
+import Follow from "@/models/Follow";
+import { verifyToken } from "@/lib/jwt";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     await connectDB();
 
@@ -23,7 +25,19 @@ export async function GET() {
       })
     );
 
-    return NextResponse.json({ writers });
+    let followingIds: string[] = [];
+    const token = req.cookies.get("token")?.value;
+    if (token) {
+      const decoded = verifyToken(token);
+      if (decoded) {
+        const follows = await Follow.find({ follower: decoded.userId })
+          .select("following")
+          .lean();
+        followingIds = follows.map((f) => f.following.toString());
+      }
+    }
+
+    return NextResponse.json({ writers, followingIds });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to fetch writers";
     return NextResponse.json(
