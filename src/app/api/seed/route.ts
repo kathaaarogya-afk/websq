@@ -204,7 +204,15 @@ const stories = [
   },
 ];
 
+export async function GET() {
+  return seedDatabase();
+}
+
 export async function POST() {
+  return seedDatabase();
+}
+
+async function seedDatabase() {
   try {
     await connectDB();
 
