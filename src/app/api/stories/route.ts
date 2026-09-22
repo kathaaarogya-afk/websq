@@ -34,15 +34,32 @@ export async function GET(req: NextRequest) {
     else if (sort === "likes") sortOption = { likesCount: -1 };
     else if (sort === "oldest") sortOption = { createdAt: 1 };
 
-    const [stories, total] = await Promise.all([
-      Story.find(filter)
-        .populate("author", "name image")
-        .sort(sortOption)
-        .skip(skip)
-        .limit(limit)
-        .lean(),
-      Story.countDocuments(filter),
-    ]);
+    const runQuery = () =>
+      Promise.all([
+        Story.find(filter)
+          .populate("author", "name image")
+          .sort(sortOption)
+          .skip(skip)
+          .limit(limit)
+          .lean(),
+        Story.countDocuments(filter),
+      ]);
+
+    let [stories, total]: [unknown[], number] = [ [], 0 ];
+    try {
+      [stories, total] = await runQuery();
+    } catch (firstError) {
+      [stories, total] = await runQuery().catch((secondError) => {
+        throw {
+          name: "StoryFetchError",
+          message:
+            (secondError instanceof Error ? secondError.message : "Failed to fetch stories") +
+            " (first attempt: " +
+            (firstError instanceof Error ? firstError.message : "failed") +
+            ")",
+        };
+      });
+    }
 
     return NextResponse.json({
       stories,
