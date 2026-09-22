@@ -38,7 +38,7 @@ function newsletterHtml(stories: NewsletterStory[]) {
   return `
   <div style="font-family:Arial,Helvetica,sans-serif;background:#FFF9EE;padding:32px;">
     <div style="max-width:600px;margin:auto;background:#ffffff;border-radius:16px;padding:32px;border:1px solid #fde68a;">
-      <h1 style="margin:0 0 8px;font-size:26px;color:#111827;">Your favourite stories this week 📖</h1>
+      <h1 style="margin:0 0 8px;font-size:26px;color:#111827;">Your favourite stories this week</h1>
       <p style="color:#4b5563;font-size:15px;line-height:1.6;">Here are the latest stories from the <strong>WebSQ</strong> community.</p>
       <hr style="border:none;border-top:1px solid #fde68a;margin:24px 0;" />
       ${cards}
