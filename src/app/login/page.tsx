@@ -2,8 +2,12 @@ import LoginForm from "@/components/auth/LoginForm";
 import { Suspense } from "react";
 
 export const metadata = {
-  title: "Login | WebSQ",
-  description: "Login to your WebSQ account",
+  title: "Login to Your Account",
+  description:
+    "Login to your WebSQ account to write stories, bookmark favourites, and connect with our storytelling community.",
+  alternates: {
+    canonical: "/login",
+  },
 };
 
 export default function LoginPage() {

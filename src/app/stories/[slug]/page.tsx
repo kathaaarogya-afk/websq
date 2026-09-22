@@ -3,12 +3,15 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import { Clock, Eye, ArrowLeft, Flag } from "lucide-react";
+import { Clock, Eye, ArrowLeft, Flag, BookOpen } from "lucide-react";
 import LikeButton from "@/components/community/LikeButton";
 import BookmarkButton from "@/components/community/BookmarkButton";
 import FollowButton from "@/components/community/FollowButton";
 import CommentSection from "@/components/community/CommentSection";
 import ReportModal from "@/components/community/ReportModal";
+import ShareButtons from "@/components/ShareButtons";
+import StoryReactions from "@/components/StoryReactions";
+import SocialProof from "@/components/SocialProof";
 
 interface StoryData {
   _id: string;
@@ -32,11 +35,28 @@ interface StoryData {
   createdAt: string;
 }
 
+interface RelatedStory {
+  _id: string;
+  title: string;
+  slug: string;
+  excerpt: string;
+  category: string;
+  coverImage: string;
+  author: { _id: string; name: string };
+}
+
+function getReadingTime(text: string): number {
+  const wordsPerMinute = 200;
+  const words = text.trim().split(/\s+/).length;
+  return Math.max(1, Math.ceil(words / wordsPerMinute));
+}
+
 export default function StoryPage() {
   const params = useParams();
   const slug = params.slug as string;
 
   const [story, setStory] = useState<StoryData | null>(null);
+  const [relatedStories, setRelatedStories] = useState<RelatedStory[]>([]);
   const [loading, setLoading] = useState(true);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [showReport, setShowReport] = useState(false);
@@ -59,6 +79,21 @@ export default function StoryPage() {
       if (res.ok) {
         const data = await res.json();
         setStory(data.story);
+
+        // Fetch related stories
+        if (data.story?.category) {
+          const relRes = await fetch(
+            `/api/stories?category=${data.story.category}&limit=4`
+          );
+          if (relRes.ok) {
+            const relData = await relRes.json();
+            setRelatedStories(
+              (relData.stories || [])
+                .filter((s: RelatedStory) => s.slug !== slug)
+                .slice(0, 3)
+            );
+          }
+        }
       }
     } catch {
       // API not connected yet
@@ -71,6 +106,47 @@ export default function StoryPage() {
     fetchStory();
     fetchCurrentUser();
   }, [slug, fetchStory, fetchCurrentUser]);
+
+  // Update document head for SEO (client-side)
+  useEffect(() => {
+    if (!story) return;
+
+    document.title = `${story.title} | WebSQ`;
+
+    // JSON-LD for article
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "story-jsonld";
+    script.textContent = JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: story.title,
+      description: story.excerpt,
+      image: story.coverImage || undefined,
+      author: {
+        "@type": "Person",
+        name: story.author?.name,
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "WebSQ",
+        url: "https://www.websq.com.au",
+      },
+      datePublished: story.createdAt,
+      mainEntityOfPage: {
+        "@type": "WebPage",
+        "@id": `https://www.websq.com.au/stories/${story.slug}`,
+      },
+    });
+    const existing = document.getElementById("story-jsonld");
+    if (existing) existing.remove();
+    document.head.appendChild(script);
+
+    return () => {
+      const el = document.getElementById("story-jsonld");
+      if (el) el.remove();
+    };
+  }, [story]);
 
   if (loading) {
     return (
@@ -90,8 +166,12 @@ export default function StoryPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-orange-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Story not found</h1>
-          <p className="text-gray-600">This story doesn&apos;t exist or has been removed.</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Story not found
+          </h1>
+          <p className="text-gray-600">
+            This story doesn&apos;t exist or has been removed.
+          </p>
           <Link
             href="/stories"
             className="inline-flex items-center gap-2 mt-4 text-yellow-600 hover:text-yellow-700 font-medium"
@@ -105,6 +185,7 @@ export default function StoryPage() {
   }
 
   const isAuthor = currentUserId === story.author._id;
+  const readingTime = getReadingTime(story.content);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 via-white to-orange-50 py-8 px-4">
@@ -117,6 +198,11 @@ export default function StoryPage() {
           <ArrowLeft className="w-5 h-5" />
           Back to Stories
         </Link>
+
+        {/* Social Proof */}
+        <div className="mb-6">
+          <SocialProof storyId={story._id} />
+        </div>
 
         {/* Cover Image */}
         {story.coverImage && (
@@ -135,11 +221,11 @@ export default function StoryPage() {
         </span>
 
         {/* Title */}
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 leading-tight text-balance">
           {story.title}
         </h1>
 
-        {/* Author Info */}
+        {/* Author + Meta + Share */}
         <div className="flex items-center justify-between flex-wrap gap-4 mb-8 pb-8 border-b border-gray-200">
           <Link
             href={`/profile/${story.author._id}`}
@@ -169,13 +255,27 @@ export default function StoryPage() {
           <div className="flex items-center gap-4 text-sm text-gray-500">
             <span className="flex items-center gap-1">
               <Clock className="w-4 h-4" />
-              {new Date(story.createdAt).toLocaleDateString()}
+              {new Date(story.createdAt).toLocaleDateString("en-AU", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+            <span className="flex items-center gap-1">
+              <BookOpen className="w-4 h-4" />
+              {readingTime} min read
             </span>
             <span className="flex items-center gap-1">
               <Eye className="w-4 h-4" />
               {story.views} views
             </span>
           </div>
+        </div>
+
+        {/* Share Buttons */}
+        <div className="flex items-center justify-between mb-8">
+          <p className="text-sm font-medium text-gray-700">Share this story</p>
+          <ShareButtons title={story.title} slug={story.slug} />
         </div>
 
         {/* Story Content */}
@@ -209,23 +309,32 @@ export default function StoryPage() {
             <BookmarkButton storyId={story._id} />
           </div>
 
-          {!isAuthor && currentUserId && (
-            <FollowButton
-              userId={story.author._id}
-              initialFollowerCount={story.author.followersCount}
-              size="sm"
-            />
-          )}
+          <div className="flex items-center gap-3">
+            <ShareButtons title={story.title} slug={story.slug} />
 
-          {!isAuthor && currentUserId && (
-            <button
-              onClick={() => setShowReport(true)}
-              className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-red-500 transition ml-2"
-            >
-              <Flag size={15} />
-              Report
-            </button>
-          )}
+            {!isAuthor && currentUserId && (
+              <FollowButton
+                userId={story.author._id}
+                initialFollowerCount={story.author.followersCount}
+                size="sm"
+              />
+            )}
+
+            {!isAuthor && currentUserId && (
+              <button
+                onClick={() => setShowReport(true)}
+                className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-red-500 transition ml-2"
+              >
+                <Flag size={15} />
+                Report
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Reactions */}
+        <div className="flex justify-center mb-8">
+          <StoryReactions storyId={story._id} />
         </div>
 
         {/* Report Modal */}
@@ -243,6 +352,43 @@ export default function StoryPage() {
           storyId={story._id}
           currentUserId={currentUserId || undefined}
         />
+
+        {/* Related Stories */}
+        {relatedStories.length > 0 && (
+          <section className="mt-16 pt-12 border-t border-gray-200">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">
+              More in {story.category}
+            </h2>
+            <div className="grid sm:grid-cols-3 gap-6">
+              {relatedStories.map((rel) => (
+                <Link
+                  key={rel._id}
+                  href={`/stories/${rel.slug}`}
+                  className="group"
+                >
+                  {rel.coverImage && (
+                    <div className="rounded-xl overflow-hidden mb-3 aspect-[16/10]">
+                      <img
+                        src={rel.coverImage}
+                        alt={rel.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                      />
+                    </div>
+                  )}
+                  <span className="text-xs font-medium text-yellow-600 bg-yellow-50 px-2 py-0.5 rounded-full">
+                    {rel.category}
+                  </span>
+                  <h3 className="font-bold text-gray-900 mt-2 group-hover:text-yellow-600 transition line-clamp-2">
+                    {rel.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-1">
+                    by {rel.author?.name}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </article>
     </div>
   );

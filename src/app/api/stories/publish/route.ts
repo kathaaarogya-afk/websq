@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { verifyToken } from "@/lib/jwt";
 import { connectDB } from "@/lib/mongodb";
 import Story from "@/models/Story";
+import Streak from "@/models/Streak";
 
 export async function POST(req: NextRequest) {
   try {
@@ -65,6 +66,54 @@ export async function POST(req: NextRequest) {
       publishedAt: now,
       approvedAt: now,
     });
+
+    // Update streak
+    try {
+      const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+      let streak = await Streak.findOne({ user: decoded.userId });
+
+      if (!streak) {
+        streak = await Streak.create({
+          user: decoded.userId,
+          lastPublishedDate: today,
+          currentStreak: 1,
+          longestStreak: 1,
+          totalStories: 1,
+          badges: ["first_story"],
+        });
+      } else {
+        const lastDate = streak.lastPublishedDate
+          ? new Date(streak.lastPublishedDate.getFullYear(), streak.lastPublishedDate.getMonth(), streak.lastPublishedDate.getDate())
+          : null;
+        const diffDays = lastDate
+          ? Math.floor((today.getTime() - lastDate.getTime()) / (1000 * 60 * 60 * 24))
+          : 999;
+
+        let newStreak = 1;
+        if (diffDays === 1) {
+          newStreak = streak.currentStreak + 1;
+        } else if (diffDays === 0) {
+          newStreak = streak.currentStreak;
+        }
+
+        const badges = [...(streak.badges || [])];
+        const newTotal = streak.totalStories + 1;
+        if (newTotal >= 5 && !badges.includes("five_stories")) badges.push("five_stories");
+        if (newTotal >= 10 && !badges.includes("ten_stories")) badges.push("ten_stories");
+        if (newStreak >= 3 && !badges.includes("streak_3")) badges.push("streak_3");
+        if (newStreak >= 7 && !badges.includes("streak_7")) badges.push("streak_7");
+        if (newStreak >= 30 && !badges.includes("streak_30")) badges.push("streak_30");
+
+        streak.lastPublishedDate = today;
+        streak.currentStreak = newStreak;
+        streak.longestStreak = Math.max(streak.longestStreak, newStreak);
+        streak.totalStories = newTotal;
+        streak.badges = badges;
+        await streak.save();
+      }
+    } catch {
+      // streak tracking is non-critical
+    }
 
     return NextResponse.json({
       message: "Story published",

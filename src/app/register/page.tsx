@@ -2,8 +2,12 @@ import RegisterForm from "@/components/auth/RegisterForm";
 import { Suspense } from "react";
 
 export const metadata = {
-  title: "Register | WebSQ",
-  description: "Create your WebSQ account",
+  title: "Create Your Free Account",
+  description:
+    "Join WebSQ for free and start sharing your stories. Connect with a community that values real stories from real people.",
+  alternates: {
+    canonical: "/register",
+  },
 };
 
 export default function RegisterPage() {

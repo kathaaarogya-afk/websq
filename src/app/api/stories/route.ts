@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
     const { searchParams } = new URL(req.url);
     const category = searchParams.get("category");
     const search = searchParams.get("search");
+    const sort = searchParams.get("sort") || "newest";
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "12");
 
@@ -28,10 +29,15 @@ export async function GET(req: NextRequest) {
 
     const skip = (page - 1) * limit;
 
+    let sortOption: Record<string, 1 | -1> = { createdAt: -1 };
+    if (sort === "views") sortOption = { views: -1 };
+    else if (sort === "likes") sortOption = { likesCount: -1 };
+    else if (sort === "oldest") sortOption = { createdAt: 1 };
+
     const [stories, total] = await Promise.all([
       Story.find(filter)
         .populate("author", "name image")
-        .sort({ createdAt: -1 })
+        .sort(sortOption)
         .skip(skip)
         .limit(limit)
         .lean(),

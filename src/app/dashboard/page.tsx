@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
 import DashboardSidebar from "@/components/dashboard/DashboardSidebar";
 import MyStories from "@/components/writer/MyStories";
+import WriterStreak from "@/components/WriterStreak";
 
 interface UserData {
   id: string;
@@ -264,8 +265,11 @@ function DashboardPageContent() {
               </div>
             </div>
 
+            {/* Writing Streak */}
+            <WriterStreak userId={user.id} />
+
             {/* Recent Stories */}
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6 mt-8">
               Recent Stories
             </h2>
             <MyStories

@@ -1,8 +1,18 @@
 import { PenSquare, Users, BookOpen, Globe } from "lucide-react";
 
 export const metadata = {
-  title: "About - WebSQ",
-  description: "Learn about WebSQ, a storytelling community where ordinary people share extraordinary experiences.",
+  title: "About WebSQ - Our Mission & Story",
+  description:
+    "Learn about WebSQ, an Australian storytelling community where ordinary people share extraordinary experiences, memories, lessons, dreams, and inspiration.",
+  openGraph: {
+    title: "About WebSQ",
+    description:
+      "Learn about WebSQ, an Australian storytelling community where ordinary people share extraordinary experiences.",
+    url: "https://www.websq.com.au/about",
+  },
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {

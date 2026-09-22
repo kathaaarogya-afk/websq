@@ -7,6 +7,19 @@ import {
   ArrowLeft,
 } from "lucide-react";
 
+export const metadata = {
+  title: "Community Guidelines - Our Standards for Sharing",
+  description:
+    "Read the WebSQ community guidelines. Learn what content is allowed, what is banned, and how to keep our storytelling community safe and welcoming.",
+  openGraph: {
+    title: "Community Guidelines | WebSQ",
+    description: "Our standards for safe and respectful storytelling.",
+  },
+  alternates: {
+    canonical: "/community-guidelines",
+  },
+};
+
 const banned = [
   {
     title: "Hate Speech",

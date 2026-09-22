@@ -316,19 +316,19 @@ export default function Footer() {
 
             <div className="flex gap-4 mt-6">
 
-              <a className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-yellow-500 hover:text-white transition">
+              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-yellow-500 hover:text-white transition">
                 <FaFacebookF />
               </a>
 
-              <a className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-yellow-500 hover:text-white transition">
+              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-yellow-500 hover:text-white transition">
                 <FaInstagram />
               </a>
 
-              <a className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-yellow-500 hover:text-white transition">
+              <a href="https://x.com" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-yellow-500 hover:text-white transition">
                 <FaXTwitter />
               </a>
 
-              <a className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-yellow-500 hover:text-white transition">
+              <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full bg-white shadow flex items-center justify-center hover:bg-yellow-500 hover:text-white transition">
                 <FaLinkedinIn />
               </a>
 
