@@ -34,11 +34,17 @@ const categories = [
 function StoriesContent() {
   const searchParams = useSearchParams();
   const initialCategory = searchParams.get("category") || "All";
+  const initialSearch = searchParams.get("search") || "";
 
   const [stories, setStories] = useState<Story[]>([]);
   const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(initialSearch);
   const [category, setCategory] = useState(initialCategory);
+
+  useEffect(() => {
+    setSearch(searchParams.get("search") || "");
+    setCategory(searchParams.get("category") || "All");
+  }, [searchParams]);
 
   const fetchStories = useCallback(async () => {
     setLoading(true);

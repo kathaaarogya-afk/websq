@@ -7,6 +7,8 @@ import { useRouter, usePathname } from "next/navigation";
 import { Menu, X, Search, Bell, ChevronDown, Check, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
 
+const categories = ["All", "Life", "Family", "Career", "Education", "Technology", "Travel", "Health", "Inspiration"];
+
 interface UserData {
   id: string;
   name: string;
@@ -44,7 +46,11 @@ export default function Header() {
   const [unreadCount, setUnreadCount] = useState(0);
   const notifRef = useRef<HTMLDivElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const searchInputRef = useRef<HTMLInputElement>(null);
   const pathname = usePathname();
+  const [showSearch, setShowSearch] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchCategory, setSearchCategory] = useState("All");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -153,6 +159,32 @@ export default function Header() {
     }
   };
 
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    const params = new URLSearchParams();
+    if (searchQuery.trim()) params.set("search", searchQuery.trim());
+    if (searchCategory !== "All") params.set("category", searchCategory);
+    setShowSearch(false);
+    router.push(`/stories?${params.toString()}`);
+  };
+
+  const openSearch = () => {
+    setShowSearch(true);
+    setTimeout(() => searchInputRef.current?.focus(), 100);
+  };
+
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
+        e.preventDefault();
+        openSearch();
+      }
+      if (e.key === "Escape") setShowSearch(false);
+    };
+    document.addEventListener("keydown", handleKey);
+    return () => document.removeEventListener("keydown", handleKey);
+  }, []);
+
   const timeAgo = (date: string) => {
     const seconds = Math.floor((Date.now() - new Date(date).getTime()) / 1000);
     if (seconds < 60) return "just now";
@@ -225,7 +257,10 @@ export default function Header() {
 
           {/* Right Side */}
           <div className="hidden lg:flex items-center gap-4">
-            <button className="w-10 h-10 rounded-full hover:bg-yellow-100 flex items-center justify-center transition">
+            <button
+              onClick={openSearch}
+              className="w-10 h-10 rounded-full hover:bg-yellow-100 flex items-center justify-center transition"
+            >
               <Search size={20} />
             </button>
 
@@ -473,6 +508,18 @@ export default function Header() {
               </Link>
             ))}
 
+            {/* Mobile Search */}
+            <button
+              onClick={() => {
+                setMobileOpen(false);
+                openSearch();
+              }}
+              className="flex items-center gap-3 text-gray-700 hover:text-yellow-500 font-medium"
+            >
+              <Search size={20} />
+              Search Stories
+            </button>
+
             {user ? (
               <>
                 <Link
@@ -525,6 +572,66 @@ export default function Header() {
               </>
             )}
           </nav>
+        </div>
+      )}
+
+      {/* Search Overlay */}
+      {showSearch && (
+        <div
+          className="fixed inset-0 z-[9999] bg-black/40 backdrop-blur-sm flex items-start justify-center pt-[10vh]"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setShowSearch(false);
+          }}
+        >
+          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden animate-slide-down">
+            <form onSubmit={handleSearch}>
+              <div className="flex items-center gap-3 px-5 py-4 border-b border-gray-100">
+                <Search size={20} className="text-gray-400 shrink-0" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  placeholder="Search stories, topics, writers..."
+                  className="flex-1 outline-none text-gray-900 placeholder:text-gray-400"
+                />
+                <kbd className="hidden sm:inline-flex items-center gap-0.5 text-xs text-gray-400 bg-gray-100 px-2 py-1 rounded-md">
+                  ESC
+                </kbd>
+              </div>
+
+              {/* Category Filter */}
+              <div className="px-5 py-3 border-b border-gray-100">
+                <p className="text-xs text-gray-400 mb-2 font-medium">Filter by category</p>
+                <div className="flex flex-wrap gap-2">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      type="button"
+                      onClick={() => setSearchCategory(cat)}
+                      className={`px-3 py-1.5 rounded-full text-sm font-medium transition ${
+                        searchCategory === cat
+                          ? "bg-yellow-500 text-white"
+                          : "bg-gray-100 text-gray-600 hover:bg-yellow-50 hover:text-yellow-700"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Search Button */}
+              <div className="px-5 py-3 bg-gray-50">
+                <button
+                  type="submit"
+                  className="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-3 rounded-xl transition"
+                >
+                  Search Stories
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       )}
     </header>

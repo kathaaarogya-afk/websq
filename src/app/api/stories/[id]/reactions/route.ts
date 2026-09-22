@@ -1,18 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
+import { verifyToken } from "@/lib/jwt";
 import { connectDB } from "@/lib/mongodb";
 import Reaction from "@/models/Reaction";
 
 function getUserId(req: NextRequest): string | null {
-  const cookie = req.headers.get("cookie") || "";
-  const match = cookie.match(/auth_token=([^;]+)/);
-  if (!match) return null;
-  try {
-    const jwt = require("jsonwebtoken");
-    const decoded = jwt.verify(match[1], process.env.JWT_SECRET || "fallback_secret");
-    return decoded.userId || null;
-  } catch {
-    return null;
-  }
+  const token = req.cookies.get("token")?.value;
+  if (!token) return null;
+  const decoded = verifyToken(token);
+  return decoded?.userId || null;
 }
 
 export async function GET(
