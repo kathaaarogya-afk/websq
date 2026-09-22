@@ -244,9 +244,11 @@ export default function Footer() {
 
               <li><Link href="/stories">Stories</Link></li>
 
-              <li><Link href="/writers">Writers</Link></li>
+              <li><Link href="/categories">Discover</Link></li>
 
-              <li><Link href="/categories">Categories</Link></li>
+              <li><Link href="/daily">Daily ✨</Link></li>
+
+              <li><Link href="/writers">Writers</Link></li>
 
               <li><Link href="/about">About</Link></li>
 

@@ -168,13 +168,18 @@ export default function Header() {
   const publicNavItems = [
     { name: "Home", href: "/" },
     { name: "Stories", href: "/stories" },
-    { name: "Categories", href: "/categories" },
+    { name: "Discover", href: "/categories" },
+    { name: "Daily ✨", href: "/daily" },
+    { name: "Writers", href: "/writers" },
     { name: "Write", href: "/write" },
   ];
 
   const authNavItems = [
     { name: "Home", href: "/" },
     { name: "Stories", href: "/stories" },
+    { name: "Discover", href: "/categories" },
+    { name: "Daily ✨", href: "/daily" },
+    { name: "Writers", href: "/writers" },
     { name: "Write", href: "/write" },
   ];
 
@@ -483,6 +488,13 @@ export default function Header() {
                   className="text-gray-700 hover:text-yellow-500 font-medium"
                 >
                   Users
+                </Link>
+                <Link
+                  href="/bookmarks"
+                  onClick={() => setMobileOpen(false)}
+                  className="text-gray-700 hover:text-yellow-500 font-medium"
+                >
+                  Bookmarks
                 </Link>
                 <button
                   onClick={() => {
