@@ -10,6 +10,7 @@ import ManageUsers from "@/components/admin/ManageUsers";
 import ManageCategories from "@/components/admin/ManageCategories";
 import ManageComments from "@/components/admin/ManageComments";
 import Analytics from "@/components/admin/Analytics";
+import NewsletterBroadcast from "@/components/admin/NewsletterBroadcast";
 
 interface UserData {
   id: string;
@@ -474,6 +475,8 @@ function AdminPageContent() {
             loading={dataLoading}
           />
         );
+      case "newsletter":
+        return <NewsletterBroadcast />;
       default:
         return (
           <AdminOverview

@@ -11,6 +11,7 @@ import {
   BarChart3,
   LogOut,
   Shield,
+  Mail,
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -57,6 +58,12 @@ const navItems = [
     label: "Analytics",
     href: "/admin?tab=analytics",
     tab: "analytics",
+  },
+  {
+    icon: Mail,
+    label: "Newsletter",
+    href: "/admin?tab=newsletter",
+    tab: "newsletter",
   },
 ];
 
