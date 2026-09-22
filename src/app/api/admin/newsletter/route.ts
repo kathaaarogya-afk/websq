@@ -49,18 +49,18 @@ function newsletterHtml(stories: NewsletterStory[]) {
   </div>`;
 }
 
-async function requireAdmin(req: NextRequest) {
+async function requireAdmin(
+  req: NextRequest
+): Promise<{ res: NextResponse } | { ok: true }> {
   const token = req.cookies.get("token")?.value;
   if (!token) {
     return {
-      ok: false,
       res: NextResponse.json({ error: "Not authenticated" }, { status: 401 }),
     };
   }
   const decoded = verifyToken(token);
   if (!decoded) {
     return {
-      ok: false,
       res: NextResponse.json({ error: "Invalid token" }, { status: 401 }),
     };
   }
@@ -68,17 +68,16 @@ async function requireAdmin(req: NextRequest) {
   const user = await User.findById(decoded.userId).select("-password");
   if (!user || user.role !== "admin") {
     return {
-      ok: false,
       res: NextResponse.json({ error: "Access denied. Admin only." }, { status: 403 }),
     };
   }
-  return { ok: true, res: null };
+  return { ok: true };
 }
 
 export async function GET(req: NextRequest) {
   try {
     const admin = await requireAdmin(req);
-    if (!admin.ok) return admin.res;
+    if ("res" in admin) return admin.res;
 
     const [subscribers, stories] = await Promise.all([
       Newsletter.countDocuments(),
@@ -107,7 +106,7 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
   try {
     const admin = await requireAdmin(req);
-    if (!admin.ok) return admin.res;
+    if ("res" in admin) return admin.res;
 
     if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
       return NextResponse.json(
