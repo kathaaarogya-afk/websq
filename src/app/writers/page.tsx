@@ -203,27 +203,25 @@ export default function WritersPage() {
                         {writer.name}
                       </h3>
                     </Link>
-                    <p className="text-sm text-gray-700 mt-1 line-clamp-2 min-h-[40px]">
+                    <p className="text-sm text-gray-600 mt-1 line-clamp-2 min-h-[40px]">
                       {writer.bio || "No bio yet"}
                     </p>
 
                     {/* Stats */}
                     <div className="flex items-center gap-4 mt-4 pt-4 border-t border-gray-100">
-                      <div className="flex items-center gap-1.5 text-gray-900">
-                        <BookOpen size={16} className="text-yellow-500" />
+                      <div className="flex items-center gap-1.5 text-gray-800">
                         <span className="text-sm font-semibold">
                           {writer.storyCount}
                         </span>
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm text-gray-500">
                           {writer.storyCount === 1 ? "story" : "stories"}
                         </span>
                       </div>
-                      <div className="flex items-center gap-1.5 text-gray-900">
-                        <PenTool size={16} className="text-orange-500" />
+                      <div className="flex items-center gap-1.5 text-gray-800">
                         <span className="text-sm font-semibold">
                           {writer.followersCount}
                         </span>
-                        <span className="text-sm text-gray-600">followers</span>
+                        <span className="text-sm text-gray-500">followers</span>
                       </div>
                     </div>
 
