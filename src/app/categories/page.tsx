@@ -12,13 +12,72 @@ import {
   Stethoscope,
   Lightbulb,
   Home,
+  Bot,
+  Code2,
+  UserRound,
+  SearchCheck,
+  Megaphone,
 } from "lucide-react";
 
 const categories = [
   {
+    name: "Technology",
+    slug: "technology",
+    description: "Guides, news and deep dives into everything tech.",
+    image: "/categories/technology.jpg",
+    icon: Laptop,
+    color: "#14B8A6",
+    bg: "from-teal-500/80 to-teal-600/80",
+  },
+  {
+    name: "AI",
+    slug: "ai",
+    description: "Artificial intelligence explained in plain, practical language.",
+    image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&h=600&fit=crop",
+    icon: Bot,
+    color: "#8B5CF6",
+    bg: "from-violet-500/80 to-purple-600/80",
+  },
+  {
+    name: "Web Development",
+    slug: "web-development",
+    description: "Build websites with tutorials, code and best practices.",
+    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=600&fit=crop",
+    icon: Code2,
+    color: "#3B82F6",
+    bg: "from-blue-500/80 to-indigo-600/80",
+  },
+  {
+    name: "SEO",
+    slug: "seo",
+    description: "Search engine optimisation — get found on Google, step by step.",
+    image: "https://images.unsplash.com/photo-1562577309-4932fdd64cd1?w=800&h=600&fit=crop",
+    icon: SearchCheck,
+    color: "#10B981",
+    bg: "from-emerald-500/80 to-green-600/80",
+  },
+  {
+    name: "Digital Marketing",
+    slug: "digital-marketing",
+    description: "Practical marketing skills for the internet era.",
+    image: "https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=800&h=600&fit=crop",
+    icon: Megaphone,
+    color: "#F97316",
+    bg: "from-orange-500/80 to-amber-600/80",
+  },
+  {
+    name: "Education",
+    slug: "education",
+    description: "Learning journeys, study tips and skill-building.",
+    image: "/categories/education.jpg",
+    icon: GraduationCap,
+    color: "#F97316",
+    bg: "from-orange-500/80 to-orange-600/80",
+  },
+  {
     name: "Life",
     slug: "life",
-    description: "Stories about everyday moments, lessons learned, and the beauty of living.",
+    description: "Everyday experiences and personal lessons.",
     image: "/categories/life.jpg",
     icon: Heart,
     color: "#EF4444",
@@ -27,7 +86,7 @@ const categories = [
   {
     name: "Family",
     slug: "family",
-    description: "Heartwarming tales of family bonds, traditions, and togetherness.",
+    description: "Stories and lessons from family life.",
     image: "/categories/family.jpg",
     icon: Home,
     color: "#3B82F6",
@@ -36,34 +95,16 @@ const categories = [
   {
     name: "Career",
     slug: "career",
-    description: "Journeys of professional growth, ambition, and finding your calling.",
+    description: "Work, growth, resilience and professional know-how.",
     image: "/categories/career.jpg",
     icon: Briefcase,
     color: "#8B5CF6",
     bg: "from-violet-500/80 to-violet-600/80",
   },
   {
-    name: "Education",
-    slug: "education",
-    description: "Insights on learning, teaching, and the pursuit of knowledge.",
-    image: "/categories/education.jpg",
-    icon: GraduationCap,
-    color: "#F97316",
-    bg: "from-orange-500/80 to-orange-600/80",
-  },
-  {
-    name: "Technology",
-    slug: "technology",
-    description: "Exploring the digital world, innovations, and tech-driven change.",
-    image: "/categories/technology.jpg",
-    icon: Laptop,
-    color: "#14B8A6",
-    bg: "from-teal-500/80 to-teal-600/80",
-  },
-  {
     name: "Travel",
     slug: "travel",
-    description: "Adventures from around the world and the joy of exploration.",
+    description: "Destinations, adventures and travel wisdom.",
     image: "/categories/travel.jpg",
     icon: Plane,
     color: "#EAB308",
@@ -72,7 +113,7 @@ const categories = [
   {
     name: "Health",
     slug: "health",
-    description: "Stories of wellness, self-care, and living a balanced life.",
+    description: "Physical and mental wellbeing, the practical way.",
     image: "/categories/health.jpg",
     icon: Stethoscope,
     color: "#22C55E",
@@ -81,11 +122,20 @@ const categories = [
   {
     name: "Inspiration",
     slug: "inspiration",
-    description: "Motivating stories that uplift and spark positivity.",
+    description: "Ideas and encouragement to keep going.",
     image: "/categories/inspiration.jpg",
     icon: Lightbulb,
     color: "#EC4899",
     bg: "from-pink-500/80 to-pink-600/80",
+  },
+  {
+    name: "Personal",
+    slug: "personal",
+    description: "Personal reflections, honestly written.",
+    image: "/categories/life.jpg",
+    icon: UserRound,
+    color: "#F59E0B",
+    bg: "from-amber-500/80 to-orange-600/80",
   },
 ];
 
@@ -109,7 +159,8 @@ export default function CategoriesPage() {
             transition={{ delay: 0.1 }}
             className="text-gray-600 text-lg max-w-2xl mx-auto"
           >
-            Find stories that match your interests. Dive into the topics you love most.
+            Find guides and stories that match your interests — from AI, web
+            development, SEO and marketing to everyday experiences.
           </motion.p>
         </div>
 

@@ -1,49 +1,49 @@
 "use client";
 
-import { PenSquare, BookOpen, Users, Heart, Globe, Shield } from "lucide-react";
+import { PenSquare, BookOpen, Bot, Code2, Globe, Shield } from "lucide-react";
 import { motion } from "framer-motion";
 
 const features = [
   {
     icon: PenSquare,
-    title: "Share Your Story",
+    title: "Write & Share",
     description:
-      "Write about your life, memories, achievements or experiences. Every story has the power to inspire someone.",
+      "Publish practical guides, tutorials and breakdowns on web technology, AI and the digital skills shaping tomorrow.",
     color: "bg-yellow-100 text-yellow-600",
   },
   {
     icon: BookOpen,
-    title: "Read & Discover",
+    title: "Learn Something New",
     description:
-      "Explore stories from people around the world and learn through their experiences.",
+      "Hands-on reads on building websites, using AI tools and levelling up — written in plain, everyday language.",
     color: "bg-blue-100 text-blue-600",
   },
   {
-    icon: Users,
-    title: "Build Community",
+    icon: Bot,
+    title: "AI Explained",
     description:
-      "Connect people through ideas, emotions and authentic storytelling.",
-    color: "bg-green-100 text-green-600",
+      "Clear, beginner-friendly explanations of artificial intelligence. No buzzwords, no jargon — just how it actually works.",
+    color: "bg-violet-100 text-violet-600",
   },
   {
-    icon: Heart,
-    title: "Inspire Others",
+    icon: Code2,
+    title: "Get Hands-On",
     description:
-      "Your journey could be exactly what someone else needs to hear today.",
-    color: "bg-pink-100 text-pink-600",
+      "Copy-ready code snippets and step-by-step walkthroughs you can apply to a real project the same day.",
+    color: "bg-teal-100 text-teal-600",
   },
   {
     icon: Globe,
     title: "Global Reach",
     description:
-      "Stories transcend borders. Reach readers across Australia and beyond.",
+      "Technology connects people across borders. Reach readers across Australia and beyond with your knowledge.",
     color: "bg-purple-100 text-purple-600",
   },
   {
     icon: Shield,
     title: "Safe Space",
     description:
-      "A moderated community where respect and authenticity come first.",
+      "A moderated community where accuracy, respect and helpfulness come first.",
     color: "bg-orange-100 text-orange-600",
   },
 ];
@@ -60,9 +60,11 @@ export default function WhyWebSQ() {
             Why <span className="text-yellow-500">WebSQ</span>?
           </h2>
           <p className="mt-5 text-lg text-gray-600 max-w-3xl mx-auto text-balance">
-            We believe every person has a unique journey worth sharing.
-            Whether you&apos;re a student, parent, traveller or professional,
-            your experiences can inspire others.
+            WebSQ is where everyday people learn, build, and share the
+            technology, AI and digital skills shaping our world — from web
+            development and search optimisation to online marketing. Whether
+            you are a student, developer, marketer, hobbyist or professional —
+            your knowledge can help someone else grow.
           </p>
         </div>
 

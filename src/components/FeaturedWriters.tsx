@@ -44,7 +44,7 @@ export default function FeaturedWriters() {
             Featured Writers
           </h2>
           <p className="mt-5 text-lg text-gray-600">
-            Meet some amazing storytellers from our community.
+            Meet our community sharing tech, AI and web knowledge.
           </p>
         </div>
 

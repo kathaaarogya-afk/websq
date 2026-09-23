@@ -1,19 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { Save, Send, ArrowLeft } from "lucide-react";
+import { useState, useRef } from "react";
+import { Save, Send, ArrowLeft, Bold, List, Quote, Code, Link2, Heading } from "lucide-react";
 import ImageUploader from "./ImageUploader";
-
-const categories = [
-  "Life",
-  "Family",
-  "Career",
-  "Education",
-  "Technology",
-  "Travel",
-  "Health",
-  "Inspiration",
-];
+import { STORY_CATEGORIES } from "@/lib/categories";
 
 interface StoryFormData {
   title: string;
@@ -45,6 +35,72 @@ export default function StoryForm({
   });
 
   const [saving, setSaving] = useState(false);
+  const contentRef = useRef<HTMLTextAreaElement>(null);
+
+  const markdownTools = [
+    {
+      label: "Heading",
+      icon: Heading,
+      snippet: "## ",
+      insert: (sel: string) => `## ${sel}`,
+    },
+    {
+      label: "Bold",
+      icon: Bold,
+      snippet: "**bold**",
+      insert: (sel: string) => `**${sel || "bold text"}**`,
+    },
+    {
+      label: "List",
+      icon: List,
+      snippet: "- item",
+      insert: (sel: string) =>
+        sel
+          .split("\n")
+          .map((l) => `- ${l}`)
+          .join("\n"),
+    },
+    {
+      label: "Quote",
+      icon: Quote,
+      snippet: "> quote",
+      insert: (sel: string) => `> ${sel || "quote"}`,
+    },
+    {
+      label: "Link",
+      icon: Link2,
+      snippet: "[text](url)",
+      insert: (sel: string) => `[${sel || "link text"}](https://)`,
+    },
+    {
+      label: "Code",
+      icon: Code,
+      snippet: "```\ncode\n```",
+      insert: (sel: string) =>
+        `\`\`\`\n${sel || "your code here"}\n\`\`\``,
+    },
+  ];
+
+  const insertMarkdown = (tool: (typeof markdownTools)[0]) => {
+    const textarea = contentRef.current;
+    if (!textarea) {
+      setForm({ ...form, content: form.content + tool.snippet });
+      return;
+    }
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selected = form.content.slice(start, end);
+    const before = form.content.slice(0, start);
+    const after = form.content.slice(end);
+    const replacement = tool.insert(selected);
+    const next = `${before}${replacement}${after}`;
+    setForm({ ...form, content: next });
+    requestAnimationFrame(() => {
+      textarea.focus();
+      const cursor = start + replacement.length;
+      textarea.setSelectionRange(cursor, cursor);
+    });
+  };
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -144,7 +200,7 @@ export default function StoryForm({
               className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none appearance-none bg-white"
             >
               <option value="">Select a category</option>
-              {categories.map((cat) => (
+              {STORY_CATEGORIES.map((cat) => (
                 <option key={cat} value={cat}>
                   {cat}
                 </option>
@@ -169,16 +225,46 @@ export default function StoryForm({
 
         {/* Content */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Story Content *
-          </label>
+          <div className="flex items-center justify-between mb-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Story Content *
+            </label>
+            <div
+              className="flex items-center gap-1 flex-wrap"
+              role="toolbar"
+              aria-label="Markdown tools"
+            >
+        {markdownTools.map((tool) => {
+          const Icon = tool.icon;
+          return (
+            <button
+              key={tool.label}
+              type="button"
+              title={tool.label}
+              onClick={() => insertMarkdown(tool)}
+              className="w-9 h-9 rounded-lg hover:bg-yellow-50 text-gray-500 hover:text-yellow-600 flex items-center justify-center transition"
+            >
+              <Icon size={18} />
+            </button>
+          );
+        })}
+        <span
+          className="ml-2 text-xs text-gray-400 flex items-center gap-1"
+          title="Markdown is supported — headings, bold, lists, and code blocks."
+        >
+          <Code size={14} />
+          Markdown
+        </span>
+          </div>
+          </div>
           <textarea
+            ref={contentRef}
             name="content"
             value={form.content}
             onChange={handleChange}
-            placeholder="Start writing your story here..."
-            rows={20}
-            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none resize-none leading-relaxed"
+            placeholder={"Start writing your story here...\n\nTip: markdown is supported (## titles, **bold**, ``` code ```)."}
+            rows={22}
+            className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none resize-none leading-relaxed font-mono text-sm"
           />
         </div>
       </div>

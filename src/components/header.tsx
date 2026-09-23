@@ -6,8 +6,9 @@ import { useState, useEffect, useRef } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { Menu, X, Search, Bell, ChevronDown, Check, Trash2 } from "lucide-react";
 import toast from "react-hot-toast";
+import { STORY_CATEGORIES } from "@/lib/categories";
 
-const categories = ["All", "Life", "Family", "Career", "Education", "Technology", "Travel", "Health", "Inspiration"];
+const categories = ["All", ...STORY_CATEGORIES];
 
 interface UserData {
   id: string;
@@ -237,7 +238,7 @@ export default function Header() {
             <div>
               <h2 className="text-2xl font-bold text-gray-900">WebSQ</h2>
               <p className="text-sm text-yellow-600 font-medium">
-                Every Story Matters. Every Voice Belongs.
+                Where tech, AI &amp; marketing meet storytelling
               </p>
             </div>
           </Link>

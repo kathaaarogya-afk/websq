@@ -82,18 +82,18 @@ export default function Footer() {
 
                 <span className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 text-white/90 text-sm font-medium mb-6">
                   <PenSquare size={14} />
-                  Share Your Voice
+                  Share What You Know
                 </span>
 
                 <h2 className="text-4xl lg:text-5xl font-bold text-white leading-tight">
-                  Ready to Tell
+                  Ready to Teach
                   <br />
-                  <span className="text-yellow-400">Your Story?</span>
+                  <span className="text-yellow-400">the World Tech &amp; AI?</span>
                 </h2>
 
                 <p className="mt-6 text-white/80 text-lg leading-relaxed max-w-lg">
-                  Every experience matters. Someone somewhere is waiting
-                  to read the story only you can tell.
+                  Every insight matters. Someone somewhere is waiting
+                  to learn something only you can explain.
                 </p>
 
                 <div className="flex flex-wrap items-center gap-4 mt-8">
@@ -128,14 +128,14 @@ export default function Footer() {
                       <div className="w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-xs font-bold text-gray-900">S</div>
                       <span className="text-white text-sm font-medium">Sarah J.</span>
                     </div>
-                    <p className="text-white/70 text-sm italic">&ldquo;Writing here changed how I see my own life.&rdquo;</p>
+                    <p className="text-white/70 text-sm italic">&ldquo;Learning about AI here changed how I work.&rdquo;</p>
                   </div>
                   <div className="absolute bottom-8 right-0 bg-white/10 backdrop-blur-sm rounded-2xl p-4 w-56 shadow-lg">
                     <div className="flex items-center gap-3 mb-2">
                       <div className="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center text-xs font-bold text-white">D</div>
                       <span className="text-white text-sm font-medium">David W.</span>
                     </div>
-                    <p className="text-white/70 text-sm italic">&ldquo;Real stories from real people.&rdquo;</p>
+                    <p className="text-white/70 text-sm italic">&ldquo;Practical guides from real people.&rdquo;</p>
                   </div>
                 </div>
               </div>
@@ -171,16 +171,15 @@ export default function Footer() {
             </div>
 
             <p className="mt-3 text-yellow-600 font-semibold text-lg">
-              Every Story Matters.
+              Where tech, AI &amp; marketing
               <br />
-              Every Voice Belongs.
+              meet storytelling.
             </p>
 
             <p className="mt-8 text-gray-600 leading-8 max-w-md">
-              A storytelling community where
-              ordinary people share extraordinary
-              experiences, memories, lessons,
-              dreams and inspiration.
+              A community for learning, building and sharing
+              practical knowledge about website technology,
+              artificial intelligence, SEO and digital marketing.
             </p>
 
             {/* Newsletter */}

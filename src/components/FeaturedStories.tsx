@@ -44,11 +44,11 @@ export default function FeaturedStories() {
             Featured
           </span>
           <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mt-3">
-            Featured Stories
+            Featured Articles
           </h2>
           <p className="text-gray-600 mt-5 max-w-2xl mx-auto">
-            Read inspiring stories shared by people from different walks of life.
-            Every story has the power to teach, heal and inspire.
+            Hand-picked guides and stories on web technology, AI and everyday
+            life — written to teach, save time and inspire.
           </p>
         </div>
 

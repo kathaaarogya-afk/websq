@@ -4,7 +4,7 @@ import { Suspense } from "react";
 export const metadata = {
   title: "Login to Your Account",
   description:
-    "Login to your WebSQ account to write stories, bookmark favourites, and connect with our storytelling community.",
+    "Login to your WebSQ account to write tech and AI guides, bookmark favourites, and connect with our community.",
   alternates: {
     canonical: "/login",
   },

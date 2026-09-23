@@ -62,13 +62,13 @@ export default function BecomeWriter() {
           )}
 
           <h2 className="text-5xl font-bold">
-            Your Story Could Inspire Someone
+            Your Knowledge Could Teach Someone
           </h2>
 
           <p className="mt-6 text-xl max-w-3xl mx-auto">
             {writers.length > 0
-              ? `Join ${writers.length}+ writers sharing their stories.`
-              : "Every experience matters. Share your journey with the world."}
+              ? `Join ${writers.length}+ writers sharing tech, AI and web guides.`
+              : "Every insight matters. Share what you know with the world."}
           </p>
 
           <Link

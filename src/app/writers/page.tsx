@@ -126,7 +126,7 @@ export default function WritersPage() {
                 Writers
               </h1>
               <p className="text-gray-500 mt-1">
-                Discover talented storytellers who share their experiences
+                Discover writers sharing tech, AI and everyday knowledge
               </p>
             </div>
 

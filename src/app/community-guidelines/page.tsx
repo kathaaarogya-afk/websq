@@ -93,7 +93,7 @@ export default function CommunityGuidelinesPage() {
             Community Guidelines
           </h1>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            WebSQ is a space for authentic storytelling and respectful connection.
+            WebSQ is a space for honest, helpful sharing and respectful connection.
             These guidelines help keep our community safe, welcoming, and trustworthy.
           </p>
         </div>
@@ -109,10 +109,10 @@ export default function CommunityGuidelinesPage() {
                 Our Mission
               </h2>
               <p className="text-gray-600 leading-relaxed">
-                Every story matters. Every voice belongs. We believe in the power of
-                real experiences shared by real people. Our platform exists to uplift,
+                Every insight matters. Every voice belongs. We believe in the power of
+                real knowledge shared by real people. Our platform exists to teach,
                 inspire, and connect — never to harm. By participating, you agree to
-                contribute to a community built on respect, honesty, and empathy.
+                contribute to a community built on respect, accuracy, and empathy.
               </p>
             </div>
           </div>

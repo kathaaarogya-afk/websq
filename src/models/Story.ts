@@ -1,4 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
+import { STORY_CATEGORIES } from "@/lib/categories";
 
 export interface IStory extends Document {
   title: string;
@@ -48,17 +49,7 @@ const StorySchema = new Schema<IStory>(
     category: {
       type: String,
       required: [true, "Category is required"],
-      enum: [
-        "Life",
-        "Family",
-        "Career",
-        "Education",
-        "Technology",
-        "Travel",
-        "Health",
-        "Inspiration",
-        "Personal",
-      ],
+      enum: STORY_CATEGORIES,
     },
     coverImage: {
       type: String,

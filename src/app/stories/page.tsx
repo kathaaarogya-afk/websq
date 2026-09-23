@@ -4,6 +4,7 @@ import { Suspense, useEffect, useState, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import { Search, Filter } from "lucide-react";
 import StoryCard from "@/components/community/StoryCard";
+import { STORY_CATEGORIES } from "@/lib/categories";
 
 interface Story {
   _id: string;
@@ -19,17 +20,7 @@ interface Story {
   createdAt: string;
 }
 
-const categories = [
-  "All",
-  "Life",
-  "Family",
-  "Career",
-  "Education",
-  "Technology",
-  "Travel",
-  "Health",
-  "Inspiration",
-];
+const categories = ["All", ...STORY_CATEGORIES];
 
 function StoriesContent() {
   const searchParams = useSearchParams();

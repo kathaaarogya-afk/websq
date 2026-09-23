@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Acceptable Use Policy | WebSQ",
   description:
-    "Learn about the acceptable and prohibited uses of the WebSQ storytelling platform.",
+    "Learn about the acceptable and prohibited uses of the WebSQ tech, AI and storytelling platform.",
 };
 
 export default function AcceptableUsePage() {
@@ -64,7 +64,7 @@ export default function AcceptableUsePage() {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-yellow-500 mt-1">•</span>
-                  Use the platform for personal and non-commercial storytelling
+                  Use the platform for personal and non-commercial sharing and publishing
                 </li>
               </ul>
             </section>

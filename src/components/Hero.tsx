@@ -7,14 +7,14 @@ import { ArrowRight, PenSquare, BookOpen, Users, Lightbulb } from "lucide-react"
 import { motion } from "framer-motion";
 
 const features = [
-  { icon: BookOpen, label: "Read Stories" },
-  { icon: PenSquare, label: "Write Yours" },
-  { icon: Users, label: "Join Community" },
-  { icon: Lightbulb, label: "Get Inspired" },
+  { icon: BookOpen, label: "Tech & AI" },
+  { icon: PenSquare, label: "Web Development" },
+  { icon: Users, label: "SEO & Marketing" },
+  { icon: Lightbulb, label: "Code Snippets" },
 ];
 
 export default function Hero() {
-  const [stats, setStats] = useState({ stories: 0, writers: 0, categories: 8 });
+  const [stats, setStats] = useState({ stories: 0, writers: 0, categories: 13 });
 
   useEffect(() => {
     fetch("/api/stats")
@@ -44,17 +44,18 @@ export default function Hero() {
           >
             <span className="inline-flex items-center gap-2 rounded-full bg-yellow-100 text-yellow-700 px-4 py-2 text-sm font-semibold mb-6">
               <span className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse" />
-              Stories &bull; Ideas &bull; Experiences
+              Tech &bull; AI &bull; SEO &bull; Marketing
             </span>
 
             <h1 className="text-5xl lg:text-7xl font-extrabold leading-[1.1] text-gray-900">
-              A Space for
-              <span className="block text-yellow-500">Every Story</span>
+              Learn, Build &amp; Share
+              <span className="block text-yellow-500">the Future of Tech &amp; AI</span>
             </h1>
 
             <p className="mt-6 text-lg lg:text-xl text-gray-600 leading-relaxed max-w-lg">
-              Share your life experiences, lessons, and ideas with a community
-              that values real stories from real people. Read, write, and connect.
+              Read practical guides on website technology, artificial
+              intelligence, SEO and digital marketing — then share what you
+              know with a growing community of builders and learners.
             </p>
 
             {/* Feature pills */}
@@ -79,7 +80,7 @@ export default function Hero() {
                 href="/stories"
                 className="inline-flex items-center gap-2 rounded-full bg-yellow-500 hover:bg-yellow-600 px-8 py-4 text-white font-semibold transition-all shadow-lg hover:shadow-xl hover:scale-105"
               >
-                Explore Stories
+                Explore Articles
                 <ArrowRight size={20} />
               </Link>
               <Link
@@ -87,7 +88,7 @@ export default function Hero() {
                 className="inline-flex items-center gap-2 rounded-full border-2 border-yellow-500 px-8 py-4 text-yellow-600 hover:bg-yellow-50 font-semibold transition-all"
               >
                 <PenSquare size={20} />
-                Share Your Story
+                Start Writing
               </Link>
             </div>
 
@@ -116,7 +117,7 @@ export default function Hero() {
             <div className="relative rounded-3xl overflow-hidden shadow-2xl">
               <Image
                 src="/hero.jpg"
-                alt="People collaborating and sharing stories"
+                alt="Writers collaborating and sharing ideas online"
                 width={700}
                 height={600}
                 priority
@@ -129,8 +130,8 @@ export default function Hero() {
                     <PenSquare className="text-yellow-600" size={22} />
                   </div>
                   <div>
-                    <p className="font-bold text-gray-900">Start Your Journey</p>
-                    <p className="text-sm text-gray-500">Write your first story in minutes</p>
+                    <p className="font-bold text-gray-900">Share What You Know</p>
+                    <p className="text-sm text-gray-500">Write your first tech guide in minutes</p>
                   </div>
                   <Link
                     href="/register"

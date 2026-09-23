@@ -136,9 +136,9 @@ export default function ContactPage() {
             </div>
 
             <div className="bg-[#FFF8E7] rounded-3xl p-8">
-              <h3 className="text-xl font-bold text-gray-900 mb-3">Share Your Story</h3>
+              <h3 className="text-xl font-bold text-gray-900 mb-3">Contribute to WebSQ</h3>
               <p className="text-gray-600 mb-4">
-                Got a story to tell? We are always looking for authentic voices to feature on WebSQ.
+                Got a tech, AI or web guide to share? We are always looking for helpful, authentic voices to feature on WebSQ.
               </p>
               <a
                 href="/write"

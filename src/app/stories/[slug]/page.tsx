@@ -12,6 +12,7 @@ import ReportModal from "@/components/community/ReportModal";
 import ShareButtons from "@/components/ShareButtons";
 import StoryReactions from "@/components/StoryReactions";
 import SocialProof from "@/components/SocialProof";
+import MarkdownContent from "@/components/MarkdownContent";
 
 interface StoryData {
   _id: string;
@@ -279,10 +280,8 @@ export default function StoryPage() {
         </div>
 
         {/* Story Content */}
-        <div className="prose prose-lg max-w-none mb-8">
-          <div className="whitespace-pre-wrap text-gray-700 leading-relaxed text-lg">
-            {story.content}
-          </div>
+        <div className="mb-8">
+          <MarkdownContent content={story.content} />
         </div>
 
         {/* Story Images */}

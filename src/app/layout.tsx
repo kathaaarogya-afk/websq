@@ -11,23 +11,30 @@ import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
   title: {
-    default: "WebSQ - A Space for Every Story | Share Your Story Online",
+    default: "WebSQ - Learn, Build & Share Tech, AI, SEO & Marketing Guides",
     template: "%s | WebSQ",
   },
   description:
-    "WebSQ is an Australian storytelling community where ordinary people share extraordinary experiences, memories, lessons, dreams, and inspiration. Read, write, and connect with real stories from real people.",
+    "WebSQ is an Australian community for learning, building and sharing knowledge about website technology, artificial intelligence, SEO and digital marketing. Read practical guides, write tutorials, and grow with a community of builders and learners.",
   keywords: [
-    "storytelling",
-    "community",
-    "share stories",
-    "personal stories",
-    "life experiences",
+    "technology blog",
+    "AI guides",
+    "artificial intelligence explained",
+    "web development",
+    "SEO tips",
+    "search engine optimisation",
+    "digital marketing",
+    "online marketing",
+    "website technology",
+    "tech tutorials",
+    "AI tools",
+    "web design",
+    "blogging community",
+    "learn tech",
     "Australian community",
-    "write stories",
-    "inspiration",
-    "real stories",
-    "memoir",
-    "blog",
+    "tech writers",
+    "web blog",
+    "marketing blog",
   ],
   authors: [{ name: "WebSQ" }],
   creator: "WebSQ",
@@ -41,23 +48,23 @@ export const metadata: Metadata = {
     locale: "en_AU",
     url: "https://www.websq.com.au",
     siteName: "WebSQ",
-    title: "WebSQ - A Space for Every Story",
+    title: "WebSQ - Learn, Build & Share Tech, AI, SEO & Marketing",
     description:
-      "Share your life experiences, lessons, and ideas with a community that values real stories from real people.",
+      "Practical guides on website technology, AI, SEO and digital marketing — read, write and share with our community.",
     images: [
       {
         url: "/hero.jpg",
         width: 1200,
         height: 630,
-        alt: "WebSQ - Share Your Story",
+        alt: "WebSQ - Tech, AI, SEO & marketing guides",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "WebSQ - A Space for Every Story",
+    title: "WebSQ - Learn, Build & Share Tech, AI, SEO & Marketing",
     description:
-      "Share your life experiences, lessons, and ideas with a community that values real stories from real people.",
+      "Practical guides on website technology, AI, SEO and digital marketing — read, write and share with our community.",
     images: ["/hero.jpg"],
     creator: "@websq",
   },
@@ -79,10 +86,10 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "WebSite",
   name: "WebSQ",
-  alternateName: "WebSQ - A Space for Every Story",
+  alternateName: "WebSQ - Learn, Build & Share Tech, AI, SEO & Marketing",
   url: "https://www.websq.com.au",
   description:
-    "An Australian storytelling community where ordinary people share extraordinary experiences.",
+    "An Australian community for learning, building and sharing knowledge about website technology, artificial intelligence, SEO and digital marketing.",
   publisher: {
     "@type": "Organization",
     name: "WebSQ",
@@ -109,7 +116,7 @@ const organizationJsonLd = {
   url: "https://www.websq.com.au",
   logo: "https://www.websq.com.au/logo.svg",
   description:
-    "An Australian storytelling community where ordinary people share extraordinary experiences.",
+    "An Australian community for learning, building and sharing knowledge about website technology, artificial intelligence, SEO and digital marketing.",
   sameAs: [],
   contactPoint: {
     "@type": "ContactPoint",
