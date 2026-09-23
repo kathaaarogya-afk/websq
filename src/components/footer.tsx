@@ -21,6 +21,8 @@ import {
   FaXTwitter,
 } from "react-icons/fa6";
 
+import { STORY_CATEGORIES } from "@/lib/categories";
+
 export default function Footer() {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
@@ -265,20 +267,17 @@ export default function Footer() {
               Categories
             </h3>
 
-            <ul className="space-y-4 text-gray-600">
-
-              <li><Link href="/stories?category=Life" className="hover:text-yellow-600 transition">Life</Link></li>
-
-              <li><Link href="/stories?category=Family" className="hover:text-yellow-600 transition">Family</Link></li>
-
-              <li><Link href="/stories?category=Career" className="hover:text-yellow-600 transition">Career</Link></li>
-
-              <li><Link href="/stories?category=Education" className="hover:text-yellow-600 transition">Education</Link></li>
-
-              <li><Link href="/stories?category=Technology" className="hover:text-yellow-600 transition">Technology</Link></li>
-
-              <li><Link href="/stories?category=Travel" className="hover:text-yellow-600 transition">Travel</Link></li>
-
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-4 text-gray-600">
+              {STORY_CATEGORIES.map((cat) => (
+                <li key={cat}>
+                  <Link
+                    href={`/stories?category=${cat}`}
+                    className="hover:text-yellow-600 transition"
+                  >
+                    {cat}
+                  </Link>
+                </li>
+              ))}
             </ul>
 
           </div>

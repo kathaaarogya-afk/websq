@@ -1604,9 +1604,14 @@ async function seedDatabase() {
           image: author.image || "",
           role: author.role || "user",
         });
-      } else if (author.image && !user.image) {
-        user.image = author.image;
-        await user.save();
+      } else {
+        const updates: Record<string, unknown> = {};
+        if (author.image && !user.image) updates.image = author.image;
+        if (author.bio && user.bio !== author.bio) updates.bio = author.bio;
+        if (Object.keys(updates).length > 0) {
+          updates.updatedAt = new Date();
+          await User.updateOne({ _id: user._id }, { $set: updates });
+        }
       }
       createdAuthors.push(user);
     }
