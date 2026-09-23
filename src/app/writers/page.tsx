@@ -141,7 +141,7 @@ export default function WritersPage() {
                 placeholder="Search writers..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full sm:w-80 pl-11 pr-4 py-3 rounded-2xl border border-gray-200 bg-white focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition"
+                className="w-full sm:w-80 pl-11 pr-4 py-3 rounded-2xl border border-gray-200 bg-white text-gray-900 placeholder:text-gray-500 focus:ring-2 focus:ring-yellow-500 focus:border-transparent outline-none transition"
               />
             </div>
           </div>
@@ -199,31 +199,31 @@ export default function WritersPage() {
                   {/* Content */}
                   <div className="pt-14 p-6">
                     <Link href={`/profile/${writer._id}`}>
-                      <h3 className="text-lg font-bold text-gray-900 hover:text-yellow-600 transition truncate">
+                      <h3 className="text-lg font-bold text-gray-900 group-hover:text-yellow-600 transition truncate">
                         {writer.name}
                       </h3>
                     </Link>
-                    <p className="text-sm text-gray-500 mt-1 line-clamp-2 min-h-[40px]">
+                    <p className="text-sm text-gray-700 mt-1 line-clamp-2 min-h-[40px]">
                       {writer.bio || "No bio yet"}
                     </p>
 
                     {/* Stats */}
                     <div className="flex items-center gap-4 mt-4 pt-4 border-t border-gray-100">
-                      <div className="flex items-center gap-1.5 text-gray-600">
+                      <div className="flex items-center gap-1.5 text-gray-900">
                         <BookOpen size={16} className="text-yellow-500" />
                         <span className="text-sm font-semibold">
                           {writer.storyCount}
                         </span>
-                        <span className="text-sm text-gray-400">
+                        <span className="text-sm text-gray-600">
                           {writer.storyCount === 1 ? "story" : "stories"}
                         </span>
                       </div>
-                      <div className="flex items-center gap-1.5 text-gray-600">
+                      <div className="flex items-center gap-1.5 text-gray-900">
                         <PenTool size={16} className="text-orange-500" />
                         <span className="text-sm font-semibold">
                           {writer.followersCount}
                         </span>
-                        <span className="text-sm text-gray-400">followers</span>
+                        <span className="text-sm text-gray-600">followers</span>
                       </div>
                     </div>
 
