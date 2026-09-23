@@ -49,7 +49,9 @@ export async function GET(req: NextRequest) {
     try {
       [stories, total] = await runQuery();
     } catch (firstError) {
+      console.error("[/api/stories] first DB attempt failed:", firstError);
       [stories, total] = await runQuery().catch((secondError) => {
+        console.error("[/api/stories] retry DB attempt failed:", secondError);
         throw {
           name: "StoryFetchError",
           message:
@@ -69,6 +71,7 @@ export async function GET(req: NextRequest) {
     });
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : "Failed to fetch stories";
+    console.error("[/api/stories] error:", error);
     return NextResponse.json(
       { error: message },
       { status: 500 }
