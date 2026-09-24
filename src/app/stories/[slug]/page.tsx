@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import { connectDB } from "@/lib/mongodb";
 import Story from "@/models/Story";
 import "@/models/User";
+import { pickInternalLinks } from "@/lib/internal-links";
 import StoryViewer from "./StoryViewer";
 
 interface PageProps {
@@ -82,6 +83,46 @@ function serializeStory(story: {
     createdAt: story.createdAt?.toISOString?.() || "",
     updatedAt: story.updatedAt?.toISOString?.() || "",
   };
+}
+
+async function getRelatedFor(story: {
+  title: string;
+  slug: string;
+  category: string;
+}) {
+  try {
+    await connectDB();
+    const candidates = await Story.find({
+      status: "published",
+      category: story.category,
+      slug: { $ne: story.slug },
+    })
+      .select("_id slug title category excerpt coverImage")
+      .limit(8)
+      .lean();
+
+    return pickInternalLinks(
+      story,
+      (candidates as Array<{
+        _id: unknown;
+        title: string;
+        slug: string;
+        category: string;
+        excerpt?: string;
+        coverImage?: string;
+      }>).map((c) => ({
+        _id: String(c._id),
+        title: c.title,
+        slug: c.slug,
+        category: c.category,
+        excerpt: c.excerpt || "",
+        coverImage: c.coverImage,
+      })),
+      3
+    );
+  } catch {
+    return [];
+  }
 }
 
 export async function generateMetadata({
@@ -184,6 +225,8 @@ export default async function StoryPage({ params }: PageProps) {
       ],
     };
 
+    const initialRelated = await getRelatedFor(story);
+
     return (
       <>
         <script
@@ -194,7 +237,11 @@ export default async function StoryPage({ params }: PageProps) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
         />
-        <StoryViewer slug={slug} initialStory={serializeStory(story)} />
+        <StoryViewer
+          slug={slug}
+          initialStory={serializeStory(story)}
+          initialRelated={initialRelated}
+        />
       </>
     );
   }

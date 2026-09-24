@@ -1,5 +1,6 @@
 import { MetadataRoute } from "next";
 import mongoose from "mongoose";
+import User from "@/models/User";
 
 const MONGODB_URI = process.env.MONGODB_URI || "";
 
@@ -68,7 +69,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     }));
 
-    return [...staticPages, ...storyPages, ...categoryPages];
+    const writers = await User.find({ storiesCount: { $gt: 0 }, active: true })
+      .select("_id updatedAt createdAt")
+      .lean();
+
+    const writerPages: MetadataRoute.Sitemap = writers.map((writer: { _id: unknown; updatedAt?: Date; createdAt: Date }) => ({
+      url: `${baseUrl}/profile/${String(writer._id)}`,
+      lastModified: writer.updatedAt || writer.createdAt,
+      changeFrequency: "weekly" as const,
+      priority: 0.6,
+    }));
+
+    return [...staticPages, ...storyPages, ...categoryPages, ...writerPages];
   } catch {
     return staticPages;
   }

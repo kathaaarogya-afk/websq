@@ -39,10 +39,10 @@ interface RelatedStory {
   _id: string;
   title: string;
   slug: string;
-  excerpt: string;
+  excerpt?: string;
   category: string;
-  coverImage: string;
-  author: { _id: string; name: string };
+  coverImage?: string;
+  author?: { _id: string; name: string };
 }
 
 function getReadingTime(text: string): number {
@@ -54,12 +54,16 @@ function getReadingTime(text: string): number {
 export default function StoryViewer({
   slug,
   initialStory,
+  initialRelated,
 }: {
   slug: string;
   initialStory?: StoryData | null;
+  initialRelated?: RelatedStory[];
 }) {
   const [story, setStory] = useState<StoryData | null>(initialStory || null);
-  const [relatedStories, setRelatedStories] = useState<RelatedStory[]>([]);
+  const [relatedStories, setRelatedStories] = useState<RelatedStory[]>(
+    initialRelated || []
+  );
   const [loading, setLoading] = useState(() => !initialStory);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
   const [showReport, setShowReport] = useState(false);
@@ -83,8 +87,10 @@ export default function StoryViewer({
         const data = await res.json();
         setStory(data.story);
 
-        // Fetch related stories
-        if (data.story?.category) {
+        if (
+          data.story?.category &&
+          (!initialRelated || initialRelated.length === 0)
+        ) {
           const relRes = await fetch(
             `/api/stories?category=${data.story.category}&limit=4`
           );
@@ -103,7 +109,7 @@ export default function StoryViewer({
     } finally {
       setLoading(false);
     }
-  }, [slug]);
+  }, [slug, initialRelated]);
 
   useEffect(() => {
     fetchStory();
