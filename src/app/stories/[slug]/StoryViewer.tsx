@@ -266,43 +266,6 @@ export default function StoryViewer({
           </div>
         )}
 
-        {/* Related Stories - SEO internal links at end of article */}
-        {relatedStories.length > 0 && (
-          <section className="mt-16 pt-12 border-t border-gray-200">
-            <h2 className="text-2xl font-bold text-gray-900 mb-8">
-              More in {story.category}
-            </h2>
-            <div className="grid sm:grid-cols-3 gap-6">
-              {relatedStories.map((rel) => (
-                <Link
-                  key={rel._id}
-                  href={`/stories/${rel.slug}`}
-                  className="group"
-                >
-                  {rel.coverImage && (
-                    <div className="rounded-xl overflow-hidden mb-3 aspect-[16/10]">
-                      <img
-                        src={rel.coverImage}
-                        alt={rel.title}
-                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-                      />
-                    </div>
-                  )}
-                  <span className="text-xs font-medium text-yellow-600 bg-yellow-50 px-2 py-0.5 rounded-full">
-                    {rel.category}
-                  </span>
-                  <h3 className="font-bold text-gray-900 mt-2 group-hover:text-yellow-600 transition line-clamp-2">
-                    {rel.title}
-                  </h3>
-                  <p className="text-sm text-gray-500 mt-1">
-                    by {rel.author?.name}
-                  </p>
-                </Link>
-              ))}
-            </div>
-          </section>
-        )}
-
         {/* Actions Bar */}
         <div className="flex items-center justify-between flex-wrap gap-4 py-6 border-t border-b border-gray-200 mb-8">
           <div className="flex items-center gap-3">
@@ -356,6 +319,43 @@ export default function StoryViewer({
           storyId={story._id}
           currentUserId={currentUserId || undefined}
         />
+
+        {/* Related Stories - SEO internal links */}
+        {relatedStories.length > 0 && (
+          <section className="mt-16 pt-12 border-t border-gray-200">
+            <h2 className="text-2xl font-bold text-gray-900 mb-8">
+              More in {story.category}
+            </h2>
+            <div className="grid sm:grid-cols-3 gap-6">
+              {relatedStories.map((rel) => (
+                <Link
+                  key={rel._id}
+                  href={`/stories/${rel.slug}`}
+                  className="group"
+                >
+                  {rel.coverImage && (
+                    <div className="rounded-xl overflow-hidden mb-3 aspect-[16/10]">
+                      <img
+                        src={rel.coverImage}
+                        alt={rel.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
+                      />
+                    </div>
+                  )}
+                  <span className="text-xs font-medium text-yellow-600 bg-yellow-50 px-2 py-0.5 rounded-full">
+                    {rel.category}
+                  </span>
+                  <h3 className="font-bold text-gray-900 mt-2 group-hover:text-yellow-600 transition line-clamp-2">
+                    {rel.title}
+                  </h3>
+                  <p className="text-sm text-gray-500 mt-1">
+                    by {rel.author?.name}
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </section>
+        )}
       </article>
     </div>
   );
