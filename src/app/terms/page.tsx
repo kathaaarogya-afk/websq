@@ -4,6 +4,9 @@ import { ArrowLeft, FileText } from "lucide-react";
 export const metadata = {
   title: "Terms of Service - WebSQ",
   description: "Terms of Service for WebSQ storytelling community.",
+  alternates: {
+    canonical: "/terms",
+  },
 };
 
 export default function TermsPage() {

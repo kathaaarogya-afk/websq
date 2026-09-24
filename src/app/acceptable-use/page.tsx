@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Acceptable Use Policy | WebSQ",
   description:
     "Learn about the acceptable and prohibited uses of the WebSQ tech, AI and storytelling platform.",
+  alternates: {
+    canonical: "/acceptable-use",
+  },
 };
 
 export default function AcceptableUsePage() {

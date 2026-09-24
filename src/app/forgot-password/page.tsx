@@ -4,6 +4,9 @@ import { Suspense } from "react";
 export const metadata = {
   title: "Forgot Password | WebSQ",
   description: "Reset your WebSQ password",
+  alternates: {
+    canonical: "/forgot-password",
+  },
 };
 
 export default function ForgotPasswordPage() {

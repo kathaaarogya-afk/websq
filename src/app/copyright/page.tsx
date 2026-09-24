@@ -4,6 +4,9 @@ import { ArrowLeft, Copyright } from "lucide-react";
 export const metadata = {
   title: "Copyright Policy - WebSQ",
   description: "Copyright Policy for WebSQ storytelling community.",
+  alternates: {
+    canonical: "/copyright",
+  },
 };
 
 export default function CopyrightPage() {

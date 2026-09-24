@@ -1,24 +1,24 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact Us - Get in Touch with WebSQ",
+  title: "Contact Us",
   description:
-    "Have a question, suggestion, or want to collaborate? Contact the WebSQ team. We'd love to hear from you.",
-  openGraph: {
-    title: "Contact Us | WebSQ",
-    description:
-      "Have a question, suggestion, or want to collaborate? Contact the WebSQ team.",
-    url: "https://www.websq.com.au/contact",
-  },
+    "Get in touch with the WebSQ team. Send us your questions, feedback or partnership ideas — we'd love to hear from you.",
   alternates: {
     canonical: "/contact",
+  },
+  openGraph: {
+    title: "Contact WebSQ",
+    description:
+      "Reach out to the WebSQ team with questions, feedback and partnership ideas.",
+    url: "https://www.websq.com.au/contact",
+    siteName: "WebSQ",
+    type: "website",
   },
 };
 
 export default function ContactLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: React.ReactNode }>) {
   return <>{children}</>;
 }

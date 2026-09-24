@@ -40,9 +40,6 @@ export const metadata: Metadata = {
   creator: "WebSQ",
   publisher: "WebSQ",
   metadataBase: new URL("https://www.websq.com.au"),
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "en_AU",
@@ -136,6 +133,11 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <link rel="apple-touch-icon" href="/favicon.svg" />
         <meta name="theme-color" content="#EAB308" />
+        <link
+          rel="preconnect"
+          href="https://images.unsplash.com"
+          crossOrigin=""
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}

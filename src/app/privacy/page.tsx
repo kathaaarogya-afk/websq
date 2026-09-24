@@ -4,6 +4,9 @@ import { ArrowLeft, Lock } from "lucide-react";
 export const metadata = {
   title: "Privacy Policy - WebSQ",
   description: "Privacy Policy for WebSQ storytelling community.",
+  alternates: {
+    canonical: "/privacy",
+  },
 };
 
 export default function PrivacyPage() {

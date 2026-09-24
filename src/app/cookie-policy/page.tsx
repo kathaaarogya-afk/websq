@@ -4,6 +4,9 @@ import { ArrowLeft, Cookie } from "lucide-react";
 export const metadata = {
   title: "Cookie Policy - WebSQ",
   description: "Cookie Policy for WebSQ storytelling community.",
+  alternates: {
+    canonical: "/cookie-policy",
+  },
 };
 
 export default function CookiePolicyPage() {
