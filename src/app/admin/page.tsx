@@ -11,6 +11,7 @@ import ManageCategories from "@/components/admin/ManageCategories";
 import ManageComments from "@/components/admin/ManageComments";
 import Analytics from "@/components/admin/Analytics";
 import NewsletterBroadcast from "@/components/admin/NewsletterBroadcast";
+import ContentPlanner from "@/components/admin/ContentPlanner";
 
 interface UserData {
   id: string;
@@ -477,6 +478,8 @@ function AdminPageContent() {
         );
       case "newsletter":
         return <NewsletterBroadcast />;
+      case "content-plan":
+        return <ContentPlanner />;
       default:
         return (
           <AdminOverview

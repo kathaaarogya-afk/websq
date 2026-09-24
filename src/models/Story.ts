@@ -17,6 +17,7 @@ export interface IStory extends Document {
   likesCount: number;
   commentsCount: number;
   bookmarksCount: number;
+  isUpgraded: boolean;
   createdAt: Date;
   updatedAt: Date;
   publishedAt?: Date;
@@ -94,6 +95,10 @@ const StorySchema = new Schema<IStory>(
     bookmarksCount: {
       type: Number,
       default: 0,
+    },
+    isUpgraded: {
+      type: Boolean,
+      default: false,
     },
     publishedAt: {
       type: Date,

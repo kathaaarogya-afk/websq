@@ -12,6 +12,7 @@ import {
   LogOut,
   Shield,
   Mail,
+  ClipboardCheck,
 } from "lucide-react";
 
 interface AdminSidebarProps {
@@ -64,6 +65,12 @@ const navItems = [
     label: "Newsletter",
     href: "/admin?tab=newsletter",
     tab: "newsletter",
+  },
+  {
+    icon: ClipboardCheck,
+    label: "Content Plan",
+    href: "/admin?tab=content-plan",
+    tab: "content-plan",
   },
 ];
 
