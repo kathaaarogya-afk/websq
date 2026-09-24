@@ -12,6 +12,11 @@ export const STORY_CATEGORIES = [
   "Health",
   "Inspiration",
   "Personal",
+  "Money",
+  "Productivity",
+  "Mental Health",
+  "Business",
+  "Sustainability",
 ] as const;
 
 export type StoryCategory = (typeof STORY_CATEGORIES)[number];

@@ -17,6 +17,11 @@ import {
   UserRound,
   SearchCheck,
   Megaphone,
+  Wallet,
+  Zap,
+  Flower2,
+  Rocket,
+  Leaf,
 } from "lucide-react";
 
 const categories = [
@@ -33,6 +38,11 @@ const categories = [
   { name: "Health", icon: Stethoscope, image: "/categories/health.jpg", bg: "from-green-500/80 to-green-600/80" },
   { name: "Inspiration", icon: Lightbulb, image: "/categories/inspiration.jpg", bg: "from-pink-500/80 to-pink-600/80" },
   { name: "Personal", icon: UserRound, image: "/categories/life.jpg", bg: "from-amber-500/80 to-orange-600/80" },
+  { name: "Money", icon: Wallet, image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop", bg: "from-emerald-500/80 to-green-600/80" },
+  { name: "Productivity", icon: Zap, image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&h=600&fit=crop", bg: "from-cyan-500/80 to-teal-600/80" },
+  { name: "Mental Health", icon: Flower2, image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=600&fit=crop", bg: "from-rose-500/80 to-pink-600/80" },
+  { name: "Business", icon: Rocket, image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=600&fit=crop", bg: "from-sky-500/80 to-blue-600/80" },
+  { name: "Sustainability", icon: Leaf, image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=600&fit=crop", bg: "from-green-500/80 to-emerald-600/80" },
 ];
 
 export default function Categories() {

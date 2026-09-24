@@ -4,6 +4,7 @@ import { connectDB } from "@/lib/mongodb";
 import User from "@/models/User";
 import Story from "@/models/Story";
 import Category from "@/models/Category";
+import Follow from "@/models/Follow";
 import { STORY_CATEGORIES } from "@/lib/categories";
 
 const categoryDescriptions: Record<string, string> = {
@@ -20,6 +21,11 @@ const categoryDescriptions: Record<string, string> = {
   Health: "Physical and mental wellbeing, the practical way.",
   Inspiration: "Ideas and encouragement to keep going.",
   Personal: "Personal reflections, honestly written.",
+  Money: "Practical money skills — budgets, saving, investing and smarter spending.",
+  Productivity: "Focus, systems and getting more done without burning out.",
+  "Mental Health": "Mindfulness, stress and the emotional side of everyday life.",
+  Business: "Starting and growing a business, side hustles and entrepreneurship.",
+  Sustainability: "Everyday steps towards a greener, more sustainable life.",
 };
 
 const authors = [
@@ -37,6 +43,11 @@ const authors = [
   { name: "Nina Sarwar", email: "nina@websq.com.au", bio: "Health and wellbeing writer with a practical approach.", role: "user" as const, image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&h=200&fit=crop&crop=face" },
   { name: "Grace Nguyen", email: "grace@websq.com.au", bio: "Writer on inspiration, motivation and perseverance.", role: "user" as const, image: "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=200&h=200&fit=crop&crop=face" },
   { name: "Jack Turner", email: "jack@websq.com.au", bio: "Honest personal essays on privacy, habits and self-discovery.", role: "user" as const, image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&h=200&fit=crop&crop=face" },
+  { name: "Rachel Kim", email: "rachel@websq.com.au", bio: "Money writer turning personal finance into plain, doable steps.", role: "user" as const, image: "https://images.unsplash.com/photo-1489424731084-a5d8b219a5bb?w=200&h=200&fit=crop&crop=face" },
+  { name: "Sam Whitfield", email: "sam@websq.com.au", bio: "Productivity writer obsessed with focus, systems and getting things done.", role: "user" as const, image: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=200&h=200&fit=crop&crop=face" },
+  { name: "Lily Chen", email: "lily@websq.com.au", bio: "Mental health and mindfulness writer with a gentle, practical style.", role: "user" as const, image: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&h=200&fit=crop&crop=face" },
+  { name: "Marcus Webb", email: "marcus@websq.com.au", bio: "Entrepreneur and writer covering business, side hustles and growth.", role: "user" as const, image: "https://images.unsplash.com/photo-1531891437562-4301cf35b7e4?w=200&h=200&fit=crop&crop=face" },
+  { name: "Isabella Moore", email: "isabella@websq.com.au", bio: "Sustainability writer sharing practical steps towards a greener life.", role: "user" as const, image: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=200&h=200&fit=crop&crop=face" },
 ];
 
 const stories = [
@@ -1576,6 +1587,666 @@ The apps are not evil; the dynamic is. Attention is the only currency we never g
     likesCount: 213,
     commentsCount: 61,
   },
+
+  // ===== 2026 TRENDING PICKS (one per category) =====
+  // ===== TECHNOLOGY (David Wilson) =====
+  {
+    title: "AI Laptops in 2026: What Actually Changed",
+    category: "Technology",
+    coverImage: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=800&h=600&fit=crop",
+    excerpt: "Every laptop is suddenly 'AI-powered'. I tested what that actually means for real work — and which promises are still marketing noise.",
+    content: `Every new laptop this year comes with an "AI" sticker. Are these machines genuinely better, or is it just a price bump? I spent a month with one. Here is the honest breakdown.
+
+## What the industry changed
+
+The hardware shifted in one meaningful way: a **neural processing unit (NPU)** is now standard. It is a dedicated chip for on-device AI tasks, and it changes what your laptop can do without a cloud connection.
+
+## What actually feels different
+
+- **Background tasks feel faster** — photo tagging, transcription and search now run locally.
+- **Battery life improved** — the NPU does AI work at a fraction of the power of the main CPU.
+- **Live captions and summaries** — near-real-time captions and meeting summaries come standard on decent machines.
+
+## What is still hype
+
+- **"AI file search"** — useful occasionally, rarely worth upgrading for.
+- **On-device AI image generation** — a fun demo, slow at real resolutions.
+- **Every "AI assistant" feature** — some are genuinely handy. Others are a branded search box.
+
+## Should you upgrade?
+
+| You are... | Verdict |
+|---|---|
+| On a laptop older than 4 years | Yes — battery and speed win |
+| Using AI tools daily | Yes — local AI is noticeably snappier |
+| Happy with your current machine | No — wait a cycle; prices are still dropping |
+
+## The honest takeaway
+
+The NPU is the most significant hardware change in laptops since solid-state drives went mainstream. But like every transition, the first generation is overpriced. Need a new machine? Buy one with an NPU in it — just do not pay a premium for the sticker.`,
+    author: 2,
+    views: 1024,
+    likesCount: 218,
+    commentsCount: 54,
+  },
+
+  // ===== AI (Alex Morgan) =====
+  {
+    title: "AI Agents, Explained Without the Hype",
+    category: "AI",
+    coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=600&fit=crop",
+    excerpt: "AI agents are 2026's biggest buzzword — and the least understood. Here is what they actually do, where they help, and where they cost you.",
+    content: `Every tech announcement this year ends with the word **agent**. Booking travel, writing code, filing expenses — "the agent does it". But what is an agent, really, and when is trusting one a bad idea?
+
+## Chatbot vs agent
+
+A **chatbot** answers when you ask. An **agent** is given a goal and then *performs a series of steps* to reach it — searching, deciding, clicking, retrying — before reporting back.
+
+| | Chatbot | Agent |
+|---|---|---|
+| When it acts | After every prompt | Once given a goal |
+| Control | You steer each step | You steer the goal |
+| Best for | Answers, drafts | Multi-step chores |
+| Biggest risk | Wrong answer | Wrong *action* |
+
+## Where agents genuinely help
+
+- **Summarising** a month of spreadsheets and flagging outliers
+- **Drafting and sending** routine emails or follow-ups
+- **Researching** a topic across sources and organising the notes
+
+## Where they burn you
+
+- **Anything involving money moving** — double-check every step
+- **Anything public-facing** — one wrong tone means a real apology
+- **Anything irreversible** — deletes, publishes, commits
+
+## The rule I use
+
+> Let the agent do the first 80% of a boring task. Be the 20% that verifies before anything becomes permanent.
+
+## The 2026 reality
+
+Agents are not magic; they are automation that makes mistakes faster. Used as a ruthless time-saver for low-stakes chores, they are brilliant. Treated as a delegate for anything that matters, they will eventually cost you. Keep the parent in the loop — that part is still your job.`,
+    author: 4,
+    views: 1187,
+    likesCount: 264,
+    commentsCount: 71,
+  },
+
+  // ===== WEB DEVELOPMENT (Chris Patel) =====
+  {
+    title: "Vibe Coding Is Real: I Built a Working App From Prompts",
+    category: "Web Development",
+    coverImage: "https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=800&h=600&fit=crop",
+    excerpt: "In 2026 you can describe an app in plain English and get working code. I did it — and here is what surprised me, what broke, and what I had to review by hand.",
+    content: `This year I built a real, usable web app without writing most of the code myself. I described what I wanted in plain English and the AI handled the rest. Here is the honest field report.
+
+## What "vibe coding" actually is
+
+You give an AI assistant a goal — "a simple habit tracker with a weekly view" — and it writes the code, styling and structure. You steer with follow-ups: "make it darker", "add a reset button".
+
+## What surprised me
+
+- **It is genuinely fast.** What took me a weekend now takes an afternoon.
+- **The code is decent.** For a small app: clean, commented, mostly idiomatic.
+- **Debugging is conversational.** "It breaks when I clear the list" — and it fixes itself.
+
+## What frustrated me
+
+- **The bill.** Long sessions burn tokens fast. Set a budget.
+- **The codebase bubble.** Beyond a few files, context starts slipping and you get contradictions.
+- **Security.** AI writes 90% correct code. The missing 10% is auth edge cases and injection. **Never ship AI code untested.**
+
+## My rules now
+
+1. Use AI for the first version; review carefully before the second.
+2. Keep apps small — one screen, one job.
+3. You still must understand the code you ship.
+
+## The verdict
+
+Vibe coding does not replace developers, exactly — it removes the *grunt work* developers hate. The skill that matters now is describing the problem precisely and reviewing what comes back. That skill is still called development. It just looks different.`,
+    author: 5,
+    views: 943,
+    likesCount: 201,
+    commentsCount: 48,
+  },
+
+  // ===== SEO (Amanda Reyes) =====
+  {
+    title: "SEO in the AI Search Era: Ranking When Google Answers the Question",
+    category: "SEO",
+    coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=800&h=600&fit=crop",
+    excerpt: "More searches than ever end without a single click. Here is how to stay visible when AI Overviews and answer engines sit between you and the reader.",
+    content: `The headline everyone quotes in 2026: a large share of searches never click a result anymore. Google's AI Overview answers the question right on the page. So does ranking still matter? Extremely — just differently.
+
+## What changed
+
+Search is now two experiences in one:
+
+- **Answer mode** — an AI summary at the top, built from *citations*
+- **Browse mode** — traditional results, which now get *fewer clicks*
+
+## What this means for you
+
+### 1. Get quoted, not just ranked
+
+AI systems pick answers from pages they trust and **cite sources**. Being one of the cited pages in an AI summary is the new "page one".
+
+### 2. Write things AI systems can quote
+
+- Clear definitions in the first paragraph
+- Numbered lists and steps
+- Direct answers to the "how/what/why" people actually type
+- Original data and honest opinions — answer engines skip generic content
+
+### 3. Build trust like always, but louder
+
+AI models mirror human trust signals: transparent authorship, fresh content, real citations, and sites real people link to.
+
+## The checklist
+
+- [ ] Answer the question in the first 100 words
+- [ ] One clear topic per page
+- [ ] Original stats or a strong opinion
+- [ ] Keep humans clicking — even if AI is quoting you
+
+## The takeaway
+
+You cannot game the AI answer box. You win it by writing so clearly and trustworthily that any honest system — human or model — would rather cite you than risk being wrong. Same strategy as 2015, same strategy as 2035.`,
+    author: 6,
+    views: 867,
+    likesCount: 187,
+    commentsCount: 39,
+  },
+
+  // ===== DIGITAL MARKETING (Priya Sharma) =====
+  {
+    title: "AI-Generated Ads: What Works and What Kills a Brand",
+    category: "Digital Marketing",
+    coverImage: "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=800&h=600&fit=crop",
+    excerpt: "AI can write an ad in ten seconds. Whether it sells — or silently devalues your brand — comes down to one thing. It is not the tool.",
+    content: `Cheap AI content means everyone can now *produce* — so the premium has moved to *perspective*. Here is how to use AI for marketing without sounding like every other brand.
+
+## The trap
+
+> "Write ten ad variations for our product."
+
+What you get back is text that is grammatically perfect and strategically empty. Every competitor with a prompt gets the same.
+
+## What actually works
+
+### 1. Feed AI your voice
+
+Give the tool five of your best past posts and ask it to match *your* tone, not generic marketing-speak. It mimics surprisingly well when it has real examples.
+
+### 2. Use AI for the blank page
+
+The cheapest, highest-value use: brainstorm headings, list pain points, draft first versions. Then **edit like a human** — add the specific detail only you know.
+
+### 3. Test at speed
+
+AI slashes the cost of variations. Run five versions, keep the winner, throw away the rest. This is where AI genuinely pays.
+
+## What kills a brand
+
+- **Copied, unedited AI copy** — readers now notice the "AI voice" instantly
+- **Fake trust** — fake testimonials, fake stats, fabricated before-and-afters. Platforms and people are both punishing this
+- **Zero differentiation** — if your whole industry can press the same button, your only edge is taste
+
+## The rule
+
+> AI writes faster. You write better. The brand is the better.
+
+Use the speed for volume, the editing for soul, and never ship anything you would not proudly sign your name to.`,
+    author: 7,
+    views: 779,
+    likesCount: 164,
+    commentsCount: 33,
+  },
+
+  // ===== EDUCATION (Emily Brown) =====
+  {
+    title: "How to Actually Learn Online in 2026",
+    category: "Education",
+    coverImage: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop",
+    excerpt: "More courses, more AI tutors, more content than anyone can watch. The skill that matters now is learning deliberately. Here is a method that survives.",
+    content: `In 2026 the problem is not finding information; it is *selecting and retaining* it. I have spent years teaching and many more learning badly. The method below finally stuck.
+
+## The two killer habits
+
+1. **Watching is not learning.** Courses feel productive; only doing something locks it in.
+2. **Collecting is not learning.** A saved video is content you paid attention to for zero minutes.
+
+## The method
+
+| Step | What you do | Time |
+|---|---|---|
+| 1. Narrow the skill | One skill, small enough to finish this week | 10 min |
+| 2. Pick one source | Not "all the courses" — one focused one | 10 min |
+| 3. Do, don't watch | Build something with what you saw | most of it |
+| 4. Teach it | Explain it in writing or to someone | 15 min |
+
+## Why it works
+
+- A small goal has a finish line; big goals get abandoned
+- Teaching forces the parts you *thought* you knew into the open
+- Doing creates the mistakes that make the next thing click
+
+## Using AI without cheating yourself
+
+A good tutor asks *you* questions. Use AI the same way — "quiz me on this", "what did I get wrong", "explain that step again". Answering is active; generating genuinely *is* the learning.
+
+## One line to remember
+
+> The feed gives you awareness. Only deliberate practice gives you skill.`,
+    author: 3,
+    views: 705,
+    likesCount: 149,
+    commentsCount: 31,
+  },
+
+  // ===== LIFE (Sarah Johnson) =====
+  {
+    title: "The Joy of Slow Weekends",
+    category: "Life",
+    coverImage: "https://images.unsplash.com/photo-1452421822248-d4c2b47f0c81?w=800&h=600&fit=crop",
+    excerpt: "No plans, no 'productive' projects, no guilt. After a year of deliberately slow weekends, here is everything I gained — and none of what I feared losing.",
+    content: `<p>For months, my weekends looked like weekdays with worse outfits. Lists. Laundry. Side projects I "owed myself". By Sunday night I was more tired than on Friday, and I could not remember a single good moment.</p><p>So I made a strange decision: I would stop doing. For two days a week, I would have no agenda. No projects. No optimising. Just being — a walk, a long breakfast, a book, a nap I would not apologise for.</p><p>The first weekend was unbearable. That is not an exaggeration. My hands kept reaching for my phone, for my list, for something to do. Doing nothing felt like failing at being alive.</p><p>By the third weekend, something shifted. I sat on the balcony in the afternoon and watched the light move across the street for a whole hour. I did not check anything. I just watched. And I felt something I had not felt in years: rest — the deep kind, not the recharge-your-battery-for-Monday kind.</p><p>The slow weekends did not ruin me. My laundry still gets done — during the week, when utilities are actually cheaper anyway. My projects still exist; they just wait patiently, and I am sharper when I return to them.</p><p>What they gave me back was proportion. I remembered that a life is not a performance, and that I am allowed to simply enjoy mine. Sunday night once filled me with dread. Now it feels like the soft landing at the end of two days that belonged completely to me.</p><p>Try one slow weekend. Not a digital detox with goals. Not a reset for productivity. Just two days where you are a person, not an output. The doing can wait.</p>`,
+    author: 1,
+    views: 834,
+    likesCount: 192,
+    commentsCount: 47,
+  },
+
+  // ===== FAMILY (Liam O'Connor) =====
+  {
+    title: "A Calm Tech Household: Screen Rules That Actually Stuck",
+    category: "Family",
+    coverImage: "https://images.unsplash.com/photo-1529636798458-92182e662485?w=800&h=600&fit=crop",
+    excerpt: "We tried app timers, shouting and cold turkey. What finally worked was boring, unpopular at first — and has quietly held for a year.",
+    content: `<p>For a long time, screens were the humming centre of our household. The kids watched; we checked; nobody was really together. Every attempt to change it failed: the app timers were ignored, the lectures were tuned out, and the "no screens" weekends collapsed by Saturday afternoon.</p><p>Then, one night, my daughter asked me a question I did not have an answer to: "What do we do instead?"</p><p>She was right. We had made rules about what was not allowed and never once built in a good alternative. So we stopped banning things and started replacing them.</p><p>We agreed on three small, unglamorous habits.</p><p>First, dinner stays screen-free — for all of us, parents included. It sounded easy. It was the hardest rule we have. That first week there was actual silence at the table before someone nervously remembered something from their day.</p><p>Second, phones sleep in the kitchen. Not a lockbox, not a lecture — the phone of every single person in this house charges overnight in a basket by the kettle. It sounds too simple to matter. It matters more than everything else we tried.</p><p>Third, one screen-free hour on Sunday. We play cards, or walk, or cook something we have never made before. The kids moan for exactly eleven minutes. Then, without exception, they get absorbed.</p><p>None of this makes us a "tech-free family". We are not. But the balance is ours again. The kids watch shows; we watch with them sometimes. We ask what they saw online the way we ask about school. That single conversation — curiosity replacing judgment — did more than every rule combined.</p><p>The devices did not ruin our family. They just tried to rent our time. We took it back, a basket and an ordinary Sunday afternoon at a time.</p>`,
+    author: 8,
+    views: 662,
+    likesCount: 143,
+    commentsCount: 29,
+  },
+
+  // ===== CAREER (Maria Gonzalez) =====
+  {
+    title: "How to Switch Careers Without Starting From Zero",
+    category: "Career",
+    coverImage: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&h=600&fit=crop",
+    excerpt: "You do not have to restart, take the junior salary, or climb a new ladder from the bottom. Here is the transferable-skill playbook that actually worked for me.",
+    content: `The scariest part of changing careers is the image: back to square one, entry salary, proving yourself for years. It is mostly wrong. I changed industries at 34 and climbed *across*, not down.
+
+## The three-part move
+
+### 1. Translate what you already do
+
+Nobody wants "I answered customer emails". Everyone wants "I resolved 40+ daily issues and cut complaint spikes by keeping a weekly root-cause log". Write your past in the language of outcomes — those transfer everywhere.
+
+### 2. Choose a bridge, not a pit
+
+Rather than quitting everything to study for a year, find the **overlap**: the role in your target field where your current skills already pay. For me it was moving from operations into product — the title changed, the "getting things shipped through other people" skill did not.
+
+### 3. Prove the skill, not the certificate
+
+A certificate shows you watched. A small project shows you *can*. Build one visible thing in your new field — a portfolio page, a side project, a documented experiment. It doubles as your answer in every interview.
+
+## The rules
+
+- **Network before you apply** — most good career moves start with a conversation, not a form
+- **Keep income flowing** — switch jobs, do not restart from zero: negotiate on experience
+- **Expect a two-year curve** — competent quickly, expert after effort; do not panic in the first six months
+
+## The truth
+
+Employers increasingly hire for what you can do next, not what your last title said. Your history is not a handicap — it is the collection of transferable skills you have already paid for. Go sell them somewhere that pays more.`,
+    author: 9,
+    views: 940,
+    likesCount: 204,
+    commentsCount: 51,
+  },
+
+  // ===== TRAVEL (Tom Bennett) =====
+  {
+    title: "Slow Travel: Why 5 Days in One City Beats 5 Cities in 10 Days",
+    category: "Travel",
+    coverImage: "https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=800&h=600&fit=crop",
+    excerpt: "Overtourism is squeezing entire neighbourhoods and I was part of the problem. Two slow trips later, I am never rushing again — and neither are the locals.",
+    content: `We have all done a version of the whistle-stop tour: five photos, four countries, three airports, and one memory — exhaustion. In 2026, travellers everywhere are quietly rebelling, and the word is **slow travel**.
+
+## What slow travel is
+
+Staying longer in fewer places. Ten days in one city instead of two days in five. It sounds like doing less. It gives you the trip your photos could never imitate.
+
+## What you actually gain
+
+- **The local time.** Rushing forces tourist traps; staying lets you find the bakery the neighbourhood actually queues for.
+- **Real rest.** A relaxing holiday full of trains and schedules fights itself. Slow travel is the difference between a slideshow and a feeling.
+- **Lighter impact.** Overtourism hollows out cities — short stays that arrive by cruise and leave at sunrise pay the least and cost the most. Longer stays spread money through the community properly.
+
+## How to try it cheaply
+
+1. **Pick one place with a reason** — a festival, a cuisine, a friend, a book you loved
+2. **Rent, cook, commute** — groceries and buses are both half experience, half saving
+3. **Do nothing on purpose** — a slow morning is an event, not a gap
+4. **Return instead of expand** — revisiting a city you loved beats a new one you will forget
+
+## The honest maths
+
+A six-city dash gives you six average memories. Five long days in one place give you permanence — the street name you remember, the regular who nods at your table, the morning you want to repeat next year.
+
+Wherever you go next, go slower. The cities will thank you. So will the version of you who comes back.`,
+    author: 10,
+    views: 1102,
+    likesCount: 236,
+    commentsCount: 59,
+  },
+
+  // ===== HEALTH (Nina Sarwar) =====
+  {
+    title: "Muscle Is Underrated Medicine: Strength Training for Longevity",
+    category: "Health",
+    coverImage: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=800&h=600&fit=crop",
+    excerpt: "Doctors keep prescribing the most underrated health habit of our time. You do not need a gym membership — you need a plan and a pillow.",
+    content: `Cardio gets the glory. Strength training saves you — quietly — in the decades most people are not thinking about. Here is the case, and a two-session-a-week plan almost anyone can manage.
+
+## Why muscle matters as you age
+
+From around 30 you lose a little muscle every year, and it accelerates if you do nothing. This matters because muscle is not just for looks:
+
+- **It moves glucose** — more muscle means steadier blood sugar
+- **It protects your bones** — the stress of strength work keeps them dense
+- **It keeps you independent** — standing, lifting and walking are partly a muscle equation
+- **Grip strength is a real health signal** — it predicts later health better than most people realise
+
+## The minimum plan
+
+| Session | Work | Effort |
+|---|---|---|
+| 1 (Mon) | Squats, push-ups (or wall), rows | 2 sets to near-fatigue |
+| 2 (Thu) | Lunges, overhead press, plank | 2 sets to near-fatigue |
+
+- Choose **bodyweight first** — no equipment needed
+- **Progression beats perfection** — add reps or switch to harder variations each month
+- **Protein matters** — roughly a palm-sized portion at each meal; you cannot build without bricks
+
+## The practical rule
+
+> Train hard enough that the last rep is a struggle, twice a week, forever.
+
+Two honest 30-minute sessions are enough. Missing a week is a pause, not a failure. At 60 you will thank the version of you who squatted in the living room.`,
+    author: 11,
+    views: 1254,
+    likesCount: 287,
+    commentsCount: 74,
+  },
+
+  // ===== INSPIRATION (Grace Nguyen) =====
+  {
+    title: "Start Before You Feel Ready",
+    category: "Inspiration",
+    coverImage: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=600&fit=crop",
+    excerpt: "We wait for a sign, a perfect moment, or permission. It never arrives. Here is what happened when I started everything I kept postponing.",
+    content: `We tell ourselves a comfortable lie: *I will start when I feel ready*. The readiness never comes — because feeling ready is not a door, it is a feeling. This is what changed when I stopped waiting for it.
+
+## The myth of the right moment
+
+Every project I ever abandoned waited for the same thing: a clean slate, more time, fewer doubts. Meanwhile the doubts followed me around and the clean slate never showed up. Ready was a state other people appeared to reach; I just never woke up in it.
+
+## What I did instead
+
+I chose one small thing — a blog I had been planning for a year — and I published a rough first post. Not a strategy. Not a perfect draft. A post.
+
+And here is the part nobody warns you about: starting is not where you need the courage. Working out with poor form, writing with an imperfect outline, selling with a shaky script — you can survive all of it. The only place you cannot grow is inside your own head, waiting.
+
+## The loop that replaced waiting
+
+1. Start small enough that "not ready" is a lie
+2. Ship it while it still embarrasses you a little
+3. Get feedback, improve, repeat
+
+## The permission you are waiting for
+
+It does not come from a course, a mentor, or a green light. It comes from the first imperfect attempt — the moment you become someone who *does the thing* rather than someone who is merely planning it.
+
+> Readiness is the distance between your plans and your hands. Shorten it yourself.
+
+You will not feel ready. Start anyway — the feeling follows, it does not lead.`,
+    author: 12,
+    views: 1443,
+    likesCount: 312,
+    commentsCount: 88,
+  },
+
+  // ===== PERSONAL (Jack Turner) =====
+  {
+    title: "How I Learned to Be Bored Again",
+    category: "Personal",
+    coverImage: "https://images.unsplash.com/photo-1508672019048-805c876b67e2?w=800&h=600&fit=crop",
+    excerpt: "I filled every idle second with a feed for a decade. When I let boredom back in, my brain returned something I had forgotten it owned: itself.",
+    content: `<p>I could not remember the last time I was bored. That sounds like a boast. It is a confession. Every waiting room, bus ride and quiet minute got filled with a feed — so perfectly, so relentlessly, that my brain never once had to sit in a silent queue with itself.</p><p>Then a colleague challenged something small: leave the phone at home on walks. Not a detox. Not goal-based meditation. Just walk, and be bored.</p><p>The first walk was agony in a mundane costume. My hand kept drifting for a phone that was not there. My thoughts circled my to-do list like a lost dog. I almost turned back.</p><p>And then — maybe on the third walk, maybe the fourth — the noise thinned out. My brain, starved of stimulation, began to produce its own. I noticed how the light hit a window I had passed a hundred times. I remembered a conversation from years ago and, bizarrely, understood it better now. I had an idea — not a good one, but mine, and it had arrived on its own, without being summoned by a notification.</p><p>That was the tell. Creativity, it turns out, is not an activity you schedule. It is what your mind does in the gaps — the gaps we have all been industriously filling for a decade.</p><p>I have not quit my phone. But I deliberately leave holes in my day now: walks with nothing in my hands, queue time that is just queue time, ten minutes of staring at the ceiling before I sleep. They feel wasted. That is the point exactly.</p><p>Boredom was never the enemy. It was the quiet room my brain needed all along — and the bolder I let it be, the more of myself I get back.</p>`,
+    author: 13,
+    views: 985,
+    likesCount: 221,
+    commentsCount: 55,
+  },
+
+  // ===== MONEY (Rachel Kim) =====
+  {
+    title: "Your First Investment: A No-Jargon Guide for 2026",
+    category: "Money",
+    coverImage: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop",
+    excerpt: "Investing sounds like a club with a secret handshake. It is not. Here is the order of operations — debt, emergency fund, then a boring index fund you actually understand.",
+    content: `Everyone with a finance account makes investing feel complicated so you buy their course. The real version is short, unglamorous and very boring. Here it is.
+
+## The order of operations
+
+Do these in order. Not in the order that feels exciting.
+
+1. **Pay off expensive debt** — anything above roughly 8% interest is a guaranteed return to eliminate first
+2. **Build an emergency fund** — 3–6 months of expenses in a savings account, not in shares
+3. **Invest the rest, monthly, on autopilot**
+
+## The boring part (the point)
+
+| Choose | Instead of |
+|---|---|
+| A low-cost index fund that tracks the whole market | Whatever is trending this week |
+| Monthly, automatic contributions | Timing the market |
+| Decades as the horizon | Checking the price daily |
+
+## The "how" in plain steps
+
+1. Open an account with a reputable, low-fee provider
+2. Pick a broad index fund or ETF — you are buying the entire market
+3. Set a monthly amount you will not feel — even $100 counts
+4. Ignore it. Look again in a year.
+
+## The mistakes that cost real people
+
+- **Chasing last week's winner** — by the time you hear about it, it is already priced in
+- **Cashing out when it drops** — downturns are the sale rack, not the exit sign
+- **Buying "AI coin" or hype assets** — treat anything you cannot explain in two sentences as gambling money
+
+## The honest expectation
+
+The market will zigzag. That is the price of admission, and it is worth it. Do not expect to beat it; expect to *join* it. The boring version wins over decades — mostly by letting consistent contributions and compounding do the heavy lifting. Start small. Start boring. Start today.`,
+    author: 14,
+    views: 1210,
+    likesCount: 275,
+    commentsCount: 68,
+  },
+
+  // ===== PRODUCTIVITY (Sam Whitfield) =====
+  {
+    title: "Deep Work in the Most Distracted Decade: A Practical System",
+    category: "Productivity",
+    coverImage: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&h=600&fit=crop",
+    excerpt: "Focus is not a personality trait; it is a setup problem. This is the system I built after failing every stylish productivity hack — one timer and closed tab at a time.",
+    content: `I have tried every focus method that trends online. The ones that survived are embarrassingly simple and aggressively boring. Here is the system that finally worked — not because it is clever, but because it removes the *need* for willpower.
+
+## Spend willpower on the setup, not the session
+
+The days I am productive are decided the night before. Twenty minutes of preparation beats two hours of white-knuckle discipline:
+
+- Pick tomorrow's **one** deep task (not five)
+- Close the browser tabs you do not need
+- Put the phone in another room — not face-down on the desk, another *room*
+
+## The 90/90 method
+
+| Element | Rule |
+|---|---|
+| Block | 90 minutes, one task |
+| Alarm | On, so you stop *worrying* about overrunning |
+| Break | 20 minutes away from the screen, phone optional |
+| Loop | 2 blocks max, then switch to shallow work |
+
+## The three honest rules
+
+1. **One tab, one document, one task.** Multitasking is not speed; it is paying a switching tax on every task.
+2. **Interruptions are a schedule problem.** Not a self-control problem — tell people when your deep hours are, and batch replies instead of answering instantly.
+3. **Energy beats time.** Guard your deep hours for when you think best. A distracted early-morning hour is nothing; a protected 10 a.m. hour can hold a whole week of progress.
+
+## When it still falls apart
+
+It will. That is not failure; it is the system reminding you the setup slipped. Reset the night before the same boring way — the pre-game that also wins the games you play on bad days.
+
+> Good systems survive the days you have no motivation. That is the entire point.`,
+    author: 15,
+    views: 1088,
+    likesCount: 243,
+    commentsCount: 61,
+  },
+
+  // ===== MENTAL HEALTH (Lily Chen) =====
+  {
+    title: "A 10-Minute Daily Reset for an Anxious Week",
+    category: "Mental Health",
+    coverImage: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=600&fit=crop",
+    excerpt: "You do not need a retreat to stabilise a rough week. Four short, science-backed tools — ten minutes total — that I use myself and recommend to friends.",
+    content: `Some weeks the noise inside is louder than anything outside. The expert answers are therapy, sleep and movement — all true and all slow. Here is the quick manual I keep for the days in between, ten minutes to loosen the grip.
+
+## 1. Name it (2 minutes)
+
+"Anxious about the meeting", not just "stressed". Naming the emotion — *this is worry, and it is about X* — genuinely calms the alarm. Write one sentence if it helps. Labelling turns a fog into a weather report, and you can plan around a report.
+
+## 2. Breathe the long exhale (3 minutes)
+
+Box breathing — four counts in, hold, out, hold. Or the deceptively simple **longer exhale**: a slow breath in, an even slower breath out. Your exhale is the brake pedal; making it longer than your inhale physically lowers your heart rate. Three minutes of long out-breaths is the cheapest tranquilliser there is.
+
+## 3. Scan your shoulders (2 minutes)
+
+Anxiety lives in your body before it reaches your thoughts. Do a ten-second body check: jaw, shoulders, hands. Drop them. Most of us carry the day's tension in our shoulders and never once tell them to put it down. Unclench today; it is a full-body permission slip.
+
+## 4. Walk without input (3 minutes)
+
+No podcast. No phone. Just feet and road. Your brain needs a window with no streams, and a few minutes of unfilled walking is exactly that window. It is not laziness. It is maintenance.
+
+## The honest note
+
+These tools reduce the pressure; they do not put out a fire that has a deeper cause. If the anxious weeks stack into months, the professional help you keep postponing is a real appointment to make. Use the ten minutes — and give yourself the deeper support the bad weeks deserve.`,
+    author: 16,
+    views: 1321,
+    likesCount: 298,
+    commentsCount: 82,
+  },
+
+  // ===== BUSINESS (Marcus Webb) =====
+  {
+    title: "Side Hustles That Actually Make Money in 2026",
+    category: "Business",
+    coverImage: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=600&fit=crop",
+    excerpt: "A side hustle is a business with the training wheels still on. Here is the honest shortlist — skill-based, low-cost, and with demand you can check before you quit anything.",
+    content: `A side hustle is a business with the training wheels still on. Most fail for the same reason: they sell something nobody asked for. Here is the honest shortlist for 2026 — skill-based, low-cost, and with verifiable demand first.
+
+## The ideas with real demand
+
+| Idea | Start-up cost | Why it works now |
+|---|---|---|
+| Freelance service (writing, design, admin, SEO) | ~$0 | Businesses outsource what their own team does not cover |
+| AI-training and process help | ~$100 | Companies pay for humans to run their AI tools well |
+| Niche local service | ~$200 | Communities pay for reliability, not virality |
+| Digital product in a niche you know | ~$50 | Build once, sell repeatedly |
+
+## The pattern that predicts success
+
+- **Demand before product** — can you find people complaining about this problem *today*? If not, the idea is a hobby
+- **One clear customer** — "everyone" is a plan to reach no one
+- **Skills you already have** — the fastest side hustle is a service your day job already trained you for
+
+## The numbers to check first
+
+1. Can you name ten real people who would pay?
+2. Can they find you — are they searching somewhere you can reach?
+3. Does the price cover your time and a real margin?
+
+If all three are yes, the idea has legs. If unsure, run the cheapest test: offer the service to two people this week and watch the money move.
+
+## The rules that keep it sane
+
+- **Protect the day job** until the side hustle reliably pays a month of bills — twice
+- **Time-box it** — one protected evening a week keeps the goal from consuming you
+- **Automate the boring parts early** — a simple form, a calendar, a saved template
+
+## Honest closing
+
+A side hustle is tuition to learn how money works in your industry. Most hustles earn little; the *skill of trying* pays forever. Start small, listen to customers harder than you listen to trends, and let the second business be the one people actually pay for.`,
+    author: 17,
+    views: 956,
+    likesCount: 210,
+    commentsCount: 47,
+  },
+
+  // ===== SUSTAINABILITY (Isabella Moore) =====
+  {
+    title: "A Beginner's Guide to a Low-Waste Home",
+    category: "Sustainability",
+    coverImage: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=600&fit=crop",
+    excerpt: "You do not need to go zero-waste on day one. Three small, real swaps cut your bin load — and your guilt — without turning your kitchen into a Pinterest project.",
+    content: `Low-waste living has a reputation for being expensive and slightly smug. The useful version is cheaper, easier and quieter: it starts with *using less* rather than *buying more*. Here is the beginner's route.
+
+## The order matters: refuse first
+
+The waste hierarchy beats any container aisle:
+
+1. **Refuse** — say no to the free bag, the straw, the flyer
+2. **Reduce** — buy the amount that actually gets used
+3. **Reuse** — the jar, the bag, the box, again
+4. **Recycle** — last of all, because recycling still consumes energy
+
+## The three swaps that actually matter
+
+### 1. Carry the reusable bag — and mean it
+
+One bag in every jacket pocket. It sounds trivial; it removes the single most common piece of waste from your day.
+
+### 2. Buy loose and in bulk
+
+A decade ago "bulk" meant giant packs. Now it often means buying per item from bulk bins — paying for the food, not the packaging. Even the deli and bakery counters cut packaging if you bring containers.
+
+### 3. Start a rough compost bin
+
+Organic waste is around a third of most household bins. A small countertop bin plus a garden pile — or, failing that, a council green bin — removes the heaviest, smelliest slice of your landfill load.
+
+## What to skip
+
+- **Guilt marketing** — you do not need another "sustainable" tote; use the ones you already own
+- **The discount trap** — buying twelve glass jars for the aesthetic is not low-waste
+- **Perfectionism** — a plastic-wrapped emergency still counts as a mostly good week
+
+## The measure that matters
+
+Do not count "zero-waste days". Watch one number: **your bin, over a month**. That is the honest, motivating, self-forgiving metric. A smaller bag next month is the entire point — and it is a habit that quietly pays back in money, space and a cleaner conscience.`,
+    author: 18,
+    views: 873,
+    likesCount: 189,
+    commentsCount: 42,
+  },
 ];
 
 export async function GET() {
@@ -1673,8 +2344,45 @@ async function seedDatabase() {
       created++;
     }
 
+    // ===== Follows: existing writers follow the new writers; new writers follow each other =====
+    let followCount = 0;
+    const ensureFollow = async (
+      follower: { _id: { toString: () => string } },
+      following: { _id: { toString: () => string } }
+    ) => {
+      if (!follower || !following) return;
+      if (follower._id.toString() === following._id.toString()) return;
+      const existing = await Follow.findOne({
+        follower: follower._id,
+        following: following._id,
+      });
+      if (!existing) {
+        await Follow.create({ follower: follower._id, following: following._id });
+        await User.updateOne({ _id: follower._id }, { $inc: { followingCount: 1 } });
+        await User.updateOne({ _id: following._id }, { $inc: { followersCount: 1 } });
+        followCount++;
+      }
+    };
+
+    const existingWriterIndices = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13];
+    const newWriterIndices = [14, 15, 16, 17, 18];
+
+    for (const existingIdx of existingWriterIndices) {
+      for (const newIdx of newWriterIndices) {
+        await ensureFollow(createdAuthors[existingIdx], createdAuthors[newIdx]);
+      }
+    }
+
+    for (let i = 0; i < newWriterIndices.length; i++) {
+      for (let j = 0; j < newWriterIndices.length; j++) {
+        if (i !== j) {
+          await ensureFollow(createdAuthors[newWriterIndices[i]], createdAuthors[newWriterIndices[j]]);
+        }
+      }
+    }
+
     return NextResponse.json({
-      message: `Seeded ${created} stories (${updated} updated, ${skipped} matched existing)`,
+      message: `Seeded ${created} stories (${updated} updated, ${skipped} matched existing); ${followCount} follows created`,
       authors: createdAuthors.map((a) => a.name),
     });
   } catch (error: unknown) {

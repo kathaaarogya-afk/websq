@@ -17,6 +17,11 @@ import {
   UserRound,
   SearchCheck,
   Megaphone,
+  Wallet,
+  Zap,
+  Flower2,
+  Rocket,
+  Leaf,
 } from "lucide-react";
 
 const categories = [
@@ -136,6 +141,51 @@ const categories = [
     icon: UserRound,
     color: "#F59E0B",
     bg: "from-amber-500/80 to-orange-600/80",
+  },
+  {
+    name: "Money",
+    slug: "money",
+    description: "Practical money skills, budgets, saving and investing.",
+    image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop",
+    icon: Wallet,
+    color: "#10B981",
+    bg: "from-emerald-500/80 to-green-600/80",
+  },
+  {
+    name: "Productivity",
+    slug: "productivity",
+    description: "Focus, systems and getting things done without burnout.",
+    image: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=800&h=600&fit=crop",
+    icon: Zap,
+    color: "#06B6D4",
+    bg: "from-cyan-500/80 to-teal-600/80",
+  },
+  {
+    name: "Mental Health",
+    slug: "mental-health",
+    description: "Mindfulness, stress and the emotional side of daily life.",
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800&h=600&fit=crop",
+    icon: Flower2,
+    color: "#F43F5E",
+    bg: "from-rose-500/80 to-pink-600/80",
+  },
+  {
+    name: "Business",
+    slug: "business",
+    description: "Starting and growing a business, side hustles and entrepreneurship.",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=600&fit=crop",
+    icon: Rocket,
+    color: "#0EA5E9",
+    bg: "from-sky-500/80 to-blue-600/80",
+  },
+  {
+    name: "Sustainability",
+    slug: "sustainability",
+    description: "Everyday steps towards a greener, more sustainable life.",
+    image: "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=600&fit=crop",
+    icon: Leaf,
+    color: "#22C55E",
+    bg: "from-green-500/80 to-emerald-600/80",
   },
 ];
 
