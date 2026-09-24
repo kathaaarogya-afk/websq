@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { connectDB } from "@/lib/mongodb";
 import Story from "@/models/Story";
+import "@/models/User";
 import StoryViewer from "./StoryViewer";
 
 interface PageProps {
@@ -33,6 +34,54 @@ async function getPublishedStory(slug: string) {
   } catch {
     return null;
   }
+}
+
+function serializeStory(story: {
+  _id: unknown;
+  title: string;
+  slug: string;
+  content: string;
+  excerpt: string;
+  category: string;
+  coverImage: string;
+  images?: string[];
+  likesCount: number;
+  commentsCount: number;
+  views: number;
+  author?: {
+    _id?: unknown;
+    name?: string;
+    image?: string;
+    bio?: string;
+    followersCount?: number;
+  };
+  createdAt?: Date;
+  updatedAt?: Date;
+}) {
+  return {
+    _id: String(story._id),
+    title: story.title,
+    slug: story.slug,
+    content: story.content,
+    excerpt: story.excerpt,
+    category: story.category,
+    coverImage: story.coverImage,
+    images: (story.images || []).filter(Boolean),
+    likesCount: story.likesCount,
+    commentsCount: story.commentsCount,
+    views: story.views,
+    author: {
+      _id: story.author
+        ? String(story.author._id || (story.author as unknown))
+        : "",
+      name: story.author?.name || "WebSQ",
+      image: story.author?.image || "",
+      bio: story.author?.bio || "",
+      followersCount: story.author?.followersCount || 0,
+    },
+    createdAt: story.createdAt?.toISOString?.() || "",
+    updatedAt: story.updatedAt?.toISOString?.() || "",
+  };
 }
 
 export async function generateMetadata({
@@ -145,7 +194,7 @@ export default async function StoryPage({ params }: PageProps) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
         />
-        <StoryViewer slug={slug} initialStory={story} />
+        <StoryViewer slug={slug} initialStory={serializeStory(story)} />
       </>
     );
   }

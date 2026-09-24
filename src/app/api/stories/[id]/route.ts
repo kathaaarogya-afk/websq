@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { connectDB } from "@/lib/mongodb";
 import { verifyToken } from "@/lib/jwt";
 import Story from "@/models/Story";
+import "@/models/User";
 import mongoose from "mongoose";
 
 export async function GET(
