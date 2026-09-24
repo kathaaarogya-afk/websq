@@ -3,7 +3,6 @@ import { notFound } from "next/navigation";
 import { connectDB } from "@/lib/mongodb";
 import Story from "@/models/Story";
 import "@/models/User";
-import { pickInternalLinks } from "@/lib/internal-links";
 import StoryViewer from "./StoryViewer";
 
 interface PageProps {
@@ -97,22 +96,23 @@ async function getRelatedFor(story: {
       category: story.category,
       slug: { $ne: story.slug },
     })
-      .select("_id slug title category excerpt coverImage author")
+      .select("_id slug title category excerpt coverImage views author")
       .populate("author", "name")
+      .sort({ views: -1, createdAt: -1 })
       .limit(8)
       .lean();
 
-    return pickInternalLinks(
-      story,
-      (candidates as Array<{
-        _id: unknown;
-        title: string;
-        slug: string;
-        category: string;
-        excerpt?: string;
-        coverImage?: string;
-        author?: { _id?: unknown; name?: string };
-      }>).map((c) => ({
+    const related = (candidates as Array<{
+      _id: unknown;
+      title: string;
+      slug: string;
+      category: string;
+      excerpt?: string;
+      coverImage?: string;
+      author?: { _id?: unknown; name?: string };
+    }>)
+      .slice(0, 3)
+      .map((c) => ({
         _id: String(c._id),
         title: c.title,
         slug: c.slug,
@@ -122,9 +122,9 @@ async function getRelatedFor(story: {
         author: c.author?.name
           ? { _id: String(c.author._id || ""), name: c.author.name }
           : undefined,
-      })),
-      3
-    );
+      }));
+
+    return related;
   } catch {
     return [];
   }

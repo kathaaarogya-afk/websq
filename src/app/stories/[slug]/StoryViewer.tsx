@@ -92,7 +92,7 @@ export default function StoryViewer({
           (!initialRelated || initialRelated.length === 0)
         ) {
           const relRes = await fetch(
-            `/api/stories?category=${data.story.category}&limit=4`
+            `/api/stories?category=${data.story.category}&sort=views&limit=4`
           );
           if (relRes.ok) {
             const relData = await relRes.json();
