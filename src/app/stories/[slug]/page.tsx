@@ -97,7 +97,8 @@ async function getRelatedFor(story: {
       category: story.category,
       slug: { $ne: story.slug },
     })
-      .select("_id slug title category excerpt coverImage")
+      .select("_id slug title category excerpt coverImage author")
+      .populate("author", "name")
       .limit(8)
       .lean();
 
@@ -110,6 +111,7 @@ async function getRelatedFor(story: {
         category: string;
         excerpt?: string;
         coverImage?: string;
+        author?: { _id?: unknown; name?: string };
       }>).map((c) => ({
         _id: String(c._id),
         title: c.title,
@@ -117,6 +119,9 @@ async function getRelatedFor(story: {
         category: c.category,
         excerpt: c.excerpt || "",
         coverImage: c.coverImage,
+        author: c.author?.name
+          ? { _id: String(c.author._id || ""), name: c.author.name }
+          : undefined,
       })),
       3
     );
