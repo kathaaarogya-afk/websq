@@ -1713,6 +1713,115 @@ Vibe coding does not replace developers, exactly — it removes the *grunt work*
     commentsCount: 48,
   },
 
+  {
+    title: "I Changed 5 Phone Settings and Stopped Wanting a New Phone",
+    category: "Technology",
+    coverImage: "https://images.unsplash.com/photo-1499951360447-b19be8fe80f5?w=800&h=600&fit=crop",
+    excerpt: "My phone felt slow, so I tried the boring fixes before spending hundreds on an upgrade. Most of them were actually worth keeping.",
+    content: `I was one tap away from buying a new phone. My battery was dying by 3pm, apps took forever to open, and I had convinced myself a faster processor would fix everything. So I did the opposite: I spent an hour changing settings and deleting old clutter. I kept the phone.
+
+## 1. Give storage a reset
+
+Open your phone's storage settings and look for the apps you have not opened in months. Delete the ones you no longer need, then clear old downloads and empty the trash. On most phones, this frees more space than people expect.
+
+## 2. Find the battery drainers
+
+The Settings menu usually has a battery report. Mine showed me that two apps were using more than a third of my charge. I turned off background refresh for the noisy ones and checked location permissions. Your phone is not always busy because it is old; something may be working in the background.
+
+## 3. Stop the little annoyances
+
+I turned off motion effects, reduced notification previews, and switched off Bluetooth, location and personal hotspot when I was not using them. None of these changes made my phone feel twice as fast, but the battery stopped disappearing in the afternoon.
+
+## 4. Restart like you mean it
+
+A restart sounds too simple to count, but it clears temporary files and closes stuck apps. I do it once a week now, before blaming the hardware.
+
+## What did not change
+
+The camera, 5G speed and a chipped screen still need real hardware. If your battery is swelling, your phone overheats, or storage is permanently full, an upgrade may be sensible.
+
+## The honest verdict
+
+Try the free fixes first, keep a backup, and give the phone a week. Mine did not become a flagship. It just stopped feeling like I needed a new one every month.`,
+    author: 2,
+    views: 0,
+    likesCount: 0,
+    commentsCount: 0,
+  },
+  {
+    title: "I Let AI Plan My Week. It Was Useful—and Wrong in Hilarious Ways",
+    category: "AI",
+    coverImage: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&h=600&fit=crop",
+    excerpt: "I gave an AI my deadlines, habits and energy levels. The plan looked brilliant on paper, then met real life.",
+    content: `I gave an AI tool my deadlines, work hours, gym schedule and the fact that I need 20 minutes to think before starting. It returned a neat Monday-to-Friday plan. Then I tried to live it.
+
+## What it got right
+
+The plan protected time for focused work instead of filling every hour with meetings. It grouped small jobs into one admin block, put my gym in before dinner, and gave me a specific stopping time. I had not done any of those things on purpose.
+
+## Where it fell apart
+
+The AI scheduled two hours of writing before breakfast. It ignored the train ride. It assumed I could do three "quick" tasks in fifteen minutes, which is a phrase that has never described a real task.
+
+The plan was not stupid. It was simply missing the messy details that make a week feel human: low-energy days, appointments that move, and the fact that I sometimes need to stare at a problem before I know what to do.
+
+## The prompt that worked
+
+I tried again with more context:
+
+\`\`\`text
+Plan my week around these priorities: work, study, exercise and rest.
+Leave 20 minutes of buffer between tasks.
+Do not schedule deep work before 9am.
+Ask me three questions if any priority is unclear.
+Show the plan in time blocks, not a to-do list.
+\`\`\`
+
+That version asked better questions and left space for things to go wrong.
+
+## My honest verdict
+
+AI is brilliant at turning a messy brain dump into a first draft of a plan. It is not brilliant at living the week for you. Let it organise the bones, then add your energy, obligations and common sense.`,
+    author: 4,
+    views: 0,
+    likesCount: 0,
+    commentsCount: 0,
+  },
+  {
+    title: "Your Website Does Not Need to Look Like Every Other Website",
+    category: "Web Development",
+    coverImage: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=600&fit=crop",
+    excerpt: "The quickest way to make a site feel like yours is not another animation. It is making a few clear, human choices.",
+    content: `I spent months making websites that looked professional and felt interchangeable. Same rounded cards. Same purple gradient. Same hero section with three buttons. When I showed a friend a site I was proud of, she said, "This looks like every startup."
+
+She was being kind, but she was not wrong.
+
+## Personality beats polish
+
+A memorable site does not need custom code or a complicated animation. Start with one opinion and make the whole page support it:
+
+- Choose a type style with personality, then use it consistently.
+- Pick a small colour palette instead of using every shade available.
+- Write like a person, not a brand trying to sound impressive.
+- Give one important element more space than the rest.
+
+## The basics are still boring on purpose
+
+Fast pages, readable text, clear buttons and a contact link are not uncool. They are what let someone actually use what you made. A clever design cannot rescue a site that takes ten seconds to load or makes the next step unclear.
+
+## A 30-minute exercise
+
+Open your website on your phone. Ask someone to find what you do and how to contact you. Do not explain anything. Watch where they hesitate. That short test is more useful than staring at your design for an hour.
+
+## The verdict
+
+Make it recognisably yours, not deliberately strange. Your website does not have to shout to be memorable. Sometimes one honest sentence, a consistent colour and a layout that respects the reader are enough.`,
+    author: 5,
+    views: 0,
+    likesCount: 0,
+    commentsCount: 0,
+  },
+
   // ===== SEO (Amanda Reyes) =====
   {
     title: "SEO in the AI Search Era: Ranking When Google Answers the Question",
