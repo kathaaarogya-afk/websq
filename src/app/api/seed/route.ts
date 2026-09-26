@@ -1914,6 +1914,87 @@ Use the speed for volume, the editing for soul, and never ship anything you woul
     likesCount: 164,
     commentsCount: 33,
   },
+  {
+    title: "Discounts Are Quietly Ruining Your Brand",
+    category: "Digital Marketing",
+    coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=600&fit=crop",
+    excerpt: "The client who said a cheaper competitor was stealing her deals did not have a pricing problem. She had a value problem she was treating with 20% off. Here is how I unwired it.",
+    content: `A client rang me once, annoyed. A competitor down the road was undercutting her by a fifth and she was "about to panic-discount everything". I asked for the competitor's website. It looked worse than hers. The photos were worse, the reviews were thinner, the service was not comparable.
+
+Then I asked her the question that ended the call: *what did the customer actually do after buying from the cheaper place?*
+
+She went quiet, because nobody had asked. They came back three months later and paid properly.
+
+That is the whole lesson. A discount does not compete on value. It competes on timing — and it wins once, then quietly costs you for years.
+
+## What a discount actually does to the numbers
+
+Say your product sells for $100 and your direct cost is $35. Here is the honest version of "just take 20% off":
+
+| | Full price | 20% off |
+|---|---|---|
+| What the customer pays | $100 | $80 |
+| Your margin per sale | $65 | $45 |
+| Sales needed to hit $6,500 margin | 100 | 145 |
+| What you just did to your February | fine | 45% more work |
+
+The discount did not create one smaller sale. It created a month of running 45% harder for the same money. And that is the version clients rarely see, because I am the one being asked to do the work.
+
+## The three quiet costs nobody invoices you for
+
+### 1. It teaches people to wait for the drop
+
+The first discount is the cheapest sale you will ever make, because now the customer knows one is coming. You have converted a buyer into an audience. Some of them wait. A few of them never buy at all, because the discount was always the product.
+
+### 2. It drags your list price down with it
+
+This is the part that hurts in eighteen months, not this month. The discount is discoverable. Your customers talk, your competitor shops your site, and eventually a new customer arrives already knowing you are "the one that was 20% off last March". You are not discounting a campaign. You are re-baselining what you are allowed to charge.
+
+### 3. It buys the least loyal customers possible
+
+I have run the split test on this across enough clients to be boringly certain: discounted customers buy once, at the lowest possible price, complain the most, and are the least likely to renew. Full-price customers buy slightly less often and stay roughly twice as long. Loyalty is expensive to acquire and cheap to keep. Discounts spend the wrong half of your budget.
+
+## What I did instead
+
+Not "charge more" — nobody has ever been inspired by that sentence. Four concrete moves:
+
+- **Reframe against the real alternative.** Not "we are cheaper than nothing". The honest comparison is almost always the *cost of the problem* or the *cost of the cheap option*. One client sold $40 audits; the cheapest rival made reports. Her reframe was two sentences: what a missed compliance deadline actually costs, and what her client would pay to avoid redoing the work next year. Price stopped being the headline.
+- **Make the value legible.** Most small businesses are not underpriced. They are *unexplained*. A number on a page has to be tied to something the buyer recognises. Testimonials, named outcomes, a before-and-after with real numbers. Nobody needs your product to be good. They need to be able to *see* that it is.
+- **Stop mentioning price first.** On pages, in emails, in the first call. Lead with the problem and the outcome. The first number a customer sees frames the whole conversation, and it is astonishing how much changes when that number is not the smallest one on the page.
+- **Use urgency, not reduction.** A deadline, a set number of slots, a genuinely limited offer. "I can take four more this quarter" converts better than "10% off", costs you nothing, and leaves your list price completely intact.
+
+## The order to do it in
+
+If you discount-trained your customers, you cannot un-learn it with one announcement. The sequence that works:
+
+1. Stop discounting immediately. No replacement offer needed — just stop.
+2. Raise the price for **new** enquiries only. Existing customers never see a price rise you did not have to make.
+3. Remove the discount language everywhere. No strikethroughs, no "was" prices, no "limited time" you have run every month for two years.
+4. Expect roughly two weeks of awkward silence, then a better-calibrated pipeline.
+
+That last one is not a warning, it is a symptom. Fewer leads that are actually right beats a full calendar of people asking for 20% off.
+
+## When a discount is the right call
+
+I am not precious about this. Genuinely:
+
+- **Clearing end-of-line stock** you will not restock
+- **A first-three-customers promotion** where you are buying a case study, not a habit
+- **A volume break** where the extra margin genuinely covers the extra support
+- **A quiet quarter**, where cashflow matters more than list price
+
+The difference in every one of those cases: it is a decision with a date attached, not a reflex. The reflex is what costs you the brand.
+
+## The rule
+
+> A discount is a loan against your own pricing power. Cheap to take, expensive to repay.
+
+Sell the outcome, price the work, and let the customers who need to haggle walk — the ones who stay were never going to be your best ones anyway.`,
+    author: 7,
+    views: 812,
+    likesCount: 176,
+    commentsCount: 38,
+  },
 
   // ===== EDUCATION (Emily Brown) =====
   {
@@ -2231,6 +2312,92 @@ It will. That is not failure; it is the system reminding you the setup slipped. 
     likesCount: 243,
     commentsCount: 61,
   },
+  {
+    title: "I Deleted 60% of My Meetings and My Work Got Better",
+    category: "Productivity",
+    coverImage: "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=800&h=600&fit=crop",
+    excerpt: "Last count, I had 31 hours of meetings in a 40-hour week. So I ran a three-week audit, cut most of them, and kept my job. The hard part was never the calendar — it was learning to say no without apologising.",
+    content: `I am not a naturally busy person and I used to resent it when people said that, because my calendar told a different story. Thirty-one hours of meetings in a forty-hour week. Nine of those hours were standing up in someone else's open-plan office at 9am.
+
+I was "in meetings" the way my old job was "in meetings": nodding, contributing exactly enough to justify the slot, then spending the evening finishing the actual work.
+
+The fix was not a productivity app. It was an audit and a very uncomfortable conversation with myself about why I was defending a calendar I had never actually chosen.
+
+## Step one: find out what your week really is
+
+Do not start by cancelling things. Start by measuring, because the honest number is always worse than your memory.
+
+For three weeks I logged every meeting with four columns: who, what it was for, and — the two that mattered — **could this have been a document, and could it have been shorter or smaller?** I was stricter with myself than anyone else would have been. Anything that did not survive the question got a note: *replace, shrink, or delete*.
+
+The tally at the end:
+
+| Meeting type | Hours/week | Verdict |
+|---|---|---|
+| Status updates | 6 | Delete. A written update is better and faster |
+| Decision meetings | 5 | Keep, but only with one named decision-maker |
+| Brainstorms | 7 | Shrink hard — 4 people, 30 minutes, in person |
+| Information sharing | 4 | Delete. Nobody is pretending to read a doc |
+| 1:1s with my reports | 2 | Keep. Never cut these |
+| Everything recurring | 7 | Audit monthly, kill the rest |
+
+Nine hours a week back. That is not a small win, that is most of a working day, five days a week.
+
+## Step two: understand why you said yes
+
+This was the actual work. I had a small, believable story ready for every invitation, and they all pointed the same direction: *if I am not in the room, it might happen without me.*
+
+That fear felt responsible. It was the opposite. Being in the room was costing me the exact hours I needed to produce the things I was being invited to discuss.
+
+Two reframes carried most of it:
+
+- **A meeting that only I attend is a work item with extra steps.** If I am the only person who needs to know, it is an email.
+- **Being reachable is not being useful.** Presence is a low-value way to look like contribution. A written answer I can think about beats a verbal one I have to react to.
+
+## Step three: decline without apologising
+
+This is the part everybody gets wrong, and I got it wrong for months. I was not saying no to meetings — I was saying yes-with-an-apology, which is the most agreeable and least effective answer in the language.
+
+What I stopped saying: "Sorry, I'm really busy, can we push it?" That invites the negotiation, and you are negotiating against a version of yourself that does not exist.
+
+What I say instead:
+
+- "I can do this in writing — give me a day and I'll send you something you can actually think about."
+- "Happy to own this one, but I need a decision-maker in the room or it won't move."
+- "I'm holding a block for deep work. Can this wait until Thursday, or do you want it async?"
+
+Notice what those do. They do not say no. They redirect to the *form* that the work deserves, and they leave the other person a way to say yes. The ones who genuinely needed me in a room kept booking me. The rest simply disappeared, which is data in itself.
+
+The one line I practised, because it does the most work:
+
+> "That needs a decision, not a discussion. I'll come back with a recommendation by Tuesday."
+
+It is not a refusal. It is an upgrade, and people accept it far more than they accept a flat no.
+
+## What replaced the hours
+
+Not more discipline. Longer, emptier blocks. Two or three uninterrupted hours where nobody can reach me, protected as ruthlessly as a client meeting, because that is what they are worth. I also stopped trying to look busy in them — no messaging apps open "just in case". An unread badge is a small tax on every single thought.
+
+## What got worse, honestly
+
+I would not have learned this by accident, so:
+
+- **The first two weeks felt selfish.** I was braced for someone to object and nobody did.
+- **I cut a weekly catch-up I should have kept.** It was the only place two teams actually talked. Now they don't, and I hear about problems a week late. I reinstated it.
+- **One senior relationship cooled slightly.** A person I respect used those meetings for unrecorded, one-on-one time. Removing the slot removed me from a room. I now ask directly what the meeting is for, so I find those conversations instead of stumbling into them.
+- **A few small status meetings were genuinely missed.** Not a disaster. A little discomfort is part of the trade, and pretending otherwise is how you get talked out of a good system.
+
+## The rule I kept
+
+> A meeting is the last resort, not the first draft.
+
+Default to writing. Keep the room for the things that are genuinely worse in text: disagreement, bad news, and anything where you need to read a face. Everything else is a document with chairs.
+
+My week is not magically empty now. It has fewer, longer, better blocks and a calendar I actually chose. I still attend more meetings than I would like. I just stopped treating my own availability as a default setting.`,
+    author: 15,
+    views: 1204,
+    likesCount: 271,
+    commentsCount: 69,
+  },
 
   // ===== MENTAL HEALTH (Lily Chen) =====
   {
@@ -2309,6 +2476,120 @@ A side hustle is tuition to learn how money works in your industry. Most hustles
     views: 956,
     likesCount: 210,
     commentsCount: 47,
+  },
+  {
+    title: "Busy but Broke: Why Your Business Has Revenue and No Money",
+    category: "Business",
+    coverImage: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=800&h=600&fit=crop",
+    excerpt: "Year one I had 41 clients, six figures of revenue, and no money in the account. I was not bad at business. I was bad at arithmetic, and nobody had taught me to look.",
+    content: `Year one of my business, I want to be precise about it, because "busy but broke" gets treated as a personality flaw and it is not.
+
+Forty-one clients. \$184,000 in revenue. Two full-time staff and a subcontractor. And in eleven months I took home \$38,000 and nearly missed a payroll.
+
+I was not lazy and I was not, as I assumed for most of that year, unlucky. I had simply never written down the four numbers that matter. Every "start a business" piece I read was about getting customers. None of them warned me that getting customers at a price you never calculated is a very efficient way to go broke.
+
+## The four lines I did not have
+
+I had a bank account. I did not have these. A one-page sheet, that is all it is:
+
+| Line | What it means | Mine, year one |
+|---|---|---|
+| Revenue | Money that arrived | \$184,000 |
+| Direct costs | What delivering the work actually cost | \$71,000 |
+| **Gross margin** | Revenue minus direct costs | \$113,000 (61%) |
+| Overheads | Rent, software, insurance, accountant | \$46,000 |
+| **Operating profit** | What is actually yours | **\$28,000** |
+
+I made \$28,000. I had told people I "made \$184,000", because I thought that was the sentence that described a successful year. It described a *big* year. Those are not the same, and the gap between them was the entire problem.
+
+The 61% margin also looked fine, which is the trap. A healthy margin is only healthy if it is high enough to cover your overheads. Mine was 61%, my overheads were 25% of revenue, and I had 14% left to pay myself with — for two years of work.
+
+## The three leaks, in the order I found them
+
+### 1. I priced by copying
+
+My first real mistake. I looked at what two competitors charged, split the difference, and posted it. I never worked out what a week of my time cost me before I started discounting from that number.
+
+Here is what "just be competitive" actually did:
+
+- An average job paid \$2,800
+- Took me 34 hours of my own time
+- A real hourly rate, once I counted the admin, invoicing, chasing, revisions and the Sunday dread, was about \$46/hour
+- I had been selling my time at \$82
+
+Not low. *Inverted.* I was paying to be allowed to work.
+
+### 2. I did not price the delivery
+
+Direct costs are where businesses quietly bleed. The stuff nobody puts in the quote:
+
+- Revisions and rework — easily a quarter of the hours, always unquoted
+- "While you're in there" requests that cost real time and earn nothing
+- Support calls after the invoice cleared
+- The software you need to deliver at all
+- The unpaid half-day a week spent finding the next job
+
+On paper, the work was profitable. Per job, once I logged honestly, roughly a third of it was. I had no idea, because I had never logged a job.
+
+### 3. Some customers cost me money
+
+The genuinely uncomfortable one. When I priced by job rather than by margin, one client had been negative for about fourteen months. They were not abusive, they were not even difficult. They were simply: large, vague, fast-moving, cheap, and *incredibly* demanding of attention. They were also my favourite client for a year, which is how it stays invisible.
+
+I did not fire them. I raised the price so far that they chose to leave, which felt cowardly for about a month and was the single most profitable decision I made that year.
+
+## The fix, in the order it actually works
+
+### 1. Work out your real hourly rate
+
+Add a column for *every* hour, not just the billable ones. For three months I tracked a rough total. I was billing 46% of my available hours. Everything else — marketing, invoicing, admin, learning, dead waiting — was silently subsidising my clients at about \$40 an hour.
+
+Divide total costs, including your own pay, by the hours you can genuinely bill. That number is uncomfortable, and it is the only one that is true.
+
+### 2. Raise prices on new work first
+
+Never on existing clients first. Not because the old price was a deal, but because the *reaction* is what teaches you your price is wrong — and you can get that reaction cheaply from strangers.
+
+I raised the day rate 30% and lost exactly two enquiries in six weeks. Both of them came back three months later at the new price. The rest of the pipeline never noticed, which told me the old price had been undercharging me rather than winning me work.
+
+### 3. Change the shape, not just the number
+
+A price rise alone gets resisted. A change of *shape* often does not, and leaves your clients better off:
+
+- Scope in writing, with a **named** number of rounds of revision
+- A rush fee for deadlines that were always urgent anyway
+- A monthly retainer instead of hourly — the single biggest change I made to my income stability
+- Deposit up front, balance on delivery. Non-negotiable now. It is not distrust, it is cashflow, and one client not paying on time can kill a month
+
+### 4. Price so your worst customer leaves
+
+This sounds brutal. It is the healthiest filter I have. If a rate is safe for your least profitable client, it is too low. Raising until the wrong-fit work politely declines does two things: it protects your week from chaos, and it quietly improves the quality of your pipeline, because you stop being the cheapest option for people who should not have hired you.
+
+### 5. Take money before it exists
+
+Tax, super, and a buffer. Not because I was worried, but because a quiet quarter is a normal quarter and a business that has set all of that aside treats a slow month as a crisis and panics-discounts. Which is how you end up back in the first problem.
+
+## The bit nobody teaches
+
+Here is the thing I wish someone had put on a poster when I started:
+
+> You do not fail at business because you lack customers. You fail because the customers you have are not worth what you are charging.
+
+Effort is not the bottleneck. I have watched brilliant, tireless founders work themselves into the ground at a price that would not cover their rent. Every "hustle" article on the internet is about volume, and volume at a loss is just a faster route to the same place.
+
+## What I would tell year-one me
+
+- Open the spreadsheet on day one, not when things feel wrong. The delay is always the problem.
+- Track time per job for one month. You will not enjoy it. You will not repeat the surprise.
+- Raise your price for new work before you feel ready, and expect it to go fine.
+- Put a written scope on every job, especially the ones you like.
+- Take a deposit. Every time.
+- If the numbers are not working, more customers is the *last* fix, not the first. Fix the price and the margin first, and the volume problem tends to solve itself.
+
+Two years in, my revenue is not dramatically larger. My profit is close to four times what it was, and I still work about as many hours. Nothing about my talent changed. I just stopped giving away the business.`,
+    author: 17,
+    views: 1043,
+    likesCount: 232,
+    commentsCount: 58,
   },
 
   // ===== SUSTAINABILITY (Isabella Moore) =====
